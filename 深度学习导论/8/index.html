@@ -1,0 +1,1614 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://seamlessss.github.io/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/8/">
+      
+      
+        <link rel="prev" href="../7/">
+      
+      
+        <link rel="next" href="../9/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>L9：生成模型 - seamlessss's Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#l9" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-header__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            seamlessss's Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L9：生成模型
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-nav__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    seamlessss's Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seamlessss's Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    人工智能芯片与系统
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    人工智能芯片与系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%8A%AF%E7%89%87%E4%B8%8E%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    摄影
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    摄影
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%91%84%E5%BD%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    深度学习导论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    深度学习导论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L11：大语言模型架构与训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3：机器学习基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L4：神经网络基础（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5：神经网络基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L6：深度视觉模型（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7：深度视觉模型（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L8：表征学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L9：生成模型
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L9：生成模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#00" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        00 生成模型背景与核心挑战
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="00 生成模型背景与核心挑战">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 图像生成的两大类型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 图像的矩阵表示与“维度灾难”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-p_textdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 图像的真实分布 ($p_{\text{data}}$)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01-vae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 变分自编码器 VAE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 变分自编码器 VAE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02-generative-adversarial-network-gan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 生成对抗网络 (Generative Adversarial Network, GAN)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 生成对抗网络 (Generative Adversarial Network, GAN)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-minimax-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 模型架构与极小极大博弈 (Minimax Game)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-js" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 理论最优解与 JS 散度
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. GAN 的局限与瓶颈
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-diffusion-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 扩散模型 (Diffusion Model)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 扩散模型 (Diffusion Model)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 核心机制：前向加噪与反向去噪
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-u-net" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 去噪模型 (U-Net) 的设计与训练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-latent-diffusion-stable-diffusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 潜在扩散模型 (Latent Diffusion / Stable Diffusion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04-flow-matching-fm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 流匹配模型 (Flow Matching, FM)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 流匹配模型 (Flow Matching, FM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 核心思想：从弯曲随机路径到确定性直线路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vector-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 向量场 (Vector Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 流匹配的极简训练与推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 图像与文本自监督学习的区别 [跨维度总结]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 四大生成模型全景对比总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10：语言模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#00" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        00 生成模型背景与核心挑战
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="00 生成模型背景与核心挑战">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 图像生成的两大类型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 图像的矩阵表示与“维度灾难”
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-p_textdata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 图像的真实分布 ($p_{\text{data}}$)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01-vae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 变分自编码器 VAE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 变分自编码器 VAE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02-generative-adversarial-network-gan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 生成对抗网络 (Generative Adversarial Network, GAN)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 生成对抗网络 (Generative Adversarial Network, GAN)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-minimax-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 模型架构与极小极大博弈 (Minimax Game)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-js" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 理论最优解与 JS 散度
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. GAN 的局限与瓶颈
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-diffusion-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 扩散模型 (Diffusion Model)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 扩散模型 (Diffusion Model)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 核心机制：前向加噪与反向去噪
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-u-net" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 去噪模型 (U-Net) 的设计与训练
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-latent-diffusion-stable-diffusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 潜在扩散模型 (Latent Diffusion / Stable Diffusion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04-flow-matching-fm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 流匹配模型 (Flow Matching, FM)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 流匹配模型 (Flow Matching, FM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 核心思想：从弯曲随机路径到确定性直线路径
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-vector-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 向量场 (Vector Field)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 流匹配的极简训练与推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 图像与文本自监督学习的区别 [跨维度总结]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 四大生成模型全景对比总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="l9">L9：生成模型</h1>
+<h2 id="00">00 生成模型背景与核心挑战</h2>
+<h3 id="1">1. 图像生成的两大类型</h3>
+<ul>
+<li><strong>无条件生成 (Unconditional Generation)</strong>：将没有具体语义含义的随机噪声，通过生成模型转换为清晰、逼真的图像（如：随机生成一张不存在的猫或人脸）。</li>
+<li><strong>条件生成 (Conditional Generation)</strong>：根据给定的“条件”（如：文本描述、类别标签、简笔画等）引导模型生成特定内容的图像（最典型的应用就是 <strong>Text-to-Image</strong>，例如：输入随机噪声 + 提示词“一只狗趴在草地上” $\rightarrow$ 输出符合描述的真实狗图像）。</li>
+</ul>
+<h3 id="2">2. 图像的矩阵表示与“维度灾难”</h3>
+<ul>
+<li>电脑眼中的图像不是颜色和笔触的组合，而是由几十万甚至上百万个数字组成的高维矩阵（其维度通常表示为：$H \times W \times C$）。</li>
+<li><strong>计算挑战</strong>：生成一张普通的高清图像（如 $1024 \times 1024$ 分辨率），需要 AI 同时、精确地预测超过三百万个像素点的取值。</li>
+<li><strong>维度灾难</strong>：如果我们直接在像素高维空间里随机取值（如直接从简单高斯分布 $x \sim \mathcal{N}(0, I)$ 中采样并可视化），得到的必然是毫无意义的雪花噪点。合理的、有结构的真实图像，在超高维空间中分布极度稀疏，仅存在于一个极微小、连续的<strong>低维流形 (Manifold)</strong> 上。</li>
+</ul>
+<h3 id="3-p_textdata">3. 图像的真实分布 ($p_{\text{data}}$)</h3>
+<ul>
+<li>世界上所有合理的真实图像，在高维空间中客观存在一个极其复杂的真实概率分布 $p_{\text{data}}$。</li>
+<li><strong>生成模型的终极目标</strong>：因为真实分布 $p_{\text{data}}$ 形式未知、维度极高且结构极其复杂，我们无法直接用解析法求解。因此，我们需要<strong>训练一个神经网络模型</strong> $p_\theta$ <strong>去近似真实分布</strong> $p_{\text{data}}$。当模型参数 $\theta$ 优化完成后，只要使 $p_\theta \approx p_{\text{data}}$，我们就可以通过在 $p_\theta$ 中进行采样，源源不断地生成高拟合度、结构合理且逼真的全新图像。</li>
+</ul>
+<h2 id="01-vae">01 变分自编码器 VAE</h2>
+<h3 id="_1"></h3>
+<h2 id="02-generative-adversarial-network-gan">02 生成对抗网络 (Generative Adversarial Network, GAN)</h2>
+<p>既然人工设计的像素级 MSE 损失函数容易导致图像模糊，GAN 提出了划时代的思想：<strong>直接用一个神经网络（判别器）来当做自适应的损失函数！</strong></p>
+<h3 id="1-minimax-game">1. 模型架构与极小极大博弈 (Minimax Game)</h3>
+<p>GAN 由两个处于零和博弈中的网络组成：</p>
+<ul>
+<li>
+<p><strong>生成器 (Generator,</strong> $G$<strong>)</strong>：输入低维随机噪声 $z$，输出高维合成图像 $G(z)$。其终极目标是不断提高伪造质量，从而“欺骗”判别器。</p>
+</li>
+<li>
+<p><strong>判别器 (Discriminator,</strong> $D$<strong>)</strong>：输入图像（真图或假图），输出该图为真实图像的标量概率评分。目标是给真图 $x$ 打高分（接近 1.0），给假图 $G(z)$ 打低分（接近 0.0）。</p>
+</li>
+<li>
+<p><strong>数学博弈公式</strong>：</p>
+</li>
+</ul>
+<p>$$\min_G \max_D V(D, G) = \mathbb{E}<em>{x \sim p</em>{\text{data}}}(x) \left[ \log D(x) \right] + \mathbb{E}_{z \sim p_z}(z) \left[ \log (1 - D(G(z))) \right]$$</p>
+<h3 id="2-js">2. 理论最优解与 JS 散度</h3>
+<p>在函数空间中，我们可以求出 GAN 博弈的唯一理论最优解：</p>
+<ul>
+<li><strong>最优判别器</strong> $D^*(x)$：当固定生成器 $G$ 时，最优判别器的输出仅取决于真实数据分布与生成分布在当前样本点上的相对比重：</li>
+</ul>
+<p>$$D^*(x) = \frac{p_{\text{data}}(x)}{p_{\text{data}}(x) + p_g(x)}$$</p>
+<ul>
+<li><strong>最优生成器与 JS 散度</strong>：当我们将最优判别器 $D^<em>(x)$ 代入博弈公式后，生成器 $G$ 的损失函数可以严格推导化简为真实图像分布 $p_{\text{data}}$ 与生成分布 $p_g$ 之间的 </em><em>JS 散度 (Jensen-Shannon Divergence)</em>*：</li>
+</ul>
+<p>$$V(D^*, G) = -\log(4) + 2 \cdot D_{\text{JS}}\left(p_{\text{data}} \parallel p_g\right)$$</p>
+<ul>
+<li>
+<p><em>物理含义</em>：训练生成器 $G$ 的本质，就是在想方设法让它所生成的概率分布 $p_g$ 在高维空间里逼近和重合于真实图像的概率流形 $p_{\text{data}}$。</p>
+</li>
+<li>
+<p><strong>纳什均衡最终状态</strong>：当训练达到终点，生成器完美学到数据分布 $p_g = p_{\text{data}}$。此时判别器无法区分真伪，对任意输入评分均为 $D(x) = 0.5$（瞎猜），对抗达到动态平衡。</p>
+</li>
+</ul>
+<h3 id="3-gan">3. GAN 的局限与瓶颈</h3>
+<ul>
+<li><strong>对抗训练易崩溃 (Mode Collapse / 模式坍塌)</strong>： 如果判别器 $D$ 的能力远超生成器 $G$（训练初期极易发生），它会给出完美的绝对零分。这会导致生成器面临严重的“梯度消失”，不知道该调整哪些像素才能得分，从而失去更新方向，产生训练崩溃或模式崩溃（只重复生成某一种特定类型的假图）。</li>
+<li><strong>单步生成难度极大</strong>： 生成器 $G$ 被要求仅通过一次网络前向传播，直接从低维噪声跃迁到极其复杂的高维像素空间。模型一次性要学会所有层级的高维特征分布，学习难度和偏差极大，极不稳定。</li>
+</ul>
+<h2 id="03-diffusion-model">03 扩散模型 (Diffusion Model)</h2>
+<p>为了打破 GAN “单步生成、对抗易崩溃” 的死结，扩散模型提出了一种极其优美的反向思维：<strong>多步去噪，化整为零</strong>。</p>
+<h3 id="1_1">1. 核心机制：前向加噪与反向去噪</h3>
+<ul>
+<li><strong>前向加噪过程 (Forward / Diffusion Process)</strong>： 是一个固定的马尔可夫链。从真实图像 $x_0 \sim p_{\text{data}}$ 开始，在 $T$ 个时间步内，每一步都往图像中加入微小的随机高斯噪声：</li>
+</ul>
+<p>$$q(x_t \mid x_{t-1}) = \mathcal{N}\left(x_t; \sqrt{1 - \beta_t} x_{t-1}, \beta_t I\right)$$</p>
+<p>经过 $T \approx 1000$ 步后，图像的所有结构信息被彻底破坏，最终退化为纯高斯噪声 $x_T \sim \mathcal{N}(0, I)$。</p>
+<blockquote>
+<p><strong>💡 数学递推优势</strong>：前向过程无需训练。利用重参数化性质，我们可以通过递推公式直接避开中间步骤，一步计算出任意 $t$ 时刻的含噪图像：</p>
+<p>$$x_t = \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon, \quad \text{其中 } \epsilon \sim \mathcal{N}(0, I)$$</p>
+</blockquote>
+<ul>
+<li><strong>反向去噪过程 (Reverse Process / 图像生成)</strong>： 从纯噪声 $x_T \sim \mathcal{N}(0, I)$ 开始。训练一个去噪神经网络，通过 $T$ 步将噪声一点点剥离，化整为零，逐步还原出有结构、高语义的逼真图像 $x_0$。</li>
+</ul>
+<h3 id="2-u-net">2. 去噪模型 (U-Net) 的设计与训练</h3>
+<ul>
+<li>
+<p><strong>学习目标</strong>：因为各种复杂图像千差万别，但噪声始终遵从高斯分布，因此模型不直接预测图像，而是<strong>预测在当前时间步</strong> $t$ <strong>下，含噪图像</strong> $x_t$ <strong>中被加进去的那个随机噪声值</strong> $\epsilon$。</p>
+</li>
+<li>
+<p><strong>单步加噪训练流程 (打破顺序限制)</strong>： 为避免模型按顺序训练产生灾难性遗忘，必须随机打乱训练步：</p>
+</li>
+<li>
+<p>随机采样真实图像 $x_0 \sim p_{\text{data}}$，采样随机时间步 $t \in [1, T]$，采样随机噪声 $\epsilon \sim \mathcal{N}(0, I)$。</p>
+</li>
+<li>
+<p>用前向单步公式生成含噪图 $x_t = \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon$。</p>
+</li>
+<li>
+<p>将 $x_t$ 和时间步 $t$ 输入去噪网络，让其预测噪声：$\epsilon_{\theta}(x_t, t)$。</p>
+</li>
+<li>
+<p>计算 L2 损失并反向传播更新参数：</p>
+<p>$$\mathcal{L}(\theta) = \mathbb{E}<em>{t, x_0, \epsilon} \left[ | \epsilon - \epsilon</em>{\theta}(x_t, t) |^2 \right]$$</p>
+</li>
+</ul>
+<h3 id="3-latent-diffusion-stable-diffusion">3. 潜在扩散模型 (Latent Diffusion / Stable Diffusion)</h3>
+<ul>
+<li><strong>纯扩散模型的痛点</strong>：在极其高维的像素空间里进行 1000 步的去噪迭代，计算开销和显存占用大到无法承受。</li>
+<li><strong>解法：结合 VAE 在隐空间内进行扩散</strong></li>
+<li><strong>编码压缩</strong>：先用一个预训练好的 VAE 编码器将高维像素图像 $x_0$ 压缩到低维的隐空间特征图 $z_0$。</li>
+<li><strong>隐空间扩散</strong>：所有的加噪、预测噪声和损失计算全都在这个低维的隐空间内进行（计算量和显存需求骤降数个数量级）。</li>
+<li><strong>解码重建</strong>：去噪完成得到干净的潜变量 $z_0$ 后，再通过 VAE 的解码器恢复解码为高分辨率图像。</li>
+<li><strong>条件生成机制（注入文本条件）</strong>： 将输入的文本描述通过 CLIP 编码成特征向量，在隐空间去噪网络（U-Net）内部，利用 <strong>Cross-Attention（交叉注意力）</strong> 机制将文本语义注入去噪过程，实现可控、可交互的文本生成图像。</li>
+</ul>
+<h2 id="04-flow-matching-fm">04 流匹配模型 (Flow Matching, FM)</h2>
+<p>扩散模型虽然效果拔群，但由于加噪过程是随机微分方程（SDE），其映射路径是<strong>随机且弯曲的</strong>。这导致其采样过程效率低下，需要多步迭代（即便加速后也需要数十步）。 为了在不牺牲生成质量的前提下大幅加快生成速度，<strong>流匹配模型 (Flow Matching)</strong> 应运而生。</p>
+<h3 id="1_2">1. 核心思想：从弯曲随机路径到确定性直线路径</h3>
+<ul>
+<li><strong>扩散模型</strong>：加噪是随机游走，反向去噪路径弯曲不确定。</li>
+<li><strong>流匹配模型</strong>：抛弃随机加噪，直接通过<strong>常微分方程 (ODE)</strong> 在噪声分布 $p_0$ 和图像分布 $p_1$ 之间强行画出一条最简单、最平滑的<strong>直线映射路径</strong>（从每步去除噪声，变成样本沿着直线路径发生位移）。</li>
+</ul>
+<h3 id="2-vector-field">2. 向量场 (Vector Field)</h3>
+<ul>
+<li>
+<p>在流匹配中，模型不再预测噪声，而是去学习一个随时间变化的<strong>向量场</strong> $v_t(x)$。</p>
+</li>
+<li>
+<p>同一时刻 $t$，向量场在空间中的每个坐标点都预设了一个专属的速度向量（包含速度大小和方向）。样本顺着速度向量走一步：</p>
+</li>
+</ul>
+<p>$$x_1 - x_0 = \int_0^1 v_t(x_t) dt$$</p>
+<h3 id="3">3. 流匹配的极简训练与推理</h3>
+<ul>
+<li>
+<p><strong>训练过程（线性插值构建状态）</strong>：</p>
+</li>
+<li>
+<p>随机采样真实图像 $x_1$ 和高斯噪声 $x_0$，以及时间步 $t \in [0, 1]$。</p>
+</li>
+<li>
+<p>此时的中间状态 $x_t$ 直接定义为简单的线性加权（即直线路径点）：</p>
+<p>$$x_t = (1 - t)x_0 + t x_1$$</p>
+</li>
+<li>
+<p>神经网络输入当前状态 $x_t$ 和时间 $t$，预测此时的速度 $v_{\theta}(x_t, t)$。</p>
+</li>
+<li>
+<p>真实移动速度为常数：$\frac{d}{dt} x_t = x_1 - x_0$。直接计算速度预测值与真实值之间的 L2 损失：</p>
+<p>$$\mathcal{L}<em>{\text{FM}}(\theta) = \mathbb{E}</em>{t, x_0, x_1} \left[ | v_{\theta}(x_t, t) - (x_1 - x_0) |^2 \right]$$</p>
+</li>
+<li>
+<p><strong>推理过程</strong>：输入隐空间随机噪声，利用训练好的向量场网络预测每一步的速度，通过多段等分直线路径进行常微分方程（ODE）求解积分，实现超快速的高质量图像生成。</p>
+</li>
+</ul>
+<h2 id="05">05 图像与文本自监督学习的区别 [跨维度总结]</h2>
+<table>
+<thead>
+<tr>
+<th>比较维度</th>
+<th>语言领域 (NLP)</th>
+<th>图像领域 (CV)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>信号物理特征</strong></td>
+<td>离散符号 (Tokens)，具有天然的字典划分。</td>
+<td>连续像素信号，强相关，没有天然的结构划分。</td>
+</tr>
+<tr>
+<td><strong>信息密度</strong></td>
+<td>极其密集 (Information-dense)。一个词通常带有极大的高阶语义。</td>
+<td>极度稀疏 (Information-sparse)。单个像素无意义，空间存在极大冗余。</td>
+</tr>
+<tr>
+<td><strong>自监督核心范式</strong></td>
+<td><strong>双向去噪掩码预测 (BERT - MLM)</strong> 或 <strong>单向自回归生成预测 (GPT - NTP)</strong>。</td>
+<td><strong>对比学习 (SimCLR/MoCo)</strong> 实例判别，或 <strong>极高比例图像掩码建模 (MAE - MIM)</strong>。</td>
+</tr>
+<tr>
+<td><strong>掩码比例差别</strong></td>
+<td>遮挡 15% 即可让模型学习深层双向语义。</td>
+<td>必须遮挡高达 75% 甚至以上。否则模型通过周围像素插值直接作弊，学不到语义。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="06">06 四大生成模型全景对比总结</h2>
+<table>
+<thead>
+<tr>
+<th>模型范式</th>
+<th>核心优化目标</th>
+<th>生成方式</th>
+<th>优势</th>
+<th>主要局限性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变分自编码器(VAE)</td>
+<td>最小化重建误差 + KL散度约束。</td>
+<td>从低维隐空间先验分布中采样，解码生成图像。</td>
+<td>显式建模概率密度，计算快，数学理论完备。</td>
+<td>生成图像倾向于模糊，存在“后验崩溃”风险。</td>
+</tr>
+<tr>
+<td>生成对抗网络(GAN)</td>
+<td>极大极小博弈，最小化真实与生成分布的 JS 散度。</td>
+<td>噪声输入生成器，单步前向传播生成图像。</td>
+<td>图像非常清晰，细节丰富，推理速度极快。</td>
+<td>训练极度不稳定，容易发生模式崩溃，无显式密度估计。</td>
+</tr>
+<tr>
+<td>扩散模型(Diffusion)</td>
+<td>预测每一步的随机高斯噪声 $\epsilon$ 的均方误差。</td>
+<td>纯高斯噪声开始，多步（如 1000 步）马尔可夫链去噪生成。</td>
+<td>训练极度稳定，生成多样性和保真度高，支持灵活条件引导。</td>
+<td>生成速度慢（多步迭代），在高维像素空间计算代价巨大。</td>
+</tr>
+<tr>
+<td>流匹配模型(Flow Matching)</td>
+<td>预测线性插值路径下样本运动的速度向量 $v$。</td>
+<td>纯噪声开始，沿着直线特征路径，解常微分方程（ODE）位移生成。</td>
+<td>生成路径直，迭代步数极少，生成速度快，数学表达极简。</td>
+<td>理论较新，目前在大尺度条件生成上的最佳实践（如大模型适配）仍在快速探索中。</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

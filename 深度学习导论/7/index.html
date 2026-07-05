@@ -1,0 +1,2465 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://seamlessss.github.io/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/7/">
+      
+      
+        <link rel="prev" href="../6/">
+      
+      
+        <link rel="next" href="../8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>L8：表征学习 - seamlessss's Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#l8" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-header__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            seamlessss's Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L8：表征学习
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-nav__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    seamlessss's Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seamlessss's Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    人工智能芯片与系统
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    人工智能芯片与系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%8A%AF%E7%89%87%E4%B8%8E%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    摄影
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    摄影
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%91%84%E5%BD%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    深度学习导论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    深度学习导论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L11：大语言模型架构与训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3：机器学习基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L4：神经网络基础（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5：神经网络基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L6：深度视觉模型（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7：深度视觉模型（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L8：表征学习
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L8：表征学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 什么是表征学习？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 什么是表征学习？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 传统表征提取模式：特征工程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 现代范式：表征学习
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 评估无监督表征的好坏
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02-pretext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 Pretext 任务
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 Pretext 任务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 经典的图像代理任务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 局限性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 对比学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 对比学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-simclr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. SimCLR
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. SimCLR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-augmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据增强 (Data Augmentation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础编码器 (Base Encoder)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#projector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==投影头 (Projector)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nt-xent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==对比损失 (NT-Xent 损失)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下游任务应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mocoencoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. MoCo——动量更新Encoder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 单词的表征学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 单词的表征学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-one-hot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 传统 One-hot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-word2vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Word2Vec
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Word2Vec">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#word2vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Word2Vec 算法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip-gram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-gram 的训练流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两大优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 从局部上下文预测到全局统计
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 文本数据的自监督学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="05 文本数据的自监督学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Transformer——可扩展序列建模基座
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. BERT
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. BERT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BERT优势
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bert_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BERT局限
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-roberta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. RoBERTa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. RoBERTa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        消融探究
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ntp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. NTP回归——从理解到生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-gpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. GPT 系列
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. GPT 系列">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chatgpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ChatGPT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-chinchilla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Chinchilla
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Chinchilla">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        动机
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最优配比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启示
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工程优势与伦理挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 图像与文本自监督学习的区别
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="06 图像与文本自监督学习的区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 文本与图像的差异
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-masked-image-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 图像掩码重建（Masked Image Modeling）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 图像掩码重建（Masked Image Modeling）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-image-sequence-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 图像序列预测（Image Sequence Prediction）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 图像序列预测（Image Sequence Prediction）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simmim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SimMIM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自监督表征学习总结
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自监督表征学习总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        广泛应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L9：生成模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10：语言模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 什么是表征学习？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 什么是表征学习？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 传统表征提取模式：特征工程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 现代范式：表征学习
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 评估无监督表征的好坏
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02-pretext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 Pretext 任务
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 Pretext 任务">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 经典的图像代理任务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 局限性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 对比学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 对比学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-simclr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. SimCLR
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. SimCLR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-augmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据增强 (Data Augmentation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基础编码器 (Base Encoder)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#projector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==投影头 (Projector)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nt-xent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==对比损失 (NT-Xent 损失)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下游任务应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mocoencoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. MoCo——动量更新Encoder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 单词的表征学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 单词的表征学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-one-hot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 传统 One-hot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-word2vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Word2Vec
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Word2Vec">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#word2vec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Word2Vec 算法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip-gram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-gram 的训练流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两大优化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 从局部上下文预测到全局统计
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 文本数据的自监督学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="05 文本数据的自监督学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Transformer——可扩展序列建模基座
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. BERT
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. BERT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BERT优势
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bert_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BERT局限
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-roberta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. RoBERTa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. RoBERTa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        消融探究
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ntp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. NTP回归——从理解到生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-gpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. GPT 系列
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. GPT 系列">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chatgpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ChatGPT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-chinchilla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Chinchilla
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Chinchilla">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        动机
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最优配比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        启示
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        工程优势与伦理挑战
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 图像与文本自监督学习的区别
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="06 图像与文本自监督学习的区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 文本与图像的差异
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-masked-image-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 图像掩码重建（Masked Image Modeling）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 图像掩码重建（Masked Image Modeling）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-image-sequence-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 图像序列预测（Image Sequence Prediction）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 图像序列预测（Image Sequence Prediction）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simmim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SimMIM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自监督表征学习总结
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自监督表征学习总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        广泛应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="l8">L8：表征学习</h1>
+<h2 id="01">01 什么是表征学习？</h2>
+<p>表征是对数据<strong>==含义==</strong>的编码，是对原始数据的映射。</p>
+<ul>
+<li><strong>核心目的</strong>：让计算机能够理解数据的本质。一个优秀的表征空间，能够做到“<strong>语义相似 = 几何接近</strong>”（例如：在表征空间中，“猫”和“狗”的距离很近，而“猫”和“汽车”的距离很远）。</li>
+</ul>
+<h3 id="1">1. 传统表征提取模式：特征工程</h3>
+<p>在深度学习爆发前，表征提取依赖于领域专家<strong>人工手动设计规则</strong>，从原始数据里 “提炼” 出特征（也就是表征）。</p>
+<ul>
+<li><strong>文本领域</strong>：</li>
+<li><strong>词袋模型 (Bag of Words, BoW)</strong>：统计每个词在句中出现的次数。<ul>
+<li>缺点：完全丢失语序和上下文关联（“狗咬人”和“人咬狗”向量完全一致）。</li>
+</ul>
+</li>
+<li><strong>TF-IDF</strong>：在词袋的基础上，再手动设计规则：词重要性 = 词频 (TF) $\times$ 逆文档频率 (IDF，词在整个语料里的稀有度)。突出在当前句高频、但在全局罕见的“关键词”。</li>
+<li><strong>图像领域</strong>：</li>
+<li><strong>SIFT (尺度不变特征变换)</strong>：手动设计了一套规则：先找图像里的 “关键点”（比如角点、边缘点），再计算关键点周围的梯度方向，生成一个对缩放、旋转不敏感的描述子（向量），作为图像的局部特征。</li>
+<li><strong>HOG (方向梯度直方图)</strong>：划分网格统计梯度分布，常用于提取行人轮廓。</li>
+<li><strong>特征工程的缺陷</strong>：</li>
+<li>需要人工设计特征模式，需要领域经验，设计成本高</li>
+<li>只能表达局部语义，难以捕捉复杂语义，难以建模非线性结构</li>
+<li>泛化能力弱，需要对任务针对性的设计特征</li>
+</ul>
+<h3 id="2">2. 现代范式：表征学习</h3>
+<p><strong>==数据驱动==代替人工设计</strong>，用模型来学习表征</p>
+<p><strong>为什么需要表征学习？</strong></p>
+<ul>
+<li>降低数据维度，捕捉数据语义，提升泛化能力</li>
+</ul>
+<p>根据监督信号的来源，分为两类：</p>
+<ul>
+<li><strong>有监督表征学习</strong>：利用人工标注的标签（如：图类别，目标框）进行端到端训练。</li>
+<li><strong>依赖下游任务标注</strong></li>
+<li>局限：标注成本极高；模型容易对特定任务<strong>过拟合</strong>，学到的表征迁移到新任务时效果不佳。</li>
+<li><strong>无监督/自监督表征学习</strong>：从数据本身的结构与分布中，自动构造监督信号（伪标签）。</li>
+<li><strong>依赖数据自身特性</strong></li>
+<li>优势：数据零成本，可利用海量无标注数据；学到的表征更加通用，泛化性和迁移能力极强。</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260621215717657.png" alt="image-20260621215717657" style="zoom:80%;" /></p>
+<h3 id="3">3. 评估无监督表征的好坏</h3>
+<ol>
+<li><strong>线性探测 (Linear Probing)</strong>：将训练好的 Backbone 冻结，只在其之上接一层简单的线性分类器，使用少量标注数据训练。分类准确率越高，说明 Backbone 提取的特征线性可分性越强，表征越好。</li>
+<li><strong>可视化观察聚类效果</strong>：使用 PCA 或 t-SNE 算法将高维特征降至 2D/3D，观察同类样本是否自然聚拢，不同类样本是否分离。</li>
+</ol>
+<h2 id="02-pretext">02 Pretext <strong>任务</strong></h2>
+<p><strong>核心思想</strong>：摒弃人工标注，以数据自身属性为“伪标签”，通过人为设计一个代理小任务（Pretext Task），让模型在解决这个任务的过程中，<strong>被迫</strong>习得数据的深层语义。</p>
+<p><img alt="image-20260621215851331" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260621215851331.png" /></p>
+<h3 id="1_1">1. 经典的图像代理任务</h3>
+<ul>
+<li>
+<p><strong>==旋转预测 (Rotation Prediction)==</strong>：将图像随机旋转 $0^\circ, 90^\circ, 180^\circ, 270^\circ$，让模型预测旋转角度（4 分类）。</p>
+</li>
+<li>
+<p>学到了什么：模型必须识别物体的主体轮廓、物体朝向和重力方向（树是竖直的，天在上面），从而理解空间语义，而不是只靠边缘、颜色这些低级特征。</p>
+<p><img alt="image-20260621220736122" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260621220736122.png" /></p>
+</li>
+<li>
+<p><strong>==相对位置预测 (Context Prediction)==</strong>：从同一张图片里随机采样两个局部区域（patch），让模型预测第二个 patch 相对第一个 patch 的位置（8 个方向，是一个 8 分类任务）。</p>
+</li>
+<li>
+<p>学到了什么：理解物体的整体结构和部件间的空间关系（如猫耳朵一定在猫眼睛上方）。</p>
+</li>
+<li>
+<p><strong>==拼图游戏 (Jigsaw Puzzle)==</strong>：把一张图片分成 9 个小方块，打乱它们的顺序，让模型预测正确的排列方式（从 9! 种排列中选 100 种做分类）。</p>
+</li>
+<li>
+<p>学到了什么：局部到全局的推理能力，物体结构建模能力，上下文一致性。</p>
+</li>
+<li>
+<p><strong>==着色 (Colorization)==</strong>：把彩色图片转成灰度图，让模型预测每个像素的颜色（在 Lab 颜色空间中恢复 a、b 通道）。</p>
+</li>
+<li>
+<p>颜色和语义强相关：天空是蓝的、草是绿的、皮肤有固定色调。模型要正确上色，必须理解物体的类别、场景上下文和纹理材质，而不是瞎猜颜色。</p>
+</li>
+<li>学到的什么：物体语义理解、场景上下文建模。</li>
+</ul>
+<h3 id="2_1">2. <strong>局限性</strong></h3>
+<ol>
+<li><strong>泛化性有限</strong>：模型可能只是学会了解决 “猜位置 / 猜角度 / 猜颜色” 这道题，而不是学到了通用的视觉特征，迁移到下游任务时效果打折扣。</li>
+<li><strong>容易走 “学习捷径”</strong>：模型可能靠边缘连续性、相机伪影这些低级特征取巧，而不是真正理解物体的高层语义（比如着色任务里，模型可能靠颜色分布的统计规律上色，而不是识别出 “这是草，所以是绿的”）。</li>
+</ol>
+<h2 id="03">03 对比学习</h2>
+<p>既然代理任务容易被钻空子，研究者回归了分类的本质：<strong>让模型学会“区分谁是谁”</strong>。在特征空间中，<strong>==拉近同类事物，推远不同事物==</strong>。</p>
+<ul>
+<li><strong>监督对比学习</strong>：需要<strong>人工标注</strong>哪些属于同类事物，哪些属于不同类事物 -&gt; 成本太高</li>
+<li><strong>自监督对比学习</strong>：通过<strong>数据变换自动构建正负样本</strong>对用于模型训练 -&gt; free lunch!</li>
+</ul>
+<h3 id="1-simclr">1. SimCLR</h3>
+<blockquote>
+<p>Simple Framework for Contrastive Learning</p>
+</blockquote>
+<p>SimCLR 证明了只要有足够强的策略，纯自监督模型的特征提取能力可以匹敌有监督模型。</p>
+<ul>
+<li>SimCLR 框架：对每张图施加两种不同的数据增强，形成一对<strong>互为“正样本”的分身</strong>。</li>
+<li>模型的目标就是<strong>识别出这些分身属于同一母体</strong>，并同时<strong>排斥 batch 内的所有其他图片。</strong></li>
+</ul>
+<h4 id="data-augmentation"><strong>数据增强 (Data Augmentation)</strong></h4>
+<p>在保留数据原本含义的前提下，通过旋转、翻转等方式对现有数据进行变换，从而创造出更多新样本。</p>
+<ul>
+<li>关键发现：</li>
+<li>数据增强组合对自监督学习质量起决定性作用</li>
+<li>单纯的<strong>随机裁剪</strong>往往效果不佳（模型作弊），必须与<strong>“颜色抖动”</strong>结合使用</li>
+</ul>
+<h4 id="base-encoder"><strong>基础编码器 (Base Encoder)</strong></h4>
+<ul>
+<li>通常采用经典的卷积神经网络（如 ResNet），作为模型的“主干”负责<strong>将原始图像转化为高维特征向量</strong>，旨在捕捉图像中核心的语义内容</li>
+</ul>
+<h4 id="projector">==<strong>投影头 (Projector)</strong>==</h4>
+<ul>
+<li>结构：一个两层的 MLP（全连接 + ReLU + 全连接），输出 $z$。</li>
+<li>作用：<strong>去冗余缓冲层</strong>。专门负责<strong>吸收和过滤</strong>掉那些对对比任务有用、但对通用识别没用的<strong>冗余信息</strong>（颜色、位置），保护前面的编码器能学到更纯净、更本质的语义特征。</li>
+<li>原始特征 $h$ 中包含了很多有用的通用信息（如颜色、朝向），但对比学习的任务会强迫模型扔掉这些信息（因为同一个物体的两个增强视图颜色不同，模型为了让它们相似，会学着忽略颜色）。Projector 充当了“替罪羊”，过滤掉对对比任务有用但对下游任务无用的信息。<strong>下游迁移时，扔掉 Projector，只保留 Encoder 提取的特征</strong> $h$。</li>
+</ul>
+<h4 id="nt-xent">==<strong>对比损失 (NT-Xent 损失)</strong>==</h4>
+<ul>
+<li><strong>最大化同一图像不同增强视图（正样本对）之间的相似度，同时最小化不同图像（负样本对）之间的相似度。</strong></li>
+</ul>
+<p>$$l(i,j) = -\log \frac{\exp(s_{i,j} / \tau)}{\sum_{k=1}^{2N} \mathbb{1}<em>{[k \neq i]} \exp(s</em>{i,k} / \tau)}$$</p>
+<blockquote>
+<ul>
+<li>计算正样本对$$i,j$$之间的相似度$$s_{i,j}$$。</li>
+<li>同时计算当前样本与所有负样本的相似度之和。</li>
+<li>目标是让正样本的相似度指数尽可能大（分子），让负样本的相似度指数尽可能小（分母）。</li>
+</ul>
+<p><u><strong>Batch 机制：它利用整个 Batch 内的样本作为负样本库，极大丰富了负样本数量，是保证效果的关键之一。</strong></u></p>
+</blockquote>
+<h4 id="_1"><strong>下游任务应用</strong></h4>
+<ul>
+<li>经过 SimCLR 训练之后的模型可以用于<strong>迁移学习</strong>。为此，使用来自基础编码器的表示，这些表示可以很好地应用于像 ImageNet 分类这样的下游任务。</li>
+</ul>
+<blockquote>
+<p><strong>特征提取</strong>：利用海量无标签数据训练好 SimCLR 后，<strong>抛弃投影头，只保留基础编码器（Backbone）</strong>。</p>
+<p><strong>微调（Finetuning）</strong>：在<strong>少量标注数据</strong>（如图中的 ImageNet）上，对编码器进行少量参数的微调。</p>
+<p>只要有足够大的 Batch、足够强的数据增强和一个简单的投影头，纯粹靠 “让模型分辨同与不同”，就能训练出特征能力极强的视觉模型，无需人工标注。</p>
+</blockquote>
+<ul>
+<li><strong>SimCLR 的痛点</strong>：严重依赖<strong>极大的 Batch Size</strong>（如 4096）来提供足够的<strong>负样本</strong>，对算力要求极高。</li>
+</ul>
+<h3 id="2-mocoencoder">2. MoCo——动量更新Encoder</h3>
+<blockquote>
+<p>Momentum Contrast</p>
+<p>解决 SimCLR 依赖 “大 Batch” 的痛点</p>
+<p>对比学习的效果，很大程度上取决于<strong>负样本的数量和质量</strong>：</p>
+<ul>
+<li>负样本越多，模型越能学到 “区分不同样本” 的能力；</li>
+<li>SimCLR 靠扩大 Batch Size 来增加负样本，但这对算力要求极高，普通设备很难跑。</li>
+</ul>
+</blockquote>
+<p><strong>需要更多负样本</strong>的另一种解决方案：引入<strong>样本队列</strong>记住负样本的特征；使用<strong>非对称更新</strong>的方式，让其中一个Encoder以动量的形式进行更新。</p>
+<blockquote>
+<p>注：SimCLR发表更晚消融更全面，发现算力充足不如直接开大Batch</p>
+</blockquote>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260621230812242.png" alt="image-20260621230812242" style="zoom:90%;" /></p>
+<ul>
+<li>
+<p><strong>样本队列 (Queue)</strong>：引入一个固定大小的先进先出（FIFO）队列，存储之前批次的旧特征作为负样本（如 $K=65536$）。这样即便当前 Batch 只有 256，也能拥有几万个负样本。</p>
+</li>
+<li>
+<p><strong>动量编码器 (Momentum Encoder)</strong>：</p>
+</li>
+<li>
+<p>问题：如果负样本特征是用很久以前的参数算出来的，那跟现在参数算出来的 Query 就没有可比性（一致性被破坏）。</p>
+</li>
+<li>
+<p>解法：网络被分为 Query Encoder (参数 $\theta_q$) 和 Key Encoder (参数 $\theta_k$)。</p>
+<p>Query Encoder：实时更新参数$\theta_q$，用来处理当前输入$x^{query}$，得到query特征q；</p>
+<p>Key Encoder： $\theta_k$ <strong>不进行梯度反向传播</strong>，而是以<strong>指数移动平均 (EMA)</strong> 极其缓慢地跟随 $\theta_q$ 更新：$$\theta_k \leftarrow m\theta_k + (1-m)\theta_q$$</p>
+<p>其中动量系数 $m$ 通常高达 0.999。这样保证了队列中所有的历史特征都是在非常相近的模型参数下生成的，保持了高度的一致性。</p>
+</li>
+</ul>
+<blockquote>
+<p>样本队列（Queue）：把<strong>历史负样本</strong>存起来</p>
+<p>动量更新编码器：保证<strong>负样本的稳定性</strong></p>
+</blockquote>
+<h2 id="04">04 单词的表征学习</h2>
+<h3 id="1-one-hot">1. 传统 One-hot</h3>
+<ul>
+<li><code>火车 = [0,0,0,1,0]</code>，<code>高铁 = [0,0,0,0,1]</code>。</li>
+<li>痛点：任意两个词的向量点积均为 0（<strong>完全正交</strong>），无法体现出“火车”和“高铁”极其相似的语义，且面临极其严重的维度灾难（词表多大，维度就多大）。</li>
+</ul>
+<h3 id="2-word2vec">2. Word2Vec</h3>
+<ul>
+<li><strong>分布式假设</strong>：一个词的含义由经常<strong>出现在它附近</strong>的词（上下文）决定。</li>
+</ul>
+<h4 id="word2vec"><strong>Word2Vec 算法</strong></h4>
+<p>统计语言模型——最大化文本语料的概率</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622010516790.png" alt="image-20260622010516790" style="zoom:90%;" /></p>
+<ul>
+<li>前提：有一个大的语料库</li>
+<li>词表Vocabulary中每个单词由一个向量表示</li>
+<li>对于文本中的每个位置t，有一个中心词c和上下文o</li>
+<li>可以通过<strong>c和o的向量相似度</strong>，来计算当<strong>中心词是c时上下文是o的概率</strong>（或当上下文是o时中心词是c的概率）</li>
+<li>通过<strong>调整单词的向量</strong>，使得语料库中上述概率最大化</li>
+</ul>
+<blockquote>
+<p>最大化 “中心词 - 上下文词” 的共现概率</p>
+</blockquote>
+<hr />
+<p>通过浅层神经网络将词映射到低维稠密向量空间。</p>
+<p>两种变体：</p>
+<ol>
+<li><strong>Skip-gram</strong>：用<strong>中心词预测上下文</strong>。对<strong>低频词</strong>友好，特征更细腻，被更广泛应用。</li>
+<li>逻辑：给定中心词 w(t)，让模型预测它周围的上下文词 w(t-2), w(t-1), w(t+1), w(t+2)。</li>
+<li>
+<p>优势：对<strong>低频词</strong>更友好，每个词都能单独参与预测，不容易被高频词淹没，也是图里重点介绍的模式。</p>
+</li>
+<li>
+<p><strong>CBOW</strong> (Continuous <strong>Bag-of-Words)</strong>：用<strong>上下文预测中心词</strong>。对<strong>高频词</strong>友好。</p>
+</li>
+<li>逻辑：把中心词周围的上下文词 w(t-2), w(t-1), w(t+1), w(t+2) 加起来取平均，再让模型预测中心词 w(t)。</li>
+<li>特点：<strong>高频词</strong>的训练更稳定，但低频词容易被高频词 “平均” 掉，效果不如 Skip-gram 稳定。</li>
+</ol>
+<h4 id="skip-gram">Skip-gram 的训练流程</h4>
+<p>以句子 problems turning into banking crises as 为例，窗口大小设为 2（中心词前后各 2 个词）：</p>
+<ol>
+<li>
+<p><strong>定义中心词和上下文词</strong></p>
+</li>
+<li>
+<p>当中心词是 into（位置 t），上下文词就是前后 2 个词：problems, turning, banking, crises，模型的目标是最大化 P(problems|into)、P(turning|into)、P(banking|into)、P(crises|into)。</p>
+</li>
+<li>
+<p>当中心词是 banking（位置 t），上下文词就是 turning, into, crises, as，模型的目标是最大化 P(turning|banking)、P(into|banking)、P(crises|banking)、P(as|banking)。</p>
+</li>
+<li>
+<p><strong>窗口滑动</strong></p>
+</li>
+<li>
+<p>在整个语料库中，窗口会不断滑动，每个词<strong>轮流当中心词</strong>，周围的词当上下文词，生成大量 “中心词 - 上下文词” 对，用来训练模型。</p>
+</li>
+<li>
+<p><strong>计算过程</strong></p>
+</li>
+<li>
+<p><strong>目标</strong>：最大化文本语料中“中心词-上下文词”的共现概率（极大似然估计）。</p>
+<p><img alt="image-20260622134338822" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622134338822.png" /></p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622134358832.png" alt="image-20260622134358832" style="zoom:90%;" /></p>
+</li>
+<li>
+<p><strong>损失函数 (负对数似然)</strong>：</p>
+<p>==$$J(\theta) = -\frac{1}{T} \sum_{t=1}^{T} \sum_{-m \le j \le m, j \neq 0} \log P(w_{t+j} \mid w_t ; \theta)$$==</p>
+</li>
+<li>
+<p><strong>原始 Softmax 计算</strong>：</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622134439970.png" alt="image-20260622134439970" style="zoom:80%;" /></p>
+<p>==$$P(o \mid c) = \frac{\exp(u_o^\top v_c)}{\sum_{w \in V} \exp(u_w^\top v_c)}$$==</p>
+<p>(每个词维护两个向量：作中心词时的 $v_c$，作上下文时的 $u_o$<em>)</em>。</p>
+</li>
+</ol>
+<h4 id="_2"><strong>两大优化</strong></h4>
+<p>原始 Softmax 的分母需要遍历整个巨大的词表 $V$（例如 10 万字），每次更新计算量无法承受。</p>
+<ol>
+<li><strong>负采样 (Negative Sampling)</strong>：</li>
+</ol>
+<p><img alt="image-20260622140102161" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622140102161.png" /></p>
+<ul>
+<li>将一个极其复杂的多分类问题，简化为<strong>多个独立的二分类问题</strong>。</li>
+<li>对于每个中心词 $c$，除了它真实的上下文 $o$（正样本），随机从词表中抽取 $K$ 个不想干的词作为<strong>负样本</strong>。</li>
+<li>
+<p>目标变为：最大化正样本对的 Sigmoid 概率，最小化负样本对的概率。无需再计算全词表！</p>
+</li>
+<li>
+<p><strong>层次 Softmax</strong>：</p>
+</li>
+</ul>
+<p><img alt="image-20260622140319178" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622140319178.png" /></p>
+<ul>
+<li>将所有词构建成一棵 Huffman 二叉树（高频词靠近根节点）。将求概率问题转化为<strong>从根节点走到叶子节点的一系列二分类问题</strong>。计算复杂度从 $\mathcal{O}(|V|)$ 直接降至 $\mathcal{O}(\log |V|)$。</li>
+</ul>
+<h3 id="3_1">3. 从局部上下文预测到全局统计</h3>
+<p>语义关系是否可以直接从“全局统计结构”中恢复？   </p>
+<p>现象：单词共现矩阵（co-occurrence matrix）蕴含了相似度语义</p>
+<p><strong>GloVe算法的思想与目标函数</strong></p>
+<p>Word2Vec 只利用了局部的上下文滑动窗口。GloVe 则直接利用<strong>全局的词共现矩阵 (Co-occurrence Matrix)</strong>。</p>
+<ul>
+<li><strong>核心目标</strong>：强迫两个词向量的内积，等于它们在整个语料库中共同出现次数的对数。</li>
+<li><strong>经典性质：表征的线性平移结构</strong>：由于基于对数共现概率，GloVe 学到的空间具有惊人的线性代数规律：$v_{woman} - v_{man} \approx v_{queen} - v_{king}$。</li>
+</ul>
+<h2 id="05">05 文本数据的自监督学习</h2>
+<h3 id="1-transformer">1. Transformer——可扩展序列建模基座</h3>
+<ul>
+<li>RNN 必须从左到右串行计算（无法并行），且存在长程记忆遗忘问题。</li>
+<li>Transformer 的<strong>自注意力机制 (Self-Attention)</strong>：</li>
+<li>允许序列中所有位置<strong>完全并行计算</strong>。</li>
+<li>任意两个词的距离均为 1（矩阵点积直达），<strong>彻底解决长程依赖</strong>。</li>
+<li><strong>开启 Scaling Law</strong>：其并行特性使得在成千上万张 GPU 上训练超大参数模型成为可能。</li>
+<li>Attention Is All You Need：不再需要复杂的循环神神经网络来提取表征。</li>
+</ul>
+<h3 id="2-bert">2. BERT</h3>
+<p>Bidirectional Encoder Representations from Transformers，旨在通过自注意力使每一层都同时编码两侧上下文，实现<strong>更深层的双向理解</strong></p>
+<ul>
+<li><strong>去噪自编码</strong>：随机遮挡输入序列中 15% 的 Token，迫使模型利用左右双向的所有上下文来推理预测被遮挡的词（完形填空）。</li>
+</ul>
+<p><img alt="image-20260622151033330" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622151033330.png" /></p>
+<blockquote>
+<p>为了缓解预训练有 Mask 但微调阶段无 Mask 带来的不匹配，这 15% 的词中 80% 替换为 <code>[MASK]</code>，10% 随机替换为其他词，10% 保持原样</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>双向掩码预测</strong>：每个被遮挡位置基于双向上下文输出词表概率分布</p>
+</li>
+<li>
+<p>在Transformer Encoder输出层，被遮挡位置对应的隐藏向量经简单分类头映射到词表空间，通过softmax分布预测原始token</p>
+<p><img alt="image-20260622151422109" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622151422109.png" /></p>
+<ul>
+<li><strong>单向生成 → 双向去噪</strong>，为深度语义理解表征奠定基础</li>
+</ul>
+</li>
+</ul>
+<h4 id="bert">BERT优势</h4>
+<p>BERT通过双向去噪自编码预训练，在多项语言理解基准上显著超越此前的静态词向量与单向模型。</p>
+<p>通过为不同理解任务设计简单的输出层（如分类头或起止位置预测），BERT表征可直接支持情感分析、语义推理、问答抽取与实体识别等任务</p>
+<h4 id="bert_1">BERT局限</h4>
+<ul>
+<li>训练规模保守，模型潜力尚未激发——<strong>Scaling Law</strong></li>
+<li>引入的<strong>句级NSP</strong> (Next Sentence Prediction)辅助任务以及输入格式可能分散核心掩码——<strong>消融实验探究</strong></li>
+</ul>
+<h3 id="3-roberta">3. RoBERTa</h3>
+<p>RoBERTa (Robustly optimized BERT approach) 在保持BERT架构完全不变的前提下，改变了训练规模：</p>
+<ul>
+<li>训练数据：16GB → 160GB</li>
+<li>步数：100K → 500K</li>
+</ul>
+<p><strong>Scaling Law</strong>：架构不变的情况下，仅通过扩大数据规模、增加训练步数，明显性能提升。说明<strong>训练充分性比架构创新更能决定预训练模型上限</strong>。</p>
+<h4 id="_3">消融探究</h4>
+<p>RoBERTa 移除NSP辅助任务，改变输入格式，进行了消融实验探究</p>
+<p><strong>聚焦学习目标</strong>：预训练任务的设计应聚焦于核心表征学习目标，冗余的辅助任务不仅非必需，还可能干扰模型对深层语义结构的捕捉</p>
+<h3 id="4-ntp">4. NTP回归——从理解到生成</h3>
+<ul>
+<li>BERT双向去噪——<strong>理解</strong>路线</li>
+<li>NTP (Next Token Prediction)单向预测下一个token——<strong>生成</strong>路线</li>
+</ul>
+<p>NTP将序列建模为条件概率的连乘积，模型只能依赖左侧已生成内容来推断后续token，这种单向约束使其在生成流畅文本上具有先天优势</p>
+<p>NTP确立了自回归生成的训练范式，为GPT系列将技术路线<strong>从理解转变为生成</strong>奠定了目标函数基础</p>
+<h3 id="5-gpt">5. GPT 系列</h3>
+<ul>
+<li><strong>目标转移：NTP (Next Token Prediction)</strong>： 不再做完形填空，而是<strong>单向自回归</strong>：给定前文，预测下一个 Token。</li>
+<li>
+<p>NTP 必须根据已知推断未知，这在本质上是一种强迫模型学习世界知识与推理逻辑的终极任务。它天然适合“生成式”应用。</p>
+</li>
+<li>
+<p><strong>规模化涌现 (GPT-1</strong> $\to$ <strong>GPT-3)</strong>： 坚持 Decoder-only 架构。GPT-3 以 1750 亿（175B）参数宣告大模型时代降临，展现出了强大的 <strong>上下文学习</strong> 和 zero-shot 能力。模型不再需要针对下游任务微调权重，只需给正确的 Prompt（提示词）即可工作。</p>
+</li>
+</ul>
+<h4 id="chatgpt">ChatGPT</h4>
+<p>在GPT-3.5基础上引入<strong>==RLHF (Reinforcement Learning from Human Feedback)==</strong>，将模型输出与人类偏好对齐</p>
+<p>ChatGPT证明，在规模化预训练之后，对齐技术是激发生成模型实用价值的一个里程碑，为后续大模型产品化确立了<strong>预训练+对齐</strong>的标准路径</p>
+<h3 id="6-chinchilla">6. Chinchilla</h3>
+<h4 id="_4">动机</h4>
+<p>基于Scaling Law，GPT-3后大模型普遍进行盲目扩参。性能提升唯一解法？</p>
+<ul>
+<li>Chinchilla以与Gopher相同的计算预算、仅1/4的参数和4.7倍的数据，在广泛下游任务上全面超越Gopher、GPT-3、Jurassic-1及MT-NLG 530B</li>
+<li><strong>结论</strong>：在相同计算预算下，主流大模型严重训练不足。缩小模型规模并等比例增加数据量，可获得更优的下游性能</li>
+</ul>
+<h4 id="_5">最优配比</h4>
+<ul>
+<li>Chinchilla通过对400余个模型（70M~16B参数）的训练曲线进行三种独立拟合，发现计算最优条件下模型规模与训练token数应近似等比例增长。推翻了此前结论“扩参远快于扩数据”</li>
+<li>模型规模与数据规模应随计算预算近似等比例扩展，约<strong>==20:1的token-参数比==</strong>成为计算最优训练的核心约束</li>
+</ul>
+<h4 id="_6">启示</h4>
+<ul>
+<li>Chinchilla表明，在固定计算预算下追求更大模型导致严重欠训练</li>
+<li>预训练的竞争指标应该从<strong>参数量</strong>转变为<strong>单位计算量的性能效率</strong></li>
+</ul>
+<h4 id="_7">工程优势与伦理挑战</h4>
+<p>Chinchilla不仅以更小模型获得更强性能，还显著降低了推理与微调的计算开销</p>
+<p>工程优势</p>
+<ul>
+<li>更优的模型并不一定需要更大的部署开销</li>
+</ul>
+<p>伦理挑战</p>
+<ul>
+<li>更大规模的数据将不可避免地包含有毒信息、社会偏见与私人信息。随着训练数据量级不断提高，数据集的质量控制、训练-测试重叠检测以及伦理审查变得至关重要</li>
+</ul>
+<h2 id="06">06 图像与文本自监督学习的区别</h2>
+<p>文本 NLP 的自监督（如 BERT）非常成功，但能否直接平移到视觉 CV 领域？</p>
+<h3 id="1_2">1. 文本与图像的差异</h3>
+<p><img alt="image-20260622155823838" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622155823838.png" /></p>
+<ul>
+<li><strong>文本</strong>：离散符号。一个词（Token）含有高度浓缩的密集语义（Information-dense）。</li>
+<li><strong>图像</strong>：连续信号。单个像素没有任何意义（Information-sparse），图像存在极大的空间冗余（相邻像素基本一样）。</li>
+</ul>
+<h3 id="2-masked-image-modeling">2. 图像掩码重建（Masked Image Modeling）</h3>
+<p><strong>核心思想：基于掩码的重建与理解 -&gt; “通过残缺理解整体”</strong></p>
+<p>通过遮挡图像75%的区域，迫使模型利用仅存的可见部分去重建全局内容，从而跳出局部纹理的局限，真正习得物体结构与语义关联。</p>
+<p><img alt="image-20260622161612289" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260622161612289.png" /></p>
+<h4 id="mae">MAE</h4>
+<p><strong>计算聚焦策略</strong>：利用 75% 的高比例遮挡，让 Encoder 仅处理 25% 的可见图块，将计算资源集中在对核心语义的理解上，避免算力浪费</p>
+<p><strong>非对称高效架构</strong>：重型 Encoder 学习强表征，轻型 Decoder 仅负责像素重建，解耦了学习与重建，将训练速度提升了 3-5 倍。</p>
+<p>说明了：高比例 Mask 不仅能够学习到更强的表征，还能提高效率！</p>
+<h3 id="3-image-sequence-prediction">3. 图像序列预测（Image Sequence Prediction）</h3>
+<p><strong>iGPT</strong>：将图像展平为像素序列，类比文本生成逻辑，采用 Transformer Decoder 架构，通过自回归方式依据前序像素预测下一像素，实现图像序列的生成式建模。</p>
+<ul>
+<li>问题：计算量极大（序列太长），且像素级的自回归预测在视觉上不如掩码重建有效！</li>
+</ul>
+<h4 id="simmim">SimMIM</h4>
+<p>直接对图像块进行随机掩码并通过轻量预测头回归原始像素值。这种无需离散化或复杂结构的方案，不仅大幅降低了计算成本，还能适配 ViT、Swin 等多种骨干网络。</p>
+<h2 id="_8">自监督表征学习总结</h2>
+<h3 id="_9">广泛应用</h3>
+<p><strong>自监督学习的核心就在于表征学习</strong>，即不依赖人工标注，而是通过从数据内部挖掘结构来自动生成监督信号，从而训练模型提取出能抓住数据本质的通用特征表示。 </p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

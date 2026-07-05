@@ -1,0 +1,2462 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://seamlessss.github.io/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/4/">
+      
+      
+        <link rel="prev" href="../3/">
+      
+      
+        <link rel="next" href="../5/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>L5：神经网络基础（二） - seamlessss's Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#l5" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-header__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            seamlessss's Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L5：神经网络基础（二）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-nav__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    seamlessss's Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seamlessss's Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    人工智能芯片与系统
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    人工智能芯片与系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%8A%AF%E7%89%87%E4%B8%8E%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    摄影
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    摄影
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%91%84%E5%BD%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    深度学习导论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    深度学习导论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L11：大语言模型架构与训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3：机器学习基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L4：神经网络基础（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5：神经网络基础（二）
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5：神经网络基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#00" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        00 神经网络训练的基本流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 数据准备
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 数据准备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 归一化 (Normalization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-data-augmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 数据增强 (Data Augmentation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 数据增强 (Data Augmentation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图像增强
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文本增强
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 类型转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 模型构建
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 模型构建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dropout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 丢弃层 (Dropout)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-normalization-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 归一化层家族 (Normalization Family)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 归一化层家族 (Normalization Family)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-normalization-bn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        批归一化 (Batch Normalization, BN)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="批归一化 (Batch Normalization, BN)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反向传播
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-normalization-ln" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        层归一化（Layer Normalization, LN）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instance-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实例归一化（Instance Normalization）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        组归一化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 参数初始化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 参数初始化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小随机数初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xavier-sigmoidtanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xavier 初始化 (适用 Sigmoid/Tanh)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#he-relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        He 初始化 (适用 ReLU)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 训练与优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 训练与优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 优化的数学性质
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. SGD 与 动量法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. SGD 与 动量法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-stochastic-gradient-descent-sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ① 随机梯度下降（Stochastic Gradient Descent, SGD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adaptive-gradient-adagrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==自适应梯度 (Adaptive Gradient, AdaGrad)==:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-momentumsgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ② 基于动量法（Momentum）的SGD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-mean-square-prop-rmsprop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==均方根传递(Root Mean Square Prop, RMSProp)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rmsprop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==RMSProp + 一阶动量==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==Adam==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amsgrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==AMSGrad==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weight-decay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==权重衰减(Weight Decay)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adamw-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==AdamW: Adam+权重衰减==
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 学习率技巧
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L6：深度视觉模型（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7：深度视觉模型（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L8：表征学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L9：生成模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10：语言模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#00" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        00 神经网络训练的基本流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 数据准备
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 数据准备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 归一化 (Normalization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-data-augmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 数据增强 (Data Augmentation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 数据增强 (Data Augmentation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图像增强
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文本增强
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 类型转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 模型构建
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 模型构建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dropout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 丢弃层 (Dropout)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-normalization-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 归一化层家族 (Normalization Family)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 归一化层家族 (Normalization Family)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#batch-normalization-bn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        批归一化 (Batch Normalization, BN)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="批归一化 (Batch Normalization, BN)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反向传播
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-normalization-ln" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        层归一化（Layer Normalization, LN）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instance-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实例归一化（Instance Normalization）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        组归一化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 参数初始化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 参数初始化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小随机数初始化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xavier-sigmoidtanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xavier 初始化 (适用 Sigmoid/Tanh)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#he-relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        He 初始化 (适用 ReLU)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 训练与优化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 训练与优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 优化的数学性质
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. SGD 与 动量法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. SGD 与 动量法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-stochastic-gradient-descent-sgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ① 随机梯度下降（Stochastic Gradient Descent, SGD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adaptive-gradient-adagrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==自适应梯度 (Adaptive Gradient, AdaGrad)==:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-momentumsgd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ② 基于动量法（Momentum）的SGD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-mean-square-prop-rmsprop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==均方根传递(Root Mean Square Prop, RMSProp)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rmsprop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==RMSProp + 一阶动量==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==Adam==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amsgrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==AMSGrad==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weight-decay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==权重衰减(Weight Decay)==
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adamw-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ==AdamW: Adam+权重衰减==
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 学习率技巧
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="l5">L5：神经网络基础（二）</h1>
+<h2 id="00">00 神经网络训练的基本流程</h2>
+<p>深度神经网络的训练并非简单的“调包”，而是一个严密的工程流。基本流程严格划分为四大阶段：</p>
+<ol>
+<li><strong>数据准备</strong>：归一化、数据增强、类型转换等。</li>
+<li><strong>模型构建</strong>：输入层、隐藏层、各种功能层（Dropout、BN/LN）、输出层与参数初始化。</li>
+<li><strong>训练与优化</strong>：定义损失函数、加入正则化项、选择优化器（SGD、Adam等）并设定学习率策略。</li>
+<li><strong>模型评估</strong>：在验证集/测试集上评估泛化性能并进行超参数调优。</li>
+</ol>
+<h2 id="01">01 数据准备</h2>
+<p>数据决定了模型的上限。输入数据在喂给神经网络之前，必须经过精细的处理。</p>
+<h3 id="1-normalization">1. 归一化 (Normalization)</h3>
+<p>数据归一化是指将不同量纲或不同取值范围的特征变换到<strong>可比较的尺度</strong>上，从而避免大数值特征在模型训练中占主导，提高训练稳定性和特征利用的公平性，消除“等高线拉伸”导致的优化震荡。</p>
+<blockquote>
+<p>比如两个特征</p>
+<ul>
+<li>年龄（Age）：取值范围大概是 <code>[20, 70]</code>，数值量级是「十位数」</li>
+<li>薪资（Salary）：取值范围大概是 <code>[25000, 75000]</code>，数值量级是「五位数」</li>
+</ul>
+<p>如果直接把原始数据喂给模型，薪资的数值远大于年龄，模型在计算时会「过度重视」薪资特征，而忽略年龄的影响，哪怕年龄对预测结果同样重要。归一化就是把两个特征都缩放到同一个尺度（比如 <code>[0,1]</code> 或 <code>[-1,1]</code>），让它们对模型的影响<strong>公平</strong>。</p>
+</blockquote>
+<ul>
+<li>
+<p>逻辑回归</p>
+</li>
+<li>
+<p>损失函数：$$\min_{w,b} \sum_{i=1}^{m} \log\left(1 + \exp\left(-y_i\left(w^\top x_i + b\right)\right)\right)$$</p>
+</li>
+<li>
+<p>单个数据 (x,y) 的梯度(对w求导)：$$\nabla_w = \frac{-1}{1 + \exp\left(y\left(w^\top x + b\right)\right)} y x$$</p>
+<ul>
+<li>
+<p>梯度的方向和大小由特征x直接决定，<strong>梯度的大小，和特征 x 的数值大小成正比。</strong></p>
+</li>
+<li>
+<p>椭圆长轴对应年龄权重，短轴对应薪资权重</p>
+</li>
+</ul>
+<p><img alt="image-20260617210907312" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617210907312.png" /></p>
+</li>
+</ul>
+<p><strong>常用归一化方法：</strong></p>
+<ul>
+<li><strong>标准化 (Standardization / Z-score)</strong>：假设第$$i$$个样本的第$$j$$个特征的均值和方差分别为$$\mu_j$$和$$\sigma_j^2$$。$$x_i^j$$表示第$$i$$个样本的第$$j$$个特征的原始值</li>
+</ul>
+<p>​ $$z_i^j = \frac{x_i^j - \mu_j}{\sigma_j}$$</p>
+<ul>
+<li>
+<p>机制：将特征转化为均值为 0，方差为 1 的标准正态分布 $\mathcal{N}(0,1)$，让所有特征都在 0 附近上下波动，不再存在量级差距</p>
+<blockquote>
+<p>z 值代表<strong>这个样本的特征值，距离均值有几个标准差</strong>，比如 z=−1.96 代表远低于平均水平，z=1.1 代表高于平均水平</p>
+</blockquote>
+</li>
+<li>
+<p><strong>优点</strong>：对异常值的鲁棒性<strong>远优于</strong>Min-Max（不会被极端值拉偏）；保留了数据的分布信息，不破坏特征间的相对关系</p>
+<p><strong>缺点</strong>：不保证固定输出范围（理论上可以是任意实数）；非正态分布数据效果会打折扣</p>
+</li>
+<li>
+<p><strong>Min-Max 归一化</strong>：</p>
+</li>
+</ul>
+<p>​ $$z_i^j = \frac{x_i^j - \min_j}{\max_j - \min_j}$$</p>
+<ul>
+<li>
+<p>平移加缩放，严格映射到 $[0, 1]$。</p>
+<blockquote>
+<ul>
+<li>$$x_i^j - min_j$$把特征的最小值平移到0</li>
+<li>除以特征的总跨度$$max_j - min_j$$，把最大值缩小到1，中间值按比例映射</li>
+<li>优缺点：输出范围固定可控；但<strong>对异常值极度敏感</strong>，新数据超出原极值时会出现越界。</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>归一化前后</p>
+</li>
+</ul>
+<p><img alt="image-20260617213026413" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617213026413.png" /></p>
+<h3 id="2-data-augmentation">2. 数据增强 (Data Augmentation)</h3>
+<p>数据增强是通过对原始样本进行<u>旋转、翻转、裁剪、加噪声</u>等<strong>==变换==</strong>，低成本构造海量新样本，扩大数据分布，提升模型泛化能力，逼迫模型学习到真正的<strong>不变性 (Invariance)</strong>。</p>
+<h4 id="_1"><strong>图像增强</strong></h4>
+<ul>
+<li>
+<p><strong>基础几何/光度变换</strong>：增强训练数据的多样性。</p>
+</li>
+<li>
+<p>翻转、旋转、缩放、裁剪、平移；噪声注入、颜色空间转换、对比度/锐化调整。</p>
+</li>
+</ul>
+<p><img alt="image-20260617214809116" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617214809116.png" /></p>
+<ul>
+<li>
+<p><strong>图像擦除</strong></p>
+</li>
+<li>
+<p>从训练图像中抹去一部分信息（如 Cutout, RandomErasing, GridMask, AdvMask），迫使模型<strong>关注其它相关部分</strong>，而不仅仅是最具判别力的部分。</p>
+<p><img alt="image-20260617215158684" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617215158684.png" /></p>
+</li>
+<li>
+<p><strong>图像混合 (Mix)</strong>：混合多个图像样本，模拟多目标或多标签场景。</p>
+</li>
+<li>
+<p><strong>Mixup</strong>：两张图按<strong>比例</strong>进行像素级线性融合（标签也同比例融合）。</p>
+</li>
+<li>
+<p><strong>CutMix</strong>：将一张图的<strong>局部剪切并粘贴</strong>到另一张图上。</p>
+</li>
+<li>
+<p><strong>FMix</strong>：在频率空间操作生成不规则的光滑<strong>掩码</strong>。</p>
+</li>
+<li>
+<p><strong>AugMix</strong>：多种<strong>增强</strong>操作的<strong>加权组合</strong>，提升鲁棒性。</p>
+<p><img alt="image-20260617215844835" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617215844835.png" /></p>
+</li>
+</ul>
+<h4 id="_2"><strong>文本增强</strong></h4>
+<ul>
+<li><strong>回译法 (Back-translation)</strong>：中 $\to$ 英 $\to$ 中，利用机翻的不完美产生语序不同但语义一致的新句子。</li>
+</ul>
+<p><img alt="image-20260617220240975" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617220240975.png" />
+- <strong>随机操作</strong>：同义词替换、随机插入、随机交换、随机删除。</p>
+<p><img alt="image-20260617220253049" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617220253049.png" /></p>
+<h3 id="3">3. 类型转换</h3>
+<p>神经网络模型通常要求输入数据的特征为连续<strong>数值</strong>型，因此对于其它类型的数据需要执行类型转换。</p>
+<ul>
+<li>
+<p><strong>数值型 (Numerical)</strong>：如年龄、像素值。直接归一化后输入。</p>
+</li>
+<li>
+<p>连续有序，可以直接参与数学运算</p>
+</li>
+<li>
+<p>这类数据可以直接输入模型，只需要做归一化 / 标准化（之前讲过），不需要类型转换</p>
+</li>
+<li>
+<p><strong>类别型 (Categorical)</strong>：离散无序（如性别、国籍），没有大小顺序，不能直接参与运算</p>
+</li>
+<li>
+<p><strong>二分类</strong>：直接用二值化映射为 $0/1$ 或 $-1/1$。</p>
+</li>
+<li>
+<p><strong>多分类</strong>：<strong>独热编码 (One-Hot Encoding)</strong>。</p>
+<ul>
+<li>把 k 个类别，转换成<strong>k 维的 0-1 指示向量</strong>，只有对应类别的位置是<code>1</code>，其余都是<code>0</code></li>
+</ul>
+<p><img alt="image-20260617221715545" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260617221715545.png" /></p>
+<ul>
+<li>k维指示向量，其中取值为1的位置表示具体类</li>
+</ul>
+<blockquote>
+<p>独热编码能避免给类别强加「大小顺序」：比如把种族编码成 1、2、3，模型会误以为 3&gt;2&gt;1，产生错误的权重；独热编码完全消除了顺序，只表示「属于 / 不属于」</p>
+</blockquote>
+</li>
+<li>
+<p><strong>文本数据 (Text)</strong>：</p>
+</li>
+</ul>
+<blockquote>
+<p>原始数据：字符串 "John likes to watch movies."</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>==分词 (Tokenization)==</strong>：将一段连续的文本（字符串）<strong>切分</strong>成更小的语义单位，确定了模型处理的最小信息单位。</p>
+<blockquote>
+<p>"John likes to watch movies." -&gt; ["John", "likes", "to", "watch", "movies", "." ]</p>
+</blockquote>
+</li>
+<li>
+<p><strong>==移除停止词==</strong>：删除文本中频率极高但携带语义信息极少的词</p>
+<blockquote>
+<p>如英文中的 "the", "a", "is", "at", "to"；中文中的 “的”、“了”、“在”</p>
+</blockquote>
+</li>
+<li>
+<p><strong>提取词干</strong>："running", "runs", "ran" -&gt; "run"</p>
+</li>
+<li>
+<p><strong>==词袋模型 (Bag-of-Words, BoW)==</strong>：记录该文本中出现的单词（加权）<strong>频率</strong>。</p>
+<blockquote>
+<p>"John likes to watch movies." -&gt; [1,1,1,1,1,0,0]，对应词典顺序：John (1)、likes (1)、to (1)、watch (1)、movies (1)、Mary (0)、too (0)</p>
+</blockquote>
+<ul>
+<li>缺点：单词太多，<strong>维度太大</strong>不可取；<strong>丢失语序</strong>，语义可能出现大差错， "I love you" 和 "You love me" 的 BoW 向量是一模一样的；</li>
+</ul>
+</li>
+<li>
+<p><strong>==嵌入 (Embedding)==</strong>：将文本中每个词映射为向量，再整合成矩阵</p>
+<ul>
+<li>如何处理长短不一的文本？</li>
+<li>不同句子的长度不同，对应的 Embedding 矩阵维度也不同，神经网络要求<strong>固定维度的输入</strong>，因此需要解决变长问题</li>
+<li>变长处理，办法如下：</li>
+<li><strong>填充(Padding)</strong>：设定一个最大长度(Max_Len)，短句子后面补0（或特定的[PAD] 标识）。</li>
+<li><strong>截断（Truncation)</strong>：过长的句子直接砍掉尾部。但可能丢信息。</li>
+<li><strong>池化(Pooling)</strong>：对 Embedding 矩阵进行平均或取最大值，将其压缩为固定长度的向量。</li>
+<li><strong>循环神经网络(RNN)/Transformer</strong>：这些架构原生支持处理变长序列（通过 Masking 技术忽略填充位）</li>
+</ul>
+</li>
+<li>
+<p>==<strong>子词分词法 (BPE, Byte Pair Encoding)</strong>==：</p>
+<ul>
+<li>
+<p>介于”按单词分“和”按字母分“之间，取两者长处</p>
+</li>
+<li>
+<p><strong>按单词分(word-level)</strong>：比如"apple"是一个词</p>
+<ul>
+<li>缺点：词表爆炸（动辄几十万个词）；OOV（Out-of-Vocabulary，未知词）问题：遇到没见过的词（比如 <code>apple-ish</code>、<code>unhappy</code>、拼写错误 <code>appple</code>），只能标成 <code>[UNK]</code>，直接丢失语义</li>
+<li>无法处理复合词、派生词、新造词</li>
+</ul>
+</li>
+<li>
+<p><strong>按字母分(Character-level)</strong>: 比如a、p、p、l、e</p>
+<ul>
+<li>缺点：序列太长（模型处理压力太大）；单个字母没有语义（a并没有什么意思）</li>
+</ul>
+</li>
+<li>
+<p>BPE核心逻辑：<strong>不断迭代合并出现频率最高的相邻字符对</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>介于「按单词分」和「按字母分」之间，把单词拆成「有意义的小片段」，既控制词表大小，又解决 OOV 问题</p>
+<p>BPE 就是<strong>用 “统计频率 + 迭代合并” 的方式，把单词拆成有意义的子词。</strong></p>
+</blockquote>
+<p><img alt="image-20260618002424464" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618002424464.png" /></p>
+<blockquote>
+<p><img alt="image-20260618002442387" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618002442387.png" /></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="02">02 模型构建</h2>
+<h3 id="1-dropout">1. 丢弃层 (Dropout)</h3>
+<ul>
+<li>
+<p><strong>动机</strong>：打破神经元之间的“共适应” (Co-adaptation)。防止某个神经元专门用来弥补另一个神经元的错误（会导致模型<strong>过度依赖训练数据</strong>的特定组合，把训练集的噪声当成规律，<strong>严重过拟合</strong>），迫使每个神经元独立提取有效特征。</p>
+</li>
+<li>
+<p>其核心思想是在训练过程中，<strong>==随机丢弃==</strong>神经网络中的一些神经元及其连接</p>
+</li>
+<li>
+<p>示意图<img alt="image-20260618003551171" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618003551171.png" /></p>
+</li>
+<li>
+<p><strong>训练阶段</strong>：以概率 $p$ 保留神经元（概率 $1-p$ 将激活值置 0）。每次迭代都会生成新的掩码矩阵 $r^{(l)} \sim \text{Bernoulli}(p)$，相当于训练了海量共享权重的“子网络”（集成学习思想）。</p>
+</li>
+<li>
+<p>常规隐藏层（第$$l+1$$层）<img alt="image-20260618004107625" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618004107625.png" /></p>
+</li>
+<li>
+<p>假设第 $$l$$ 层使用Dropout，则</p>
+<p><img alt="image-20260618004146572" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618004146572.png" /></p>
+<blockquote>
+<p><img alt="image-20260618004233216" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618004233216.png" /></p>
+</blockquote>
+<ul>
+<li>作用：</li>
+<li><strong>降低</strong>拟合训练集的<strong>模型容量</strong></li>
+<li><strong>破坏</strong>神经元间的<strong>关联性</strong></li>
+<li>近似于训练大量不同的独立的<strong>”子网络“</strong>，大幅提升泛化能力（集成学习的思想）</li>
+</ul>
+</li>
+<li>
+<p><strong>测试阶段</strong>：<strong>所有神经元全部开启</strong>。</p>
+</li>
+</ul>
+<p>对Dropout层输出进行缩放</p>
+<p><img alt="image-20260618004805408" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618004805408.png" /></p>
+<blockquote>
+<p><strong>训练时</strong>：随机丢弃神经元，每次只激活部分网络</p>
+<p><strong>测试时</strong>：不能丢弃神经元（否则预测结果不稳定），必须用<strong>完整的网络</strong>做预测</p>
+</blockquote>
+<ul>
+<li>
+<p>为什么要缩放？</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618004946837.png" alt="image-20260618004946837" style="zoom: 200%;" /></p>
+<p><strong>尺度对齐 (Scaling)</strong>：</p>
+<ul>
+<li>原始实现：训练时输出期望变为原来的 $p$ 倍。测试时全开，因此在<strong>测试时</strong>将输出乘以 $p$ 进行缩放。</li>
+<li>倒置 Dropout (Inverted Dropout)：现代深度学习框架（如 PyTorch）的默认做法。在<strong>训练时</strong>直接将保留的神经元除以 $p$（即放大 $1/p$ 倍），这样测试时就什么都不用做，直接前向传播即可，极大提高了部署效率。</li>
+</ul>
+</li>
+<li>
+<p>算例：假设 p=0.5，对于仅有一个隐藏层的神经网络，在其隐藏层后接Dropout层，训练和测试时的神经元计算分别如左右图所示-----训练时缩放会使输出范围与训练时对齐！</p>
+</li>
+</ul>
+<p><img alt="image-20260618005001496" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618005001496.png" /></p>
+<blockquote>
+<p>即训练的时候随机丢掉一半的神经元，训练时模型就习惯了小一半的数值；测试的时候用完整的神经元测试，把最后的神经元输出都×0.5。</p>
+<p>这样测试时的数值大小，和训练时丢掉一半后的大小就能对上了。</p>
+</blockquote>
+<h3 id="2-normalization-family">2. 归一化层家族 (Normalization Family)</h3>
+<p>深度网络面临<strong>内部协变量偏移</strong>：由于前层参数不断更新，后层神经元接收到的输入分布持续漂移。归一化通过平滑损失曲面，极大加速了收敛。</p>
+<ul>
+<li>
+<p>内部协变量偏移 (internal Covariate Shift, ICS)</p>
+</li>
+<li>
+<p>多层感知机第$$l$$层梯度</p>
+<p><img alt="image-20260618102124444" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618102124444.png" /></p>
+</li>
+<li>
+<p>训练过程中，前层参数改变导致后层神经元输入分布发生变化</p>
+</li>
+<li>
+<p>网络层数的增加会加剧这种影响</p>
+</li>
+<li>
+<p>回顾数据的标准化方法：$$z_i^j = \frac{x_i^j - \mu_j}{\sigma_j}$$</p>
+</li>
+</ul>
+<p>由于层状结构，除数据归一化外，神经网络模型还可以对<strong>每一层输出的激活值</strong>进行归一化，减小<strong>不同维度或不同样本之间</strong>的分布差异，从而稳定训练并加快收敛</p>
+<hr />
+<p>设输入张量形状为 $(N, C, H, W)$，其中 $N$ 为批大小，$C$ 为通道数，$H, W$ 为空间高宽。</p>
+<h4 id="batch-normalization-bn"><strong>批归一化 (Batch Normalization, BN)</strong></h4>
+<blockquote>
+<p>$[N,C,H,W]$</p>
+</blockquote>
+<ul>
+<li>考虑基于小批量(Mini-batch) 数据进行参数随机优化，假设批大小为m</li>
+<li>令$$x_1, x_2, \dots, x_m \in \mathbb{R}^d$$表示神经网络某层原本的加权求和输入，例如$$W^{(\ell)} x^{(\ell-1)}$$</li>
+<li>首先计算小批量均值和方差。</li>
+</ul>
+<p>​   $$\mu_m = \frac{1}{m} \sum_{i=1}^m x_i$$ ，$$\sigma_m^2 = \frac{1}{m} \sum_{i=1}^m (x_i - \mu_m)^2$$</p>
+<ol>
+<li><strong>一种朴素的标准化方案</strong>：令$$\epsilon &gt;0$$(防止除以0), $$ \hat{x}_i = \frac{x_i - \mu_m}{\sqrt{\sigma_m^2 + \epsilon}}$$</li>
+<li>削弱了非线性激活函数带来的表达能力</li>
+</ol>
+<blockquote>
+<p>直接标准化会把所有层的输出强行拉到均值 0、方差 1 的分布，会<strong>破坏网络已经学习到的特征分布</strong>，让激活函数（如 Sigmoid、ReLU）的非线性能力失效。</p>
+<p>比如 Sigmoid 函数在输入接近 0 时近似线性，标准化后所有输入都落在 0 附近，网络就退化成了线性模型，失去了深层网络的表达能力。</p>
+</blockquote>
+<ol>
+<li><strong>可学习的标准化方案</strong>：令$$\epsilon &gt;0$$，并引入缩放参数$$\gamma$$、偏移参数$$\beta$$</li>
+</ol>
+<p><img alt="image-20260618112026282" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618112026282.png" /></p>
+<blockquote>
+<p><em>可学习参数</em>：$\gamma$ (缩放) 和 $\beta$ (偏移)。它们赋予了模型<strong>恢复非线性表达能力</strong>的自由度（防止全落入 Sigmoid 线性区）。</p>
+<ul>
+<li>当$$\gamma=1,\beta=0$$时，等价于朴素标准化；</li>
+<li>模型可以学习最优的$$\gamma / \beta$$，在<strong>稳定输入分布</strong>和<strong>保留非线性表达能力</strong>之间找到完美平衡。</li>
+</ul>
+</blockquote>
+<ul>
+<li>BN 的性能提升<strong>和</strong> <strong>ICS</strong> <strong>的缓解没有直接关系</strong>。BN 的真正作用不是解决 ICS，而是通过归一化<strong>让损失曲面变得更平滑</strong>，<strong>让梯度更稳定</strong>，从而加速优化。</li>
+<li>总结</li>
+<li>$$\mu_m = \frac{1}{m} \sum_{i=1}^m x_i$$ ，$$\sigma_m^2 = \frac{1}{m} \sum_{i=1}^m (x_i - \mu_m)^2$$，$$\hat{x}_i = \frac{x_i - \mu_m}{\sqrt{\sigma_m^2 + \epsilon}}$$，$$y_i = \gamma \hat{x}_i + \beta$$</li>
+</ul>
+<h5 id="_3">反向传播</h5>
+<ul>
+<li>
+<p>令$$\ell(\cdot)$$表示单个数据上的损失函数，需计算$$\frac{\partial \ell}{\partial x_i}, \quad \frac{\partial \ell}{\partial \gamma}, \quad \frac{\partial \ell}{\partial \beta}$$等</p>
+</li>
+<li>
+<p>链式法则：</p>
+</li>
+<li>
+<p><img alt="image-20260618112058780" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618112058780.png" /></p>
+<blockquote>
+<p><img alt="image-20260618112126886" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618112126886.png" /></p>
+</blockquote>
+</li>
+<li>
+<p>多元函数链式法则：若$$z = f(u, v)$$，且$$u = u(x, y), v = v(x, y)$$，则</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618112152011.png" alt="image-20260618112152011" style="zoom:80%;" /></p>
+<ul>
+<li><strong>测试阶段</strong>：利用训练阶段获取的均值与方差信息</li>
+</ul>
+<p><img alt="image-20260618113900301" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618113900301.png" /></p>
+<ul>
+<li>
+<p>测试阶段的批归一化层输出</p>
+<p><img alt="image-20260618113911911" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618113911911.png" /></p>
+<blockquote>
+<p>这是 BN 的<strong>线性等价形式</strong>：测试时 BN 退化为一个固定的仿射变换（线性层 + 偏置），可以直接融合到前面的卷积 / 全连接层中，加速推理</p>
+<p><strong>如果m太小会如何？</strong></p>
+<p><img alt="image-20260618113924206" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618113924206.png" /></p>
+</blockquote>
+</li>
+<li>
+<p>缺陷：极度依赖 Batch Size。$N$ 太小时统计量剧烈波动，模型性能雪崩。</p>
+</li>
+</ul>
+<hr />
+<h4 id="layer-normalization-ln">层归一化（Layer Normalization, LN）</h4>
+<blockquote>
+<p>$(C, H, W)$ </p>
+<p>对<strong>单个样本</strong>的所有通道做归一化。完美适配 RNN 和 Transformer。</p>
+</blockquote>
+<ul>
+<li>
+<p>对某层不同神经元的输入进行归一化</p>
+</li>
+<li>
+<p>令$$x_1, x_2, \dots, x_m \in \mathbb{R}^d$$表示某层原本的加权求和输入，例如$$W^{(\ell)} x^{(\ell-1)}$$</p>
+</li>
+</ul>
+<p>计算该层神经元输入的均值与方差</p>
+<p><img alt="image-20260618195608363" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618195608363.png" /></p>
+<p>可学习的标准化方案</p>
+<p><img alt="image-20260618195620594" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618195620594.png" /></p>
+<ul>
+<li><strong>==适用于任意批大小==</strong>（哪怕 batch size=1 也能正常使用，完美适配 NLP、RNN、Transformer 等序列任务）</li>
+</ul>
+<h4 id="instance-normalization">实例归一化（Instance Normalization）</h4>
+<blockquote>
+<p>$(H, W)$ </p>
+<p>对单个样本的单个通道做归一化。消除图片全局对比度，完美适配<strong>图像风格迁移</strong>。</p>
+</blockquote>
+<p>由于层状结构，除数据归一化外，神经网络模型还可以<strong><u>对每一层输出的激活值进行归一化</u></strong>，减小不同维度或不同样本之间的分布差异，从而稳定训练并加快收敛。</p>
+<ul>
+<li>
+<p>为便于讨论，假设考虑输入为 N 个图片</p>
+</li>
+<li>
+<p>C表示通道数，例如彩色图片的R、G、B通道；H和W表示图片高度和宽度</p>
+</li>
+<li>
+<p>所有输入可以表示为$$x \in \mathbb{R}^{N \times C \times H \times W}$$</p>
+</li>
+<li>
+<p>实例归一化（Instance Normalization）：对每个样本及通道的$$ H \times W$$个取值进行归一化</p>
+<blockquote>
+<p><strong>对单个样本、单个通道内的空间特征做归一化</strong>，完全不依赖批次，专门为图像生成 / 风格迁移任务设计。</p>
+</blockquote>
+<p>$$\mu_{nc} = \frac{1}{HW} \sum_{w=1}^W \sum_{h=1}^H x_{nchw}$$        $$\sigma_{nc}^2 = \frac{1}{HW} \sum_{w=1}^W \sum_{h=1}^H (x_{nchw} - \mu_{nc})^2$$</p>
+<p>$$\hat{x}<em>{nchw} = \frac{x</em>{nchw} - \mu_{nc}}{\sqrt{\sigma_{nc}^2 + \epsilon}}$$          $$y_{nchw} = \gamma \hat{x}<em>{nchw} + \beta \equiv \text{IN}</em>{\gamma, \beta}(x_{nchw})$$</p>
+</li>
+</ul>
+<h4 id="_4">组归一化</h4>
+<blockquote>
+<p>将通道 $C$ 分组，在 $(C_{group}, H, W)$ 计算。在视觉任务中小 Batch Size 下完美替代 BN。</p>
+</blockquote>
+<ul>
+<li>将特征通道等分为G组，对每个样本在组内进行归一化</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>归一化方法</th>
+<th>计算维度</th>
+<th>核心特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Batch Norm (BN)</td>
+<td>沿<strong>批次 N 维度</strong>：对同一通道、同一空间位置，跨批次所有样本计算统计量</td>
+<td>依赖批次，批次小性能差，适合 CV 大批次训练</td>
+</tr>
+<tr>
+<td>Layer Norm (LN)</td>
+<td>沿<strong>通道 C + 空间 H,W 维度</strong>：对单个样本，跨所有通道、所有空间位置计算统计量</td>
+<td>不依赖批次，适合 NLP / 序列任务，不适合 CV（混淆通道）</td>
+</tr>
+<tr>
+<td>Instance Norm (IN)</td>
+<td>沿<strong>空间 H,W 维度</strong>：对单个样本、单个通道，跨空间位置计算统计量</td>
+<td>不依赖批次，适合图像生成 / 风格迁移</td>
+</tr>
+<tr>
+<td>Group Norm (GN)</td>
+<td>沿<strong>组内通道 + 空间 H,W 维度</strong>：对单个样本，组内跨通道、跨空间位置计算统计量</td>
+<td>不依赖批次，CV 任务性能接近 BN，完美替代 BN</td>
+</tr>
+</tbody>
+</table>
+<p>BN、LN、IN 的公式长得几乎一模一样，真正的区别只有一个：μ 和 σ 是在哪些维度上算出来的。</p>
+<hr />
+<ul>
+<li>
+<p>多用于<strong>图像风格迁移</strong>：IN有助于消除内容图原风格</p>
+</li>
+<li>
+<p>BN进一步混淆不同数据</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618202149049.png" alt="image-20260618202149049" style="zoom:80%;" /></p>
+</li>
+<li>
+<p>LN进一步混淆不同通道</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618202159546.png" alt="image-20260618202159546" style="zoom:80%;" /></p>
+</li>
+</ul>
+<hr />
+<h3 id="3_1">3. 参数初始化</h3>
+<p>一个好的模型参数初始化对于大多数优化算法的收敛都起到关键作用，尤其是神经网络模型所面临的<strong>非凸</strong>目标函数。</p>
+<ul>
+<li>
+<p>不同初始化参数可能导致不同的局部最优解</p>
+</li>
+<li>
+<p>为什么不能全 0 初始化？</p>
+</li>
+</ul>
+<p><img alt="image-20260618203602200" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618203602200.png" /></p>
+<ul>
+<li>
+<p>产生<strong>对称性瘫痪</strong>。同一层所有神经元前向输出相同，反向梯度完全相同，更新后参数永远一致，整个网络等价于只有一个神经元。</p>
+</li>
+<li>
+<p>回顾多层感知机的第l层梯度：</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618204829436.png" alt="image-20260618204829436" style="zoom:80%;" /></p>
+<ul>
+<li>过大的初始化容易导致梯度爆炸</li>
+<li>过小的初始化容易导致梯度消失</li>
+</ul>
+<h4 id="_5">小随机数初始化</h4>
+<p><img alt="image-20260618205516699" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618205516699.png" /></p>
+<p><strong>简单小随机数初始化，会让深层网络的激活值逐层衰减，最终梯度消失，网络完全无法训练</strong></p>
+<ul>
+<li>小随机数初始化的方差传播</li>
+</ul>
+<p><img alt="image-20260618205704428" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618205704428.png" /></p>
+<blockquote>
+<p>激活函数几乎不改变方差，方差直接按线性层的规律逐层衰减</p>
+<p>深层网络中，tanh 的梯度在输入接近 0 时也接近 0，进一步加剧梯度消失</p>
+</blockquote>
+<p><img alt="image-20260618205737985" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618205737985.png" /></p>
+<blockquote>
+<p>ReLU 的方差衰减比 tanh 更快，因此需要专门的初始化方法</p>
+</blockquote>
+<p>普通小随机初始化会让 tanh、ReLU 网络深层方差持续衰减、梯度消失，因此需要<strong>专门定制权重方差</strong>，抵消衰减：</p>
+<ul>
+<li>tanh 对应：Xavier 初始化（让(n_{l-1}\sigma_W^2=1)，每层方差保持不变）</li>
+<li>ReLU 对应：He 初始化（补上 ReLU 自带的 1/2 衰减，令(\frac12 n_{l-1}\sigma_W^2=1)）</li>
+</ul>
+<hr />
+<h4 id="xavier-sigmoidtanh">Xavier 初始化 (适用 Sigmoid/Tanh)</h4>
+<blockquote>
+<p><strong>让神经网络在前向传播和反向传播中，每一层的输入 / 输出方差都保持一致，既不衰减也不放大</strong>，从根源上解决梯度消失/爆炸。</p>
+</blockquote>
+<ul>
+<li>首先对于tanh等<strong>对称或近线性激活函数</strong>，控制前向传播方差衰减。要让输出方差=输入方差，即$$ \sigma_x^{(\ell)^2} = \sigma_x^{(\ell-1)^2} $$，则：</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618215004741.png" alt="image-20260618215004741" style="zoom:80%;" /></p>
+<ul>
+<li>同理，考虑反向传播过程等方差控制，必须满足：</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618215024271.png" alt="image-20260618215024271" style="zoom:80%;" /></p>
+<ul>
+<li>两者结合得到Xavier初始化，取两者的<strong>调和平均</strong></li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618215040635.png" alt="image-20260618215040635" style="zoom:80%;" /></p>
+<blockquote>
+<p><img alt="image-20260618220122934" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618220122934.png" /></p>
+<p>即：从均匀分布 $\mathcal{U}\left[-\sqrt{\frac{6}{n_{in} + n_{out}}}, \sqrt{\frac{6}{n_{in} + n_{out}}}\right]$ 或高斯分布 $\mathcal{N}\left(0, \frac{2}{n_{in} + n_{out}}\right)$ 采样。</p>
+</blockquote>
+<h4 id="he-relu">He 初始化 (适用 ReLU)</h4>
+<ul>
+<li>对于ReLU这种非对称激活函数，控制前向传播方差衰减</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618220157082.png" alt="image-20260618220157082" style="zoom: 80%;" /></p>
+<blockquote>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618220213919.png" alt="image-20260618220213919" style="zoom:80%;" /></p>
+</blockquote>
+<ul>
+<li>
+<p>方差需翻倍补偿，采样方差设为 $\frac{2}{n_{in}}$。高斯分布为 $\mathcal{N}\left(0, \frac{2}{n_{in}}\right)$</p>
+</li>
+<li>
+<p>同样可以考虑反向传播影响，但实践中上述改变已足够有效</p>
+</li>
+</ul>
+<h2 id="03">03 训练与优化</h2>
+<h3 id="1">1. 优化的数学性质</h3>
+<ul>
+<li><strong>凸性 (Convexity)</strong>：保证所有局部极小值即为全局最小值，下降方向正确。</li>
+<li><strong>平滑性 (Smoothness)</strong>：梯度变化可控（满足 Lipschitz 连续），保证步长安全，是量化收敛速度的前提。</li>
+<li><strong>海森矩阵 (Hessian)</strong>：二阶导数矩阵，决定了曲面的曲率。</li>
+<li><em>正定</em> $\to$ 局部极小值；<em>负定</em> $\to$ 局部极大值；<em>不定</em> $\to$ <strong>鞍点 (Saddle Point)</strong>。</li>
+<li><em>条件数 (最大特征值/最小特征值)</em>：条件数极大称为<strong>病态问题 (Ill-conditioned)</strong>，曲面呈深邃的峡谷，梯度下降会在峡谷壁上来回震荡（Zigzag），导致收敛极慢。</li>
+</ul>
+<h3 id="2-sgd">2. SGD 与 动量法</h3>
+<p>尽管随机梯度下降能够用于深度神经网络模型的高效更新，但是其实践中的收敛速度仍存在一些问题。</p>
+<h4 id="1-stochastic-gradient-descent-sgd">① <strong>随机梯度下降（Stochastic Gradient Descent, SGD)</strong></h4>
+<ul>
+<li>计算随机梯度：m表示批大小</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260618221045807.png" alt="image-20260618221045807" style="zoom:80%;" /></p>
+<blockquote>
+<p>全局真实梯度的无偏估计。速度快，且梯度噪声能帮助跳出浅层局部极小值。</p>
+</blockquote>
+<ul>
+<li>进行参数更新</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619000440387.png" alt="image-20260619000440387" style="zoom:80%;" /></p>
+<blockquote>
+<p>沿着负梯度方向更新参数，让损失函数最小化</p>
+<p>虽然深度学习的目标函数是高度非凸的，但SGD及其变体的收敛性理论最早是在<strong>凸优化</strong>中建立起来的</p>
+<p>在凸优化中，可以严格证明SGD能够收敛到全局最优解，并给出收敛速度</p>
+<p>利用凸优化理论可以为SGD学习率选择提供数学依据和解释</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>==学习率的选择==</strong>取决于目标函数的性质（在线或随机凸优化理论）</p>
+</li>
+<li>
+<p><strong>非平滑</strong>函数（如存在不可导点，或梯度变化剧烈）</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619000622880.png" alt="image-20260619000622880" style="zoom:80%;" /></p>
+<ul>
+<li>这种<strong>递减学习率</strong>可以保证在非平滑情况下收敛到最优解，这是在线凸优化的标准结果。学习率随迭代次数逐渐减小，前期大步快速收敛，后期小步精细调整，避免震荡。</li>
+</ul>
+</li>
+<li>
+<p><strong>平滑</strong>函数（例如梯度满足 Lipschitz 连续）</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619000643659.png" alt="image-20260619000643659" style="zoom:80%;" /></p>
+<ul>
+<li>采用<strong>固定学习率</strong>。此时在确定性凸优化中，可以达到线性收敛或更快的收敛速度。梯度稳定，不需要衰减，固定步长就能稳定收敛，速度更快。</li>
+</ul>
+</li>
+<li>
+<p>SGD的两大缺陷：</p>
+</li>
+<li><strong>参数无区分</strong>：对所有参数使用同一个全局学习率，不会根据参数的重要性、更新频率或梯度大小来区别对待<ul>
+<li><strong>参数尺度差异大</strong>：不同层的参数范围可能相差几个数量级，全局学习率无法同时适配（大尺度层更新过慢，小尺度层更新过快）</li>
+<li>对于出现<strong>频率较低的特征</strong>（如稀疏数据中的罕见词），其参数更新次数少，若学习率太小则更新缓慢；若学习率太大则容易过调</li>
+<li><strong>深层网络梯度差异</strong>：不同层的梯度大小可能相差几个数量级，统一学习率导致某些层更新异常</li>
+</ul>
+</li>
+<li><strong>随机梯度方差较大</strong>：每次只基于一个 <strong>mini-batch</strong> 计算梯度，而非全量数据 → 得到的梯度是真实梯度的有噪声估计，这个噪声的方差随批量大小变化<ul>
+<li>方差大会导致<strong>更新方向不稳定</strong>，损失曲线震荡严重</li>
+<li>为了稳定收敛，往往需要较小的学习率，但又会减慢收敛速度</li>
+<li>即使理论上最终能收敛，在非平滑区域（如尖锐极小值附近），梯度噪声可能使参数无法稳定落点</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><strong>针对“所有参数共享同一学习率”问题的早期重要改进：</strong></p>
+<h4 id="adaptive-gradient-adagrad"><strong>==自适应梯度 (Adaptive Gradient, AdaGrad)==</strong>:</h4>
+<ul>
+<li>
+<p>给不同参数分配自适应的学习率。频繁更新（梯度大）的参数用小学习率，稀疏更新（梯度小）<strong>的参数用大学习率</strong></p>
+</li>
+<li>
+<p>计算随机梯度：m表示批大小</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002255325.png" alt="image-20260619002255325" style="zoom:80%;" /></p>
+<blockquote>
+<p>还是用 mini-batch 的平均梯度，和 SGD 完全一致，保证计算效率。</p>
+</blockquote>
+</li>
+<li>
+<p>进行参数更新：</p>
+<p><img alt="image-20260619002327615" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002327615.png" /></p>
+<blockquote>
+<p>$v_t$存储了<strong>每个参数到当前迭代为止的所有梯度平方和</strong>，记录该参数的历史梯度大小</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002348588.png" alt="image-20260619002348588" style="zoom:80%;" /></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002408894.png" alt="image-20260619002408894" style="zoom:80%;" /></p>
+<p><img alt="image-20260619005021489" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619005021489.png" /></p>
+<h4 id="2-momentumsgd">② 基于动量法（Momentum）的SGD</h4>
+<blockquote>
+<p>保留一部分之前的更新方向</p>
+</blockquote>
+<ul>
+<li>计算随机梯度：m表示批大小</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002255325.png" alt="image-20260619002255325" style="zoom:80%;" /></p>
+<ul>
+<li>进行参数更新：</li>
+</ul>
+<p>$$m_0 = 0, \beta&gt;0$$</p>
+<p>==$$m_t = \beta m_{t-1} + (1-\beta) g_t$$==</p>
+<p>$$\theta_{t+1} = \theta_t - \eta_t m_t$$</p>
+<ul>
+<li>$$m_t \approx \mathbb{E}_t\left[g_t\right]$$ 相对更稳定</li>
+</ul>
+<blockquote>
+<p><img alt="image-20260619003840423" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619003840423.png" /></p>
+</blockquote>
+<hr />
+<h4 id="root-mean-square-prop-rmsprop">==均方根传递(Root Mean Square Prop, RMSProp)==</h4>
+<blockquote>
+<p>二阶动量</p>
+</blockquote>
+<ul>
+<li>计算随机梯度：m表示批大小</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002255325.png" alt="image-20260619002255325" style="zoom:80%;" /></p>
+<ul>
+<li>进行参数更新</li>
+</ul>
+<p>$$v_0 = 0, \beta&gt;0$$</p>
+<p>==$$v_t = \beta_2 v_{t-1} + (1-\beta_2) g_t \odot g_t$$==</p>
+<p>$$\theta_{t+1} = \theta_t - \frac{\eta_t}{\sqrt{v_t + \epsilon}} g_t$$</p>
+<ul>
+<li>
+<p>可被视为带有（近似）二阶动量的 AdaGrad</p>
+</li>
+<li>
+<p><strong>学习率不再单调递减</strong></p>
+</li>
+</ul>
+<h4 id="rmsprop">==RMSProp + 一阶动量==</h4>
+<ul>
+<li>计算随机梯度：m表示批大小</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002255325.png" alt="image-20260619002255325" style="zoom:80%;" /></p>
+<ul>
+<li>进行参数更新</li>
+</ul>
+<p><img alt="image-20260619010125105" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010125105.png" /></p>
+<h4 id="adam">==<strong>Adam</strong>==</h4>
+<p>一阶矩动量+二阶矩自适应+去偏<strong>（最广泛使用的优化器）</strong></p>
+<ul>
+<li>计算随机梯度：m表示批大小</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619002255325.png" alt="image-20260619002255325" style="zoom:80%;" /></p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010703295.png" alt="image-20260619010703295" style="zoom:80%;" /></p>
+<h4 id="amsgrad">==AMSGrad==</h4>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010735883.png" alt="image-20260619010735883" style="zoom:80%;" /></p>
+<h4 id="weight-decay">==权重衰减(Weight Decay)==</h4>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010757284.png" alt="image-20260619010757284" style="zoom:80%;" /></p>
+<h4 id="adamw-adam">==AdamW: Adam+权重衰减==</h4>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010816915.png" alt="image-20260619010816915" style="zoom:80%;" /></p>
+<hr />
+<p><strong>总结</strong></p>
+<p>标准 SGD 对所有参数一视同仁，且不同层参数尺度差异巨大，导致稀疏特征更新不足，密集特征更新过度。</p>
+<ul>
+<li>
+<p><strong>AdaGrad</strong>：累积历史梯度的平方和。频繁更新的参数学习率迅速下降，稀疏参数学习率保持较大。<em>致命缺陷：二阶矩单调递增，学习率很快衰减至 0，导致提前停止学习。</em></p>
+</li>
+<li>
+<p><strong>RMSProp</strong>：引入衰减系数 $\beta_2$，将累积和改为历史梯度平方的<strong>指数加权移动平均（二阶动量 $v_t$）</strong>。解决了 AdaGrad 学习率衰减至 0 的问题。</p>
+</li>
+</ul>
+<p>$$v_t = \beta_2 v_{t-1} + (1-\beta_2) g_t \odot g_t$$</p>
+<p>$$\theta_{t+1} = \theta_t - \frac{\eta_t}{\sqrt{v_t + \epsilon}} g_t$$</p>
+<ul>
+<li><strong>Adam (Adaptive Moment Estimation) —— 工业界默认霸主</strong>：</li>
+</ul>
+<p>融合了 Momentum (一阶动量，控制方向) 和 RMSProp (二阶动量，自适应步长)，并加入了<strong>去偏操作 (Bias Correction)</strong> 解决初期动量偏向 0 的问题。</p>
+<p>$$m_t = \beta_1 m_{t-1} + (1-\beta_1) g_t \quad (\text{一阶矩} \to \text{方向})$$</p>
+<p>$$v_t = \beta_2 v_{t-1} + (1-\beta_2) g_t \odot g_t \quad (\text{二阶矩} \to \text{自适应步长})$$</p>
+<p>$$\hat{m}_t = \frac{m_t}{1-\beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1-\beta_2^t} \quad (\text{初期去偏})$$</p>
+<p>$$\theta_{t+1} = \theta_t - \frac{\eta_t}{\sqrt{\hat{v}_t} + \epsilon} \hat{m}_t$$</p>
+<p><em>(实践默认值：$\beta_1=0.9, \beta_2=0.999, \epsilon=10^{-8}$)</em></p>
+<ul>
+<li><strong>AdamW (Adam + Weight Decay)</strong>：</li>
+</ul>
+<p>在标准 SGD 中，$L_2$ 正则化等价于权重衰减。但在 Adam 中，由于自适应分母的存在，$L_2$ 正则化项会被不合理地缩放。AdamW 将权重衰减步骤从梯度计算中彻底解耦出来，使得泛化性能逼近甚至超越调优过的 SGD。</p>
+<ul>
+<li><strong>AMSGrad</strong>：修复 Adam 理论中可能无法收敛的漏洞。通过维护一个历史最大的二阶矩 $\hat{v}<em>t = \max(\hat{v}</em>{t-1}, v_t)$，强制学习率具有不增的保证。</li>
+</ul>
+<hr />
+<h3 id="3_2">3. 学习率技巧</h3>
+<ul>
+<li>==<strong>固定衰减</strong>==：阶跃衰减 (Step)、逆时衰减、指数衰减。</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010411371.png" alt="image-20260619010411371" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p>==<strong>余弦退火 (Cosine Annealing)</strong>==：目前大模型训练的主流。学习率沿余弦曲线平滑下降。</p>
+</li>
+<li>
+<p>==<strong>预热 (Warmup)</strong>==：训练初期，由于随机初始化的参数极不稳定，直接使用大学习率会导致梯度爆炸或彻底破坏分布。前 $T$ 步将学习率从 0 线性增长到预设最大值，然后再进行衰减。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010518040.png" alt="image-20260619010518040" style="zoom:80%;" /></p>
+<ul>
+<li>==<strong>周期性学习率 (CLR)</strong>==：在上下界之间周期性震荡，利用突增的大学习率冲出极小值和马鞍面。</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619010541164.png" alt="image-20260619010541164" style="zoom:80%;" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

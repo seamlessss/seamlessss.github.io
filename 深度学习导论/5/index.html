@@ -1,0 +1,2027 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://seamlessss.github.io/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/5/">
+      
+      
+        <link rel="prev" href="../4/">
+      
+      
+        <link rel="next" href="../6/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>L6：深度视觉模型（一） - seamlessss's Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#l6" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-header__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            seamlessss's Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L6：深度视觉模型（一）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-nav__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    seamlessss's Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seamlessss's Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    人工智能芯片与系统
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    人工智能芯片与系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%8A%AF%E7%89%87%E4%B8%8E%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    摄影
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    摄影
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%91%84%E5%BD%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    深度学习导论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    深度学习导论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L11：大语言模型架构与训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3：机器学习基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L4：神经网络基础（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5：神经网络基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L6：深度视觉模型（一）
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L6：深度视觉模型（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 计算机视觉基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 计算机视觉基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 图像的底层表示
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 图像分类任务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 传统图像特征提取
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 手工特征 vs 端到端深度学习
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-mlp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 为什么不用多层全连接网络 (MLP) 处理图像？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 卷积操作与卷积层
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 卷积操作与卷积层">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 卷积计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 两大归纳偏置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 控制卷积层的超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 输出维度与参数量计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 感受野
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pytorch实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 卷积神经网络的演进
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 卷积神经网络的演进">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 池化层
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-lenet-5-1990s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. LeNet-5 (1990s)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-alexnet-2012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. AlexNet (2012)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vgg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. VGG 架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 特殊卷积变体
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 特殊卷积变体">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1times-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $1\times 1$ 卷积：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        扩张卷积
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-googlenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. GoogLeNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. ResNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 现代轻量化与注意力网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 视觉特征表示与迁移学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 视觉特征表示与迁移学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 视觉分类中的特征表示
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 从边缘、纹理到语义：特征的层次化演化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-class-activation-mapping-cam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 类激活映射 (Class Activation Mapping, CAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-transfer-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 迁移学习 (Transfer Learning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7：深度视觉模型（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L8：表征学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L9：生成模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10：语言模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 计算机视觉基础
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 计算机视觉基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 图像的底层表示
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 图像分类任务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 传统图像特征提取
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 手工特征 vs 端到端深度学习
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-mlp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 为什么不用多层全连接网络 (MLP) 处理图像？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 卷积操作与卷积层
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 卷积操作与卷积层">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 卷积计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 两大归纳偏置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 控制卷积层的超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 输出维度与参数量计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 感受野
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pytorch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pytorch实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 卷积神经网络的演进
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 卷积神经网络的演进">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 池化层
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-lenet-5-1990s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. LeNet-5 (1990s)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-alexnet-2012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. AlexNet (2012)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vgg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. VGG 架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 特殊卷积变体
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 特殊卷积变体">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1times-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $1\times 1$ 卷积：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        扩张卷积
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-googlenet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. GoogLeNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. ResNet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 现代轻量化与注意力网络
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 视觉特征表示与迁移学习
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 视觉特征表示与迁移学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 视觉分类中的特征表示
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 从边缘、纹理到语义：特征的层次化演化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-class-activation-mapping-cam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 类激活映射 (Class Activation Mapping, CAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-transfer-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 迁移学习 (Transfer Learning)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="l6">L6：深度视觉模型（一）</h1>
+<h2 id="01">01 计算机视觉基础</h2>
+<p>计算机视觉的核心目标是赋予计算机“看”的能力，即通过观察知道“什么在什么地方”。其在现实中有着广泛的应用，如人脸识别、自动驾驶、医学影像分析等。</p>
+<h3 id="1">1. 图像的底层表示</h3>
+<p>人类眼中的图像是连续的光影，而计算机眼中的图像是一组<strong>离散的数字矩阵</strong>。</p>
+<ul>
+<li><strong>RGB 模式</strong>：彩色图像由多个通道叠加构成，使用红、绿、蓝三个正交色轴。每个通道以 $0 \sim 255$ 的数值表示颜色强度，三通道组合可生成约 1670 万种颜色（24 位色深）。<strong>位深度</strong>决定了单通道的强度级数（如 8 位 = 256 级），位深越高色彩越细腻，数据量也越大。</li>
+<li><strong>HSL 模式</strong>：一种更符合人类直觉的色彩表示方式，<strong>H (色相)</strong> 表示颜色种类，<strong>S (饱和度)</strong> 表示颜色纯度，<strong>L (亮度)</strong> 表示明暗程度。</li>
+</ul>
+<h3 id="2">2. 图像分类任务</h3>
+<p>识别图像中样本的语义并输出相应的类别。</p>
+<ul>
+<li><strong>难点</strong>：视角变化、尺度多变、物体遮挡、不同的光照和照明条件、背景杂乱等。</li>
+<li><strong>线性分类器无法做到</strong>：图像的特征<strong><u>维度极高</u></strong>，线性分类器的表达能力太弱，面对高度非线性的视觉数据难以学习到有效边界。</li>
+</ul>
+<h3 id="3">3. 传统图像特征提取</h3>
+<p>2000年代初期，在深度学习爆发前，计算机视觉主要依赖专家手工设计的特征提取器：</p>
+<ul>
+<li>
+<p><strong>颜色直方图</strong>：统计图像中颜色的分布频率。对旋转和尺度变化具有鲁棒性，但<strong>完全丢失了空间结构信息</strong>。</p>
+</li>
+<li>
+<p><strong>梯度直方图 (HOG)</strong>：通过计算局部区域的梯度方向分布，捕捉物体的<strong>形状与边缘</strong>信息。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619144512751.png" alt="image-20260619144512751" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p><strong>SIFT 特征 (尺度不变特征变换)</strong>：</p>
+</li>
+<li>
+<p>一种经典的<strong>局部特征</strong>检测算法，它在图像的高斯尺度空间中检测关键点。其对旋转、尺度缩放、亮度变化保持不变性，对视角变化、仿射变化、噪声也保持一定程度的稳定性。</p>
+</li>
+<li>
+<p><strong>机制</strong>：在图像的高斯尺度空间中检测关键点。通过 DoG（高斯差分）金字塔实现<strong>尺度不变性</strong>，通过主方向分配实现旋转不变性。为每个关键点生成 128 维的梯度方向描述符。</p>
+</li>
+<li>
+<p><strong>步骤</strong>：① 建尺度金字塔 $\rightarrow$ ② 跨尺度寻找稳定极值点 $\rightarrow$ ③ 生成 128 维通用描述符 $\rightarrow$ ④ 跨图匹配。</p>
+</li>
+<li>
+<p><strong>优势</strong>：对旋转、尺度缩放、亮度变化保持不变性，对视角变化、仿射变化、噪声也高度稳定，曾广泛用于图像匹配和三维重建。</p>
+<blockquote>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619145128855.png" alt="image-20260619145128855" style="zoom:80%;" /></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="4-vs">4. 手工特征 vs 端到端深度学习</h3>
+<ul>
+<li><strong>传统 CV (知识驱动)</strong>：依赖专家手工设计特征（SIFT/HOG），通过固定算子提取边缘、纹理等浅层表征，可解释性强但表达能力有限，难以泛化。即：人类告诉机器“看什么”。</li>
+<li><strong>深度学习 (数据驱动)</strong>：如 CNN/ViT，<strong>端到端 (End-to-End)</strong> 直接从像素自动学习层次化特征，实现从低级边缘到高级语义的映射。在大规模数据下显著超越手工特征。机器自己学会“看什么”。</li>
+<li>本质区别在于：手工特征是<strong>知识驱动</strong>（人类告诉机器看什么），深度学习是<strong>数据驱动</strong>（机器自己学会看什么）。</li>
+</ul>
+<h3 id="5-mlp">5. 为什么不用多层全连接网络 (MLP) 处理图像？</h3>
+<p>如果强行把图像喂给全连接层，会面临两个灾难性弊端：</p>
+<p>全连接层要求输入为一维向量——需要将图像展平处理。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619174111590.png" alt="image-20260619174111590" style="zoom:80%;" /></p>
+<p><strong>①空间信息丢失</strong>：强行将二维图像拉直为一维向量，会导致像素之间的空间邻域关系（即上下左右的相对位置）彻底丢失，网络难以捕捉图像中的局部几何特征 。</p>
+<p><strong>②参数爆炸</strong>：全连接层中的每一个神经元都要与前一层的所有输入相连，当输入维度巨大时，参数量会呈指数级增长 。</p>
+<hr />
+<p><strong>仿生学启示</strong>：生物视觉存在“感知野 (Receptive Field)”机制，即神经元只感知局部特征而非全局，为卷积神经网络的局部连接和层次化特征提取奠定了生物学基础。</p>
+<h2 id="02">02 卷积操作与卷积层</h2>
+<h3 id="1_1">1. 卷积计算</h3>
+<ul>
+<li><strong>滑动内积</strong>：卷积核（Filter/Kernel）是一个包含权重的矩阵。将卷积核与原始图像的局部区域像素进行对应相乘并累加（点积计算）。卷积核在图像上从左至右、从上至下平滑滑动，形成一张新的二维矩阵，即<strong>特征图</strong>。</li>
+</ul>
+<p><img alt="image-20260619190834772" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619190834772.png" /></p>
+<ul>
+<li>
+<p><strong>多通道处理</strong>：卷积核的深度必须与输入的通道数一致（例如输入是 RGB 3 通道，卷积核也必须是 3 通道）。计算时，卷积核的三个通道分别与图像的红、绿、蓝通道进行卷积，随后将这三个通道的中间结果进行像素级累加，各个通道的内积结果最终会<strong>相加合并为一个单一通道的输出</strong>。</p>
+</li>
+<li>
+<p><strong>多卷积核提取</strong>：卷积层通过<strong>多个卷积核的组合</strong>来提取输入数据的不同特征。每个卷积核负责提取特定类型的特征（如边缘、颜色斑点），卷积层则将这些特征整合在一起，形成更高层次的特征表示。</p>
+</li>
+</ul>
+<h3 id="2_1">2. 两大归纳偏置</h3>
+<p><strong>Inductive Bias:</strong> </p>
+<ul>
+<li>
+<p><strong>局部性 (Locality)</strong>：计算范围只看局部，不看全局。</p>
+</li>
+<li>
+<p><strong>平移不变性 (Translation Invariance)</strong>：<strong>权值共享 (Weight Sharing)</strong>。同一个卷积核在整张图上滑动，权重参数在所有滑动位置保持不变，大幅减少参数量。</p>
+</li>
+<li>
+<p><strong>权值共享</strong></p>
+<p>假设：如果一个特征在计算某个空间位置(x,y)的时候有用，那么它在计算另一个不同位置(x2,y2)的时候也有用。基于这个假设，可以显著地减少参数数量：在同一卷积层中，<strong>一个卷积核负责扫描整张图像，其权重参数在所有滑动位置保持不变。</strong></p>
+</li>
+</ul>
+<h3 id="3_1">3. 控制卷积层的超参数</h3>
+<ul>
+<li><strong>深度 (Depth, $C_{out}$)</strong>：使用的<strong>卷积核数量</strong>，决定了<strong>输出特征图的通道数</strong>。</li>
+<li>
+<p>每个卷积核在输入图像中检测一些不同的特征。举例来说，如果第一个卷积层的输入是原始图像，那么在深度维度上的不同神经元将可能被不同方向的边界，或者是颜色斑点激活。</p>
+</li>
+<li>
+<p><strong>步长 (Stride, $S$)</strong>：卷积核每次滑动的像素距离。$S=1$ 提取细腻特征；$S&gt;1$ 跳跃滑动，导致输出特征图成比例减小。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619195410643.png" alt="image-20260619195410643"  /></p>
+<ul>
+<li>
+<p><strong>填充 (Padding, $P$)</strong>：在输入图像四周补零（Zero-padding）。</p>
+</li>
+<li>
+<p>在卷积过程中，图像边缘的像素参与计算的次数远少于中心像素，且每次卷积都会导致输出尺寸缩小。为了解决这个问题，我们在输入图像的四周补上一圈额外的像素（通常补0，称为Zero-padding）。</p>
+</li>
+</ul>
+<p><img alt="image-20260619195424421" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619195424421.png" /></p>
+<ul>
+<li>
+<p>作用：①控制输出尺寸；②防止边缘像素参与计算次数过少，确保边缘特征被充分提取。</p>
+</li>
+<li>
+<p><strong>偏置 (Bias, $b$)</strong>：每个卷积核配有一个可学习的偏置参数，加权求和后统一加上。</p>
+</li>
+</ul>
+<h3 id="4">4. 输出维度与参数量计算</h3>
+<p>假设输入尺寸为 $C_{in} \times H \times W$，卷积核尺寸为 $K_H \times K_W$，填充 $P$，步长 $S$，输出深度 $C_{out}$：</p>
+<ul>
+<li><strong>输出特征图高宽</strong>（必须保证结果为正整数，否则无法整齐滑动）：</li>
+</ul>
+<p>$$H' = \frac{H - K_H + 2P}{S} + 1$$</p>
+<p>$$W' = \frac{W - K_W + 2P}{S} + 1$$</p>
+<ul>
+<li>
+<p><strong>参数量计算</strong>：</p>
+</li>
+<li>
+<p>权重矩阵大小：$C_{out} \times C_{in} \times K_H \times K_W$</p>
+</li>
+<li>偏置大小：$C_{out}$</li>
+<li>总参数量：$C_{out} \times (C_{in} \times K_H \times K_W + 1)$</li>
+</ul>
+<p><img alt="image-20260619202353302" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619202353302.png" /></p>
+<h3 id="5">5. 感受野</h3>
+<p>输出特征图上的一个神经元，对应到原始输入图像上所能“看到”的像素区域大小。即：<strong>输出里的 1 个点，是由输入里多大范围的像素算出来的</strong>。</p>
+<ul>
+<li>单个 $K \times K$ 卷积核，感受野就是 $K$。</li>
+<li>堆叠 $L$ 层步长为 1、尺寸为 $K$ 的卷积核，其原始感受野公式为：$1 + L \times (K - 1)$。</li>
+</ul>
+<p><img alt="image-20260619201021168" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619201021168.png" /></p>
+<h3 id="pytorch">pytorch实现</h3>
+<p>在PyTorch中，nn.Conv2d是构建卷积层最核心且最常用的官方接口，它通过高度工程化的参数封装实现了卷积运算、权重初始化以及计算图的自动构建。</p>
+<h2 id="03">03 卷积神经网络的演进</h2>
+<p>卷积神经网络通常是由四种层构成：<strong>卷积层、激活函数层（比如RELU）、池化层、全连接层</strong>。</p>
+<ul>
+<li>最常见的形式就是将一些卷积层和激活层放在一起，其后紧跟池化层，然后重复如此直到图像在空间上被缩小到一个足够小的尺寸，在某个地方过渡成全连接层，如下图所示：</li>
+</ul>
+<p><img alt="image-20260619203235664" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619203235664.png" /></p>
+<p>标准 CNN 架构：<strong>卷积层 $\rightarrow$ 激活函数 $\rightarrow$ 池化层 $\rightarrow \dots \rightarrow$ 全连接层 $\rightarrow$ 输出</strong>。</p>
+<h3 id="1_2">1. 池化层</h3>
+<p>周期性插入在卷积层之间，主要用于<strong>下采样</strong>降低数据体尺寸。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619204507559.png" alt="image-20260619204507559" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p><strong>类型</strong>：</p>
+</li>
+<li>
+<p><strong>最大池化 (Max Pooling)</strong>：保留边缘/纹理等最强特征</p>
+</li>
+<li><strong>普通池化(General Pooling)</strong>：除了最大汇聚，汇聚单元还可以使用其他的函数，比如平均汇聚（average pooling）或L-2范式汇聚（L2-norm pooling），随机池化等等。</li>
+<li>
+<p><strong>不使用池化</strong>：回忆卷积层的维度变化——其本身具有下采样效果。在Striving for Simplicity: The All Convolutional Net（2015）中，提出使用一种只有重复的卷积层组成的结构，抛弃汇聚层。通过在卷积层中<strong>使用更大的步长</strong>来降低数据体的尺寸。</p>
+</li>
+<li>
+<p><strong>特点</strong>：<strong>没有任何可学习的参数</strong>。</p>
+</li>
+<li>
+<p><strong>转移不变性</strong>：卷积和池化操作具有转移不变性，即 $Conv(Translate(X)) = Translate(Conv(X))$。图像的特征并不取决于它们在图像中的位置。</p>
+</li>
+</ul>
+<blockquote>
+<p>即<strong>先操作，后平移</strong>和<strong>先平移，后操作</strong>得到的最终结果是一样的</p>
+</blockquote>
+<ul>
+<li>卷积靠权值共享保证提取一致性；池化靠下采样聚合（弱化绝对位置，强化特征存在性）进一步增强鲁棒性。</li>
+</ul>
+<h3 id="2-lenet-5-1990s">2. LeNet-5 (1990s)</h3>
+<ul>
+<li><strong>历史意义</strong>：第一个成功的卷积神经网络应用，是Yann LeCun在上世纪90年代实现的。它由2个卷积层组成和3个全连接层组成，组合使用卷积层、非线性激活函数和汇聚层（下采样层）。</li>
+<li>首次将<strong>非线性激活函数(Sigmoid/Tanh)</strong>融入CNN，让网络具备非线性拟合能力。</li>
+<li>提出了<strong>权值共享、局部感受野、下采样</strong>这三大CNN设计原则，沿用至今。</li>
+</ul>
+<p>背景：ImageNet 数据集的诞生彻底解决了深度模型因样本不足导致的过拟合问题，开启了深度学习的黄金十年。</p>
+<h3 id="3-alexnet-2012">3. AlexNet (2012)</h3>
+<p>第一个在 ImageNet 竞赛中击败传统 CV 模型的大型深度网络。包含 5 个卷积层 + 3 个全连接层。</p>
+<p><strong>核心创新</strong>：</p>
+<ul>
+<li>
+<p><strong>更深的网络结构</strong>。</p>
+</li>
+<li>
+<p><strong>首次大规模使用 ReLU</strong>：解决了深层网络中的梯度消失问题，极大提升了训练速度。</p>
+</li>
+<li>
+<p><strong>局部响应归一化 (LRN)</strong>：在卷积层中，每个卷积核都对应一个特征图，LRN 就是对这些特征图进行归一化。在一定程度避免了过拟合，提高泛化能力。</p>
+</li>
+<li>
+<p>针对<strong>同一空间位置、不同输出通道间</strong>的归一化。公式通过除以邻居通道特征的平方和，实现“放大差异、强化竞争”，抑制不活跃的神经元。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619212752213.png" alt="image-20260619212752213" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p>引入 <strong>Data Augmentation (数据增强)</strong> 和 <strong>Dropout</strong> 强效抗过拟合。</p>
+</li>
+<li>
+<p>采用<strong>多 GPU 分布式并行</strong>训练。</p>
+</li>
+</ul>
+<h3 id="4-vgg">4. VGG 架构</h3>
+<p>设计动机：用更小的卷积核，堆更深的网络。</p>
+<ul>
+<li>
+<p><strong>网络特点</strong>：统一使用 $3\times 3$ 卷积（步长1，填充1保持尺寸），$2\times 2$ 最大池化（步长2）。</p>
+</li>
+<li>
+<p><strong>为什么 $3\times 3$ 卷积更好？</strong></p>
+</li>
+<li>
+<p>3 个 $3\times 3$ 卷积层堆叠，其感受野相当于 1 个 $7\times 7$ 卷积核。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619213850807.png" alt="image-20260619213850807" style="zoom:80%;" /></p>
+</li>
+<li>
+<p><strong>参数量锐减</strong>：</p>
+<ul>
+<li>假设输入输出通道均为 $C$，3 层 $3\times 3$ 的参数量为 $3 \times (3\times 3\times C\times C) = 27C^2$；而 1 层 $7\times 7$ 的参数量为 $49C^2$。$27C^2 &lt; 49C^2$。</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619213916051.png" alt="image-20260619213916051" style="zoom:80%;" /></p>
+</li>
+<li>
+<p><strong>非线性更强</strong>：3 层卷积意味着包含了 3 次 ReLU 激活，模型表达能力远超单层 $7\times 7$。</p>
+</li>
+<li>
+<p><strong>VGG网络数据流图</strong></p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619214216961.png" alt="image-20260619214216961" style="zoom:80%;" /></p>
+<ul>
+<li>🔵 <strong>convolution+ReLU</strong>：3×3 卷积 + ReLU 激活，提取特征，保持空间尺寸（步长 1 + 填充 1）</li>
+<li>🔴 <strong>max pooling</strong>：2×2 最大池化（步长 2），下采样缩小尺寸，扩大感受野</li>
+<li>
+<p>🟢 <strong>fully connected+ReLU</strong>：全连接层 + ReLU，将二维特征转为一维，完成分类</p>
+</li>
+<li>
+<p><strong>总结</strong>：VGG 结构简单、规则，被广泛用作“标准特征提取器”骨架，但参数量依然极其庞大（尤其是末端的全连接层）。</p>
+</li>
+</ul>
+<h3 id="5_1">5. 特殊卷积变体</h3>
+<h4 id="1times-1"><strong>$1\times 1$ 卷积</strong>：</h4>
+<ul>
+<li>
+<p>在<strong>空间维度</strong>上不改变特征图尺寸，但在<strong>通道维度</strong>上进行跨通道的线性加权组合，本质上是跨通道的线性特征提取。核心价值在于<strong>升维或降维（能够灵活调整特征图的通道数，极大降低参数量）</strong>，同时自带一次 ReLU 增加非线性。</p>
+</li>
+<li>
+<p>这种结构被广泛应用于GoogLeNet和ResNet的Bottleneck模块中，是提升网络效率的关键手段。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619214655911.png" alt="image-20260619214655911" style="zoom:80%;" /></p>
+<blockquote>
+<p>在<strong>通道维度做了可学习的加权融合</strong>，把高维通道压缩成低维新特征。</p>
+</blockquote>
+<h4 id="_1"><strong>扩张卷积</strong></h4>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619215507855.png" alt="image-20260619215507855" style="zoom:80%;" /></p>
+<p>扩张卷积也被称为空洞卷积或者膨胀卷积，是在标准的卷积核中<strong>注入空洞</strong>，以此来增加模型的感受野。相比原来的正常卷积操作，扩张卷积多了一个参数： <strong>dilation rate</strong>，指的是卷积核的点的间隔数量，比如常规的卷积操作dilatation rate为1。</p>
+<blockquote>
+<ul>
+<li>常规卷积：<code>dilation rate = 1</code>，就是普通的 3×3 卷积，没有空洞。</li>
+<li>扩张卷积：<code>dilation rate = r</code>，表示卷积核元素之间的间隔数为 <code>r-1</code>。</li>
+<li>对于一个大小为<code>k×k</code>、扩张率为<code>r</code>的卷积核，它的<strong>等效卷积核大小</strong>（也就是实际感受野）为：<code>k+(k−1)×(r−1)</code></li>
+</ul>
+</blockquote>
+<ul>
+<li>在不增加参数量、不进行池化下采样（不丢失空间分辨率）的前提下，大幅扩大感受野。</li>
+</ul>
+<h3 id="6-googlenet">6. GoogLeNet</h3>
+<p>传统 CNN 的痛点是只能人工<strong>固定</strong>选择卷积核大小。GoogLeNet 破局思路：<strong>拓宽网络，多尺度并行</strong>。</p>
+<ul>
+<li><strong>Inception 模块</strong>：将 $1\times 1$、$3\times 3$、$5\times 5$ 卷积和 $3\times 3$ 池化并行放在同一层。让网络自己学习不同尺度特征的权重，“自己决定用哪个”。</li>
+</ul>
+<p><img alt="image-20260619215951993" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619215951993.png" /></p>
+<blockquote>
+<p><strong>不同尺度特征同时提取，网络自己决定“用哪个”</strong></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>计算量优化</strong>：在进行大卷积（$3\times 3$, $5\times 5$）前，先用 $1\times 1$ 卷积进行降维（例如将参数量从 1.12 亿次降到 530 万次，减少 95% 运算量）。</p>
+</li>
+<li>
+<p><strong>全局平均池化 (GAP)</strong>：在传统的架构（例如 AlexNet）中，末端的全连接层会引入大量参数。GoogLeNet <strong>用全局平均池化层取代了这些全连接层</strong>，该层计算每个特征图的平均值（例如，将 7×7 的特征图转换为 1×1 的特征图），这显著减少了模型的参数数量并减轻了过拟合问题。</p>
+</li>
+<li>
+<p><strong>辅助分类器</strong>：</p>
+</li>
+<li>
+<p>为了解决训练过程中出现的<strong>梯度消失</strong>问题，GoogLeNet引入了辅助分类器（充当小型分类器的中间分支）。这些辅助分类器<strong>仅在训练期间激活，用于帮助规范网络。</strong></p>
+</li>
+<li>
+<p>结构：</p>
+<ul>
+<li>
+<p>平均池化层（5×5，步长 3）</p>
+</li>
+<li>
+<p>1×1 卷积（128 个滤波器，ReLU）</p>
+</li>
+<li>
+<p>全连接层（1024 个单元，ReLU）</p>
+</li>
+<li>
+<p>Dropout层（dropout率=0.7）</p>
+</li>
+<li>
+<p>全连接softmax层（1000个类别）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>核心作用：</p>
+<ul>
+<li><strong>缓解梯度消失</strong>：中间层直接接损失函数，梯度可以直接回传，让浅层网络有效更新；</li>
+<li><strong>正则化网络</strong>：辅助分类器相当于给网络加了额外的监督信号，提升模型的泛化能力；</li>
+<li><strong>加速训练收敛</strong>：让网络在训练早期就能学习到有效特征，加快收敛速度。</li>
+</ul>
+</li>
+</ul>
+<p><img alt="image-20260619221758805" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619221758805.png" /></p>
+<p><strong>优势</strong></p>
+<ul>
+<li>引入了<strong>Inception</strong>结构，融合不同尺度的特征信息</li>
+<li>使用<strong>1x1的卷积核进行降维</strong>以及映射处理</li>
+<li>添加两个<strong>辅助分类器</strong>帮助训练</li>
+<li>丢弃全连接层，使用<strong>平均池化层</strong>，大大减少模型参数</li>
+</ul>
+<h3 id="7-resnet">7. ResNet</h3>
+<p>核心痛点：网络还能继续加深吗？（普通 CNN 堆叠过深会导致<strong>退化问题 Degradation</strong>——训练误差和测试误差双双飙升，这不是过拟合，而是模型难以优化）。</p>
+<ul>
+<li>
+<p><strong>核心思路</strong>：直觉上深模型至少能学得和浅模型一样好（如果新增的层全学成恒等映射 Identity Mapping）。</p>
+</li>
+<li>
+<p><strong>残差块 (Residual Block)</strong>：</p>
+</li>
+<li>
+<p>不再直接拟合底层映射 $H(x)$，而是拟合<strong>残差 $F(x) = H(x) - x$</strong>。</p>
+<ul>
+<li>使用<strong>网络层</strong>来拟合残差映射，而不是直接尝试拟合期望的底层映射。</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619223652271.png" alt="image-20260619223652271" style="zoom:80%;" /></p>
+<blockquote>
+<p>本质：网络不再学习 “从 x 到 H (x) 的复杂变换”，而是学习 “x 到 H (x) 的差值（残差）”。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619223714677.png" alt="image-20260619223714677" style="zoom:80%;" /></p>
+</blockquote>
+</li>
+<li>
+<p>引入<strong>跳跃连接 (Skip Connection)</strong>，直接将输入 $x$ 跨层传递与输出相加：最终输出 $H(x) = F(x) + x$。</p>
+</li>
+<li>
+<p><strong>为什么有效？</strong></p>
+</li>
+<li>
+<p>当 $F(x) \to 0$ 时，网络退化为恒等映射，保证深层网络性能保底。</p>
+</li>
+<li>反向传播时，梯度 $\frac{\partial H}{\partial x} = \frac{\partial F}{\partial x} + 1$。因为有 <code>+1</code> 的存在，梯度永远不会完全消失，可以顺畅无损地传导到浅层。</li>
+<li>
+<p>拟合微小的残差扰动比拟合绝对的非线性映射容易得多。</p>
+</li>
+<li>
+<p><strong>战绩</strong>：成功训练出 152 层网络，成为深度学习里程碑。</p>
+</li>
+</ul>
+<h3 id="8">8. 现代轻量化与注意力网络</h3>
+<ul>
+<li><strong>SENet (Squeeze-and-Excitation)</strong>：引入<strong>通道注意力机制</strong>。通过<strong>显式建模通道间依赖关系</strong>，自适应地重新校准特征通道权重的卷积神经网络架构，其核心创新是SE Block——<strong>先全局压缩（Squeeze）获取通道统计信息，再通过门控机制（Excitation）学习各通道的重要性并加权增强有用特征、抑制冗余特征。</strong></li>
+<li><strong>DenseNet</strong>：DenseNet (Densely Connected Convolutional Networks) 是一种通过<strong>密集连接（每一层都直接与前面所有层相连）</strong>实现特征重用和梯度高效传播的卷积神经网络架构。DenseNet在参数和计算成本更少的情形下实现比ResNet更优的性能，也因此斩获 CVPR 2017 的最佳论文奖。</li>
+<li><strong>MobileNet 系列 (轻量化王者)</strong>：</li>
+<li><em>MobileNet V1</em>：首创<strong>深度可分离卷积 (Depthwise Separable Convolution)</strong>。将标准卷积拆分为两步：先按通道单独做空间卷积 (Depthwise)，再用 $1\times 1$ 做跨通道融合 (Pointwise)。参数量和计算量断崖式下降。</li>
+<li><em>MobileNet V2</em>：在 V1 的基础上，引入<strong>倒残差连接 (Inverted Residual)</strong> 和 <strong>线性瓶颈层 (Linear Bottleneck)</strong>。先 $1\times 1$ 卷积升维扩展特征通道，再深度卷积提取空间信息，最后 $1\times 1$ 降维且<strong>不使用 ReLU</strong>（防止低维流形经 ReLU 导致信息损毁）。</li>
+<li><em>MobileNet V3</em>：结合 V1、V2 特性，并融入 SE 注意力机制和 AutoML 架构搜索。</li>
+<li><strong>EfficientNet</strong>：<strong>复合缩放 (Compound Scaling)</strong>。联合、平衡地<strong>同时</strong>放大网络的深度 (Depth)、宽度 (Width) 和分辨率 (Resolution)，以最少的 FLOPs 达到最高精度。</li>
+<li><strong>Vision Transformer (ViT)</strong>：打破 CNN 垄断。将图像切割为固定大小的图块 (Patches)，扁平化后加上位置编码，直接喂给纯 Transformer 编码器。利用全局自注意力机制取代局部卷积。</li>
+</ul>
+<h2 id="04">04 视觉特征表示与迁移学习</h2>
+<h3 id="1_3">1. 视觉分类中的特征表示</h3>
+<p>为什么要把图像变成单维向量表征？</p>
+<ul>
+<li><strong>剔除冗余</strong>： 原始像素包含大量背景、光照等无关信息。</li>
+<li><strong>语义提炼</strong>： 逐层抽象，从“边缘/纹理”变为“眼睛/耳朵”等高级语义。</li>
+<li><strong>线性可分</strong>： 将复杂的非线性视觉数据，转化为分类器（如全连接层）能够理解和划界的特征空间。</li>
+</ul>
+<h3 id="2_2">2. 从边缘、纹理到语义：特征的层次化演化</h3>
+<ul>
+<li><strong>浅层特征 (细节)</strong>：边缘、角点、颜色。感受野小，分辨率高，无语义。</li>
+<li><strong>中层特征 (局部)</strong>：基础几何形状、物体部件。</li>
+<li><strong>深层特征 (整体)</strong>：类别宏观模板（狗头、车轮）。感受野极大，空间分辨率低，但语义极其丰富。</li>
+</ul>
+<h3 id="3-class-activation-mapping-cam">3. 类激活映射 (Class Activation Mapping, CAM)</h3>
+<ul>
+<li><strong>目的</strong>：提供 CNN 的可解释性，可视化模型做决定的“注意力焦点”。</li>
+<li>核心方法：</li>
+<li>摒弃传统的展平全连接层 (Flatten + FC)，使用<strong>全局平均池化</strong> <strong>(GAP)</strong></li>
+<li>将输出层某个类别（如“狗”）的<strong>权重参数</strong>，反向投影到最后一层卷积的<strong>特征图</strong>上，进行加权求和。</li>
+<li><strong>现象</strong>：发现模型有时会利用背景“作弊”（例如靠雪地背景判断是狼），揭示了数据偏置。</li>
+</ul>
+<h3 id="4-transfer-learning">4. 迁移学习 (Transfer Learning)</h3>
+<p>能否提取通用表征——将大数据集上学到的通用知识直接迁移到新任务中。</p>
+<p>现实困难</p>
+<ul>
+<li>数据荒：垂直领域（如医疗、工业）很难获取万级以上的标注数据。</li>
+<li>算力贵：从零训练大型网络耗时极长，成本极高。</li>
+</ul>
+<p>关键观察</p>
+<ul>
+<li>
+<p>神经网络底层学习的是边缘、纹理等通用视觉特征。迁移学习就是将大数据集上学到的“通用视觉常识”直接搬移到新任务中。</p>
+</li>
+<li>
+<p><strong>核心原理</strong>：CNN 底层学习的是通用的视觉常识（如边缘检测）。我们可以将大规模数据集（如 ImageNet）上学到的预训练权重，直接迁移到新任务中。</p>
+</li>
+<li>
+<p><strong>三大策略</strong>：</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260619232423910.png" alt="image-20260619232423910" style="zoom:80%;" /></p>
+<ol>
+<li><strong>固定特征提取器 (Linear Probing)</strong>：冻结卷积骨干网络 (Backbone) 所有参数，只重新随机初始化并训练最后一层全连接层。</li>
+<li><strong>微调 (Fine-tuning)</strong>：使用预训练权重初始化，使用极小的学习率在整个网络上端到端继续训练。</li>
+<li>
+<p><strong>部分冻结</strong>：冻结网络底部的浅层通用特征，只微调顶层的高级抽象特征。</p>
+</li>
+<li>
+<p><strong>如何让视觉模型支持回归任务</strong>：骨干网络不变，将分类头 (Softmax) 移除，直接使用全连接层输出实数值并用 MSE 优化即可支持视觉坐标/数值回归。</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

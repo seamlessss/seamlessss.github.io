@@ -1,0 +1,2451 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://seamlessss.github.io/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/6/">
+      
+      
+        <link rel="prev" href="../5/">
+      
+      
+        <link rel="next" href="../7/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>L7：深度视觉模型（二） - seamlessss's Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#l7" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-header__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            seamlessss's Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L7：深度视觉模型（二）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-nav__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    seamlessss's Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seamlessss's Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    人工智能芯片与系统
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    人工智能芯片与系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%8A%AF%E7%89%87%E4%B8%8E%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    摄影
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    摄影
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%91%84%E5%BD%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    深度学习导论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    深度学习导论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L11：大语言模型架构与训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3：机器学习基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L4：神经网络基础（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5：神经网络基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L6：深度视觉模型（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7：深度视觉模型（二）
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7：深度视觉模型（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 目标检测 (Object Detection)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 目标检测 (Object Detection)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 单目标检测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 多目标检测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 两阶段目标检测器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 两阶段目标检测器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fast R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#faster-r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Faster R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 单阶段目标检测器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 单阶段目标检测器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#yolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        YOLO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSD：多尺度特征融合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-detr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. DETR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 密集预测
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 密集预测">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-semantic-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 语义分割（Semantic Segmentation）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 语义分割（Semantic Segmentation）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上采样
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 经典语义分割模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 经典语义分割模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fcn-fully-convolutional-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FCN (Fully Convolutional Networks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#u-net" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        U-Net
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deeplab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DeepLab 系列
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SegFormer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maskformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MaskFormer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        大模型时代：SAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 实例分割
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 实例分割">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mask-r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mask R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 视频理解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 视频理解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 时空融合策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 运动识别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 长期时序建模
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 视频任务前沿与大模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L8：表征学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L9：生成模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10：语言模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 目标检测 (Object Detection)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 目标检测 (Object Detection)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 单目标检测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 多目标检测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 两阶段目标检测器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 两阶段目标检测器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fast R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#faster-r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Faster R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 单阶段目标检测器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 单阶段目标检测器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#yolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        YOLO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSD：多尺度特征融合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-detr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. DETR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 密集预测
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 密集预测">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-semantic-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 语义分割（Semantic Segmentation）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 语义分割（Semantic Segmentation）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        上采样
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 经典语义分割模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 经典语义分割模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fcn-fully-convolutional-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FCN (Fully Convolutional Networks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#u-net" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        U-Net
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deeplab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DeepLab 系列
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SegFormer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maskformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MaskFormer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        大模型时代：SAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 实例分割
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 实例分割">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mask-r-cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mask R-CNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 视频理解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="04 视频理解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 时空融合策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 运动识别
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 长期时序建模
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 视频任务前沿与大模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="l7">L7：深度视觉模型（二）</h1>
+<h2 id="01-object-detection">01 目标检测 (Object Detection)</h2>
+<p>相比于只能判断整张图像类别的分类任务，目标检测更进一步。它不仅能识别图像中存在哪些对象，还能用<strong>边界框精确定位</strong>每个对象的位置，==<strong>实现分类与定位的结合</strong>==。广泛应用于自动驾驶、异常行为检测、医疗影像分析等领域。</p>
+<h3 id="1">1. 单目标检测</h3>
+<p>单目标检测是指图像中只存在或只需监测<strong>一个目标图像</strong>的情况，任务相对简单。</p>
+<ul>
+<li>
+<p><strong>网络结构与损失函数</strong></p>
+</li>
+<li>
+<p>采用共享的卷积特征提取器+两个并行的全连接头。</p>
+<ul>
+<li><strong>分类头</strong>：输出类别得分 (Class Scores)，使用 Softmax Loss 作为分类损失。</li>
+<li><strong>回归头</strong>：输出边界框坐标 $(x,y,w,h)$，使用 L2 Loss 作为定位损失。</li>
+</ul>
+</li>
+<li>
+<p><strong>多任务损失 (Multi-task Loss)</strong>：总损失 = 分类损失 + $\lambda \times$ 定位损失。</p>
+</li>
+</ul>
+<h3 id="2">2. 多目标检测</h3>
+<p>需要在同一图像中<strong>同时识别和定位多个目标</strong>。这些目标可能属于相同或不同类别，且常伴随目标重叠、尺度变化等复杂场景，难度显著增加。</p>
+<ul>
+<li>
+<p><strong>核心挑战</strong>：<u>每张图片需要不同数量的输出</u>，而深度学习模型通常期望输入和输出具有<u>固定的维度</u>。</p>
+</li>
+<li>
+<p><strong>朴素思路（滑动窗口）</strong>：在图像上滑动不同尺寸和长宽比的窗口，对每个窗口应用一个 CNN 分类器判断其是否包含物体及物体类别。<strong>缺陷</strong>：需要将 CNN 应用于海量位置、尺度和宽高比，计算成本极高。</p>
+</li>
+<li>
+<p><strong>解决方案</strong></p>
+<ul>
+<li>
+<p>==<strong>区域提议 (Region Proposals）</strong>==：先快速找出图像中<strong>“可能包含物体”的候选区域</strong>。只需对这几百到几千个候选区域进行精细分类和定位，大幅减少计算量。</p>
+</li>
+<li>
+<p><strong>==经典方法 (Selective Search)==</strong>：原理是<strong>自底向上合并超像素</strong>。先把图像分成很多小的“超像素块”，再根据颜色、纹理、大小、形状的相似性，一步步把相似的块合并起来。生成大约 2000 个“可能是物体”的<strong>候选框</strong>。这些框大多会覆盖到图里的物体，后续只需处理这 2000 个框，效率大幅提升。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3">3. 两阶段目标检测器</h3>
+<p>两阶段检测器（如 Faster R-CNN 系列）是“分步走”的策略：</p>
+<ol>
+<li>
+<p><strong>Stage 1 (区域提议)</strong>：先生成一堆“可能有物体”的候选框 (Proposals)。</p>
+</li>
+<li>
+<p><strong>Stage 2 (精细检测)</strong>：把这些候选框送进网络，提取特征，精确判断类别并微调框的位置。</p>
+</li>
+<li>
+<p><strong>特点</strong>：速度较慢，但精度高（因为多了一步精心筛选）。</p>
+</li>
+</ol>
+<hr />
+<h4 id="r-cnn">R-CNN</h4>
+<p>Region-based CNN: 利用 <strong>Selective Search</strong> 生成候选区域，经 CNN 提取特征后分类并回归边界框，首次实现高精度的多目标检测。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620003843766.png" alt="image-20260620003843766" style="zoom:80%;" /></p>
+<p>特征提取：</p>
+<ul>
+<li>
+<p><strong>Step 1: 生成候选区域 (RoI)</strong>：用 Selective Search 算法生成约 2000 个候选框 (Region of Interest, RoI)。把“暴力滑动窗口”缩减到了几千个。</p>
+</li>
+<li>
+<p><strong>Step 2: 统一尺寸缩放</strong>：把每个 RoI 独立缩放到<strong>固定尺寸</strong>（如 $224 \times 224$），因为后续的 CNN 模型需要固定尺寸的输入。</p>
+</li>
+<li>
+<p><strong>Step 3: 独立提取特征</strong>：把每个缩放后的 RoI 单独送入预训练好的 CNN（如 AlexNet）提取固定长度<strong>特征向量</strong>。</p>
+</li>
+</ul>
+<p>分类与精调：</p>
+<ul>
+<li>
+<p><strong>Step 4: SVM 分类</strong>：为每个类别训练一个线性 SVM 分类器，判断 RoI 里的物体类别（如猫、狗、背景）。</p>
+</li>
+<li>
+<p><strong>Step 5: 边界框回归 (Bbox reg)</strong>：为每个 RoI 的特征向量训练一个线性回归器，预测一个修正量$ (dx, dy, dw, dh)$，把 Selective Search 生成的粗糙候选框，微调成更贴合真实物体的边界框，提升定位精度。</p>
+</li>
+</ul>
+<p><strong>效率瓶颈</strong>：极大的<strong>==重复计算==</strong>！大部分 RoI 在空间上重叠，但 R-CNN 给每个 RoI 都单独跑了一遍 CNN 前向传播，大量重叠区域的卷积特征被重复计算了 2000 次。导致单张图像检测极<strong>慢</strong>，无法满足实时需求。</p>
+<hr />
+<h4 id="fast-r-cnn">Fast R-CNN</h4>
+<blockquote>
+<p>把 R-CNN 中 “每个 RoI 单独跑一次 CNN” 的重复计算，改成了<strong>整张图只跑一次卷积，生成共享特征图</strong></p>
+</blockquote>
+<p>先将整张图像通过 ConvNet 提取一个共享的稠密特征图，再将候选区域映射到该特征图上提取固定长度特征，显著提升了训练效率与推理速度。</p>
+<ul>
+<li><strong>特征提取</strong>：</li>
+<li>整图输入 ConvNet 得到共享特征图（如 conv5）。</li>
+<li>将 Selective Search 生成的 RoI 映射到该特征图上。</li>
+<li>
+<p>从特征图上<strong>直接裁剪</strong> (Crop) 出对应的 RoI 特征块，不需要再重复跑卷积。</p>
+</li>
+<li>
+<p><strong>RoI Pooling</strong>：</p>
+</li>
+<li>
+<p>因为裁剪出的 RoI 特征块尺寸不一，无法直接送入全连接层。RoI Pooling 层将任意尺寸的 RoI 特征块池化成<strong>固定尺寸</strong>的特征块，直接送入后续的全连接层。</p>
+</li>
+<li>
+<p>整个流程可以<strong>端到端训练</strong>，不需要像 R-CNN 那样分开训练 CNN、SVM、回归器。</p>
+</li>
+<li>
+<p><strong>分类与精调</strong>：</p>
+</li>
+<li>
+<p>Fast R-CNN 用<strong>一个 CNN 分支同时完成分类和定位</strong>，而不是像 R-CNN 那样分开用 SVM 和回归器</p>
+</li>
+<li>
+<p>将固定尺寸特征送入全连接层，通过<strong>两个并行输出头</strong>完成</p>
+<ul>
+<li>Softmax 分类器：输出每个 RoI 属于不同类别的概率；</li>
+<li>边界框回归器：输出 4 个修正量，微调 RoI 的位置和大小，让框更贴合真实物体；</li>
+</ul>
+</li>
+<li>
+<p>损失函数同样是<strong>分类损失与定位损失的加权和</strong></p>
+</li>
+<li>
+<p><strong>Softmax 分类器</strong>：输出多类别概率。</p>
+</li>
+<li>
+<p><strong>边界框回归器</strong>：输出 4 个修正量微调位置。</p>
+</li>
+</ul>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>整张图只做一次卷积，<strong>计算量大幅下降</strong>，速度比 R-CNN 快几十倍。</li>
+<li>单网络<strong>端到端训练</strong>（不需要单独训练 SVM 和回归器）。</li>
+<li>精度高。</li>
+</ul>
+<p><strong>遗留问题</strong>：区域提议还是依赖<strong>外部</strong>的 <code>Selective Search</code> 算法，而且这个算法是在 CPU 上运行的，比 GPU 上的卷积慢得多，成了整个流程的新瓶颈。</p>
+<hr />
+<h4 id="faster-r-cnn">Faster R-CNN</h4>
+<blockquote>
+<p>把 Selective Search 彻底替换成了可端到端训练的 RPN 网络。</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>==区域提议网络 (Region Proposal Network, RPN)==</strong>：取代 Selective Search，与检测网络共享底层卷积特征，实现完全在 GPU 上的端到端训练和推理。</p>
+</li>
+<li>
+<p><strong>RPN 锚点机制</strong>：在卷积特征图的每个空间位置上，预设 $K$ 个不同尺度和长宽比的<strong>锚点框 (Anchor Boxes)</strong>。这些锚点框覆盖了图像中物体可能出现的各种大小和形状，后续只需要对这些锚点框进行微调，就能得到候选区域。</p>
+</li>
+<li>
+<p><strong>RPN 的两个任务</strong>（只负责找框，不负责分类具体物体）：</p>
+</li>
+<li>
+<p><strong>二分类任务</strong></p>
+<blockquote>
+<p>给每个锚点框做二分类</p>
+</blockquote>
+<p>对于每个锚点框，RPN 预测一个“物体性”（Objectness）得分。这是一个二分类问题，即该锚点框是<strong>“前景”（包含物体）还是“背景”（不包含物体）</strong>，输出一个 K x H x W 的概率图（K 是每个位置的锚点数量，H、W 是特征图的高和宽），用来筛选出 “大概率包含物体” 的锚点框。</p>
+</li>
+<li>
+<p><strong>边界框回归</strong></p>
+<blockquote>
+<p>给被判定为前景的锚点框，预测位置修正量</p>
+</blockquote>
+<p>对于被预测为“前景”的锚点框，RPN 同时预测一个 4 维的<strong>修正向量</strong> (dx, dy, dw, dh)，这个向量用于将原始的锚点框精调到更接近真实物体的位置和尺寸，最终输出一个 4K x H x W 的概率图。</p>
+</li>
+<li>
+<p><strong>训练与推理</strong>：</p>
+</li>
+<li><strong>训练</strong>：用 IoU（交并比，算两个框<strong>重叠了多少</strong>）给锚点框打标签。和真实框 IoU 高的是正样本，低的是负样本，用这些样本训练 RPN 的分类和回归任务。</li>
+<li><strong>推理</strong>：对所有 K x H x W 个锚点框，按 “物体性得分” 排序，选取得分最高的约 300 个，再用回归修正量微调位置，得到最终的区域提议，送给后续的 RoI Pooling 和检测分支。</li>
+</ul>
+<hr />
+<h3 id="4">4. 单阶段目标检测器</h3>
+<p>将检测转化为<strong>密集预测</strong>问题。不筛选候选框，在特征图的每个位置上直接预测多个边界框及其类别。代表工作包括 YOLO / SSD / RetinaNet 等</p>
+<ul>
+<li>
+<p><strong>特点</strong>：“一步到位”，极快，能满足实时性需求（监控、自动驾驶），精度略低于两阶段。</p>
+</li>
+<li>
+<p><strong>核心思想</strong>：把检测变成 “<strong>密集预测</strong>”</p>
+</li>
+<li>
+<p>不像 Two-Stage 只筛选几百个框，One-Stage 在特征图的<strong>每个网格点（Grid Cell）</strong>上都直接预测。</p>
+</li>
+<li>把图片分成 N×N 的网格</li>
+<li>
+<p>每个格子里，预设几个 base boxes（锚框的一种变体，叫先验框）。</p>
+</li>
+<li>
+<p><strong>预测内容</strong>：坐标修正和置信度 $(dx, dy, dw, dh, \text{confidence})$，以及 $C$ 个类别概率。</p>
+</li>
+<li>
+<p><strong>最终输出形状</strong>：假设特征图是 $H \times W$，预设 $B$ 个框，类别数 $C$，输出尺寸为 ==$H \times W \times (5 \times B + C)$==。</p>
+</li>
+</ul>
+<hr />
+<h4 id="yolo">YOLO</h4>
+<p>YOLO (You Only Look Once)：将输入图像划分为 N×N 的网格，每个网格直接预测<strong>边界框坐标、置信度及类别概率</strong>，仅需<strong><u>一次前向传播</u></strong>即可完成全图检测，真正实现了端到端的<strong>实时</strong>目标检测。</p>
+<ul>
+<li><strong>YOLO 后处理 (Post-processing)</strong></li>
+<li>
+<p><strong>置信度筛选</strong>：删掉低于阈值（如 0.5）的低分框。</p>
+</li>
+<li>
+<p><strong>非极大值抑制 (NMS)</strong>：同一个物体会有多个重叠框，NMS 保留置信度最高的框，删掉和它重叠度 (IoU) 过高的其他框，避免重复检测。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620010642468.png" alt="image-20260620010642468" style="zoom:80%;" /></p>
+<hr />
+<h4 id="ssd">SSD：多尺度特征融合</h4>
+<blockquote>
+<p>YOLO 原版的致命缺陷：<strong>只靠最后一层特征图，小物体检测效果差</strong>。</p>
+</blockquote>
+<ul>
+<li>
+<p>核心思想：利用 CNN 不同层级的特征图检测不同尺度的物体。</p>
+</li>
+<li>
+<p><strong>用不同层级的特征图，检测不同大小的物体</strong></p>
+<ul>
+<li>
+<p><strong>浅层特征图（高分辨率，小感受野）</strong>：细节丰富，小目标在图中占据像素多，网络能看清轮廓，适合检测小物体。</p>
+</li>
+<li>
+<p><strong>深层特征图（低分辨率，大感受野）</strong>：感受野大，适合捕捉大目标的整体特征。</p>
+</li>
+</ul>
+<p><img alt="image-20260620011146319" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620011146319.png" /></p>
+</li>
+<li>
+<p>每个特征层都做预测在 30×30、19×19、10×10、5×5、3×3、1×1 这些不同尺度的特征图上，分别<strong>预设不同大小的锚框（Default boxes）</strong>，对每个锚框做分类和回归。</p>
+</li>
+<li>最后合并结果把所有特征层的预测结果汇总，再做 NMS 过滤，得到最终检测框。</li>
+</ul>
+<h4 id="_1">总结</h4>
+<ul>
+<li>YOLO 主要依赖最后的特征图，对小物体和密集物体检测效果不佳。</li>
+<li>而 SSD 通过多尺度特征融合，显著提升了对小物体的检测能力。</li>
+</ul>
+<p><strong>单阶段检测器的挑战</strong></p>
+<ul>
+<li><strong>正负样本不平衡</strong>：密集预测中，绝大多数锚点都是背景（负样本），导致模型训练被大量简单负样本主导，模型学偏（忽略少数难学的物体）。</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620011845153.png" alt="image-20260620011845153" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p><strong>标准交叉熵损失 (CE Loss)</strong>：$CE(p_{t}) = -\log(p_{t})$，对所有样本一视同仁。</p>
+</li>
+<li>
+<p><strong>==Focal Loss==</strong>：<strong>降低简单样本的权重，让模型重点关注难样本</strong>。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620011925913.png" alt="image-20260620011925913" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p>引入调制因子 $(1-p_{t})^{\gamma}$，公式为 $FL(p_{t}) = -(1-p_{t})^{\gamma}\log(p_{t})$。</p>
+</li>
+<li>
+<p>大幅压低易分样本（高 $p_{t}$，如简单背景）的权重，使其损失接近 0。</p>
+</li>
+<li>
+<p>重点关注难分样本（低 $p_{t}$，如小目标），使其损失权重几乎不变。</p>
+</li>
+<li>
+<p>有效解决不平衡问题，使单阶段检测器精度媲美两阶段。</p>
+</li>
+</ul>
+<h3 id="5-detr">5. DETR</h3>
+<p>用 Transformer 做目标检测，告别锚框和候选框。</p>
+<ul>
+<li><strong>核心架构</strong>：</li>
+<li>
+<p><strong>CNN 主干 (Backbone)</strong>：用 CNN（比如 ResNet）提取图像的特征图，和传统检测模型一样，先把图片变成高维特征向量。</p>
+</li>
+<li>
+<p><strong>Transformer 编码器</strong>：把特征图加上位置编码后，通过自注意力机制，让模型学习图像中不同区域的上下文关系；</p>
+</li>
+<li>
+<p><strong>Transformer 解码器</strong>：用固定数量的 object queries (目标查询向量) 与编码器特征做交叉注意力，直接生成一组预测框。</p>
+</li>
+<li>
+<p><strong>预测头 (Prediction Heads)</strong>：每个向量直接接分类分支（含背景类）和回归分支。</p>
+</li>
+</ul>
+<p>简单的目标检测流程：<u>直接从 Transformer 输出一组边界框</u>，不需要像 YOLO/SSD 那样预设锚框，也不需要像 Faster R-CNN 那样生成候选框，更不需要 NMS 过滤重复框。</p>
+<p>使用<strong>==二分匹配（匈牙利算法）==</strong>把模型输出的预测框，和图片里的真实框（GT）做一一配对，避免重复匹配问题，让训练更稳定；训练以回归边界框坐标。 </p>
+<ul>
+<li>
+<p>传统模型处理“一对多”，依赖 IoU 筛选正负样本，靠 NMS 去重。</p>
+</li>
+<li>
+<p>DETR 处理“多对多”。在训练阶段用“分类损失+回归损失”作为匹配成本，使用匈牙利算法给预测框和真实框 (GT) 做<strong>一一配对</strong>。从根源上杜绝重复匹配，不需要 NMS。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620013438229.png" alt="image-20260620013438229" style="zoom:80%;" /></p>
+<hr />
+<h2 id="02">02 密集预测</h2>
+<ul>
+<li>
+<p>目前我们讨论了<strong>图像分类与目标检测</strong>，这两者主要关注图像整体或特定区域的稀疏预测（Sparse Prediction），输出的是类别标签或边界框。</p>
+</li>
+<li>
+<p>不同于这两者仅在图像级或对象级给出离散结果，<strong>密集预测</strong>（Dense Prediction Tasks）则更有挑战性，它要求模型<strong>对每一个像素都做出预测</strong>。我们将重点讨论：</p>
+</li>
+<li>
+<p><strong>语义分割 (Semantic Segmentation)</strong>：给每个像素分配类别标签，但不区分同类别的不同个体（如两个骑手都标为“人”）。</p>
+<ul>
+<li><strong>实例分割 (Instance Segmentation)</strong>：在语义分割基础上，进一步区分同类别的不同实例。</li>
+</ul>
+<blockquote>
+<p><img alt="image-20260620013652344" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620013652344.png" /></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="1-semantic-segmentation">1. 语义分割（Semantic Segmentation）</h3>
+<p>与图像分类任务只能判断整张图像的类别不同，语义分割能够为图像中的<strong>每一个像素点</strong>分配一个语义类别标签，从而实现对图像的精细化理解，被广泛应用于自动驾驶、医学影像分析、遥感图像分析等领域。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620013747766.png" alt="image-20260620013747766" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p><strong>自动驾驶</strong>：<strong>把摄像头采集的图像，变成结构化的场景理解；</strong>识别可行驶区域、车辆、行人等，辅助决策。常用数据集：Cityscapes。</p>
+</li>
+<li>
+<p><strong>医学影像</strong>：<strong>对</strong> <strong>CT、MRI 等医学影像做像素级的精细标注；</strong>分割器官或病灶区，辅助定位和量化。常用数据集：BRATS。</p>
+</li>
+<li>
+<p><strong>遥感图像</strong>：<strong>对卫星 / 航拍影像做像素级的地物分类；</strong>识别建筑、水体等进行土地覆盖分类。常用数据集：FoVx4。</p>
+</li>
+</ul>
+<hr />
+<h4 id="_2">网络架构</h4>
+<p>如前所述，我们可以将语义分割理解为<strong>像素级的分类任务</strong>。然而，单个像素缺乏上下文，<strong>无法独立判断类别</strong></p>
+<ul>
+<li>语义分割是像素级的分类任务，需要给每个像素分配类别标签；</li>
+<li>但单个像素本身没有上下文信息，比如牛眼睛的黑色像素，单独看和背景的黑色像素没有任何区别，模型根本没法判断它属于 “牛” 还是 “背景”。</li>
+<li>模型必须结合周围像素的<strong>上下文信息</strong>，才能判断这个像素的类别。</li>
+</ul>
+<p><u><strong>朴素思路</strong>：对图片下采样，然后做像素级预测？</u></p>
+<ul>
+<li>直接下采样会丢失空间细节，无法恢复原图分辨率；保持原分辨率不下采样会导致计算量爆炸且感受野不足。</li>
+</ul>
+<p><u><strong>朴素思路</strong>：直接保持原分辨率做预测</u></p>
+<p><img alt="image-20260620014154036" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620014154036.png" /></p>
+<p>解决方案：采用==<strong>下采样-上采样</strong>==结构</p>
+<ol>
+<li>
+<p><strong>下采样（编码器）</strong>：用卷积 + 池化不断压缩特征图尺寸，增大感受野，提取多尺度的上下文和语义信息，同时压缩特征维度，降低计算开销；</p>
+</li>
+<li>
+<p><strong>上采样（解码器）</strong>：用反卷积 / 上采样操作，把低分辨率的特征图恢复到原图尺寸，同时可以结合编码器的高分辨率特征图（比如 U-Net 的跳跃连接），补充空间细节；</p>
+</li>
+<li>
+<p>兼顾语义和定位：<strong>下采样部分保证模型能理解全局语义，上采样部分保证最终输出的分辨率，让每个像素都有对应的类别预测。</strong></p>
+</li>
+</ol>
+<hr />
+<h4 id="_3">上采样</h4>
+<p>==<strong>重建像素级预测图，将低分辨率特征图恢复至原始空间尺寸</strong>==</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620120015607.png" alt="image-20260620120015607" style="zoom:80%;" /></p>
+<ul>
+<li>
+<p><strong>最近邻插值 (Nearest Neighbor)</strong>：直接复制原像素填充分辨率。速度快但<strong>边缘生硬（马赛克）</strong>。</p>
+</li>
+<li>
+<p><strong>0-填充</strong>：原位置保留值，其余填 0。信息稀疏，后续还需要靠卷积来补全细节。</p>
+</li>
+<li>
+<p><strong>单线性插值</strong></p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620121534677.png" alt="image-20260620121534677" style="zoom:80%;" /></p>
+<ul>
+<li>场景：一维数据（比如一条线）的插值。</li>
+<li>
+<p>做法：在两个已知点之间，<strong>按距离加权计算中间点的值</strong>。</p>
+</li>
+<li>
+<p><strong>双线性插值</strong></p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620121739294.png" alt="image-20260620121739294" style="zoom:80%;" /></p>
+<ul>
+<li>场景：二维图像（我们常用的）的插值。</li>
+<li>做法：先在<strong>水平</strong>方向做一次线性插值，再在<strong>垂直</strong>方向做一次，用目标点周围 4 个像素的加权平均来计算值。</li>
+<li>
+<p>特点：</p>
+<ul>
+<li>优点：放大后边缘平滑，不会出现马赛克，效果比最近邻好很多；</li>
+<li>缺点：固定的插值规则，不可学习，没法根据任务自适应调整。</li>
+</ul>
+</li>
+<li>
+<p><strong>Max Unpooling</strong>：</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620122031868.png" alt="image-20260620122031868" style="zoom:80%;" /></p>
+<ul>
+<li>前提：下采样时用的是 Max Pooling，并且<strong>记录了每个最大值的位置</strong>。</li>
+<li>做法：上采样时，把值放回它原来的位置，其他位置填 0。</li>
+<li>例子：下采样时记录了最大值的位置，上采样时直接把值放回原位。</li>
+<li>
+<p>特点：</p>
+<ul>
+<li>优点：完美还原池化时的位置信息，保留了空间细节；</li>
+<li>缺点：必须和 Max Pooling 配对使用，通用性差，计算量也更大。</li>
+</ul>
+</li>
+<li>
+<p><strong>转置卷积</strong></p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620123222141.png" alt="image-20260620123222141" style="zoom:80%;" /></p>
+<ul>
+<li>做法：用带步长的卷积核，让每个输入像素 “扩散” 到输出的一个区域里，实现放大。</li>
+<li>例子：2×2 的输入，用 stride=2、3×3、padding=1 的卷积核，输出变成 4×4 的特征图。</li>
+<li>特点：<ul>
+<li><strong>可学习</strong>：卷积核的权重可以通过训练更新，能自适应地学习怎么放大，效果比固定插值好很多；</li>
+<li>计算高效：放大和特征变换一步完成，不需要额外的插值步骤；</li>
+<li>注意：如果设置不当，可能会出现棋盘状的伪影，需要注意参数配置。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2_1">2. 经典语义分割模型</h3>
+<h4 id="fcn-fully-convolutional-networks">FCN (Fully Convolutional Networks)</h4>
+<p>从图像分类到图像分割。</p>
+<ul>
+<li>
+<p>核心思想：把分类网络（如 VGG）最后的<strong>全连接层 -&gt; 卷积层</strong></p>
+</li>
+<li>
+<p>全连接层：整图分类</p>
+</li>
+<li>卷积层：像素级预测</li>
+<li>支持<strong>任意尺寸输入</strong>，端到端训练</li>
+</ul>
+<blockquote>
+<p>图像分类模型（比如 VGG）：最后几层是全连接层，输出一个<strong>固定长度</strong>的向量，只能给整张图打一个<strong>标签</strong>（比如 “这是猫”）；</p>
+<p>FCN 的改进：把全连接层全部换成了卷积层，这样网络就不再输出固定长度的向量，而是<strong>输出一张和输入图像尺寸成比例的特征图</strong>（热力图），每个位置都对应一个类别预测。</p>
+</blockquote>
+<ul>
+<li><strong>多尺度融合</strong>：深层特征语义强但位置模糊；浅层特征位置准但语义弱。FCN 通过跳跃连接融合特征。</li>
+</ul>
+<blockquote>
+<ul>
+<li>深层特征：语义信息强，能判断 “这是猫”，但位置模糊；</li>
+<li>浅层特征：位置信息准，能看清边缘细节，但语义弱；</li>
+<li>FCN 通过<strong>跳跃连接</strong>，把深层、中层、浅层的特征融合起来，兼顾语义和定位。</li>
+</ul>
+</blockquote>
+<hr />
+<h4 id="u-net">U-Net</h4>
+<p>医学图像分割标杆，适合小数据。</p>
+<p>U-Net通过<strong>完全对称的编码器-解码器</strong>结构和密集的<strong>跳跃连接</strong>，在恢复分辨率的同时精确保留空间细节。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620124523773.png" alt="image-20260620124523773" style="zoom:80%;" /></p>
+<ul>
+<li><strong>完全对称的编解码结构</strong>：左侧编码器（下采样）提取语义但丢细节；右侧解码器（上采样）恢复尺寸。</li>
+<li><strong>编码器（下采样路径）</strong>。和 FCN 的特征提取部分类似，用卷积 + 池化不断<strong>压缩特征图尺寸</strong>，增大感受野，<strong>提取全局语义信息</strong>；<ul>
+<li>作用：增大感受野，提取全局语义信息；</li>
+<li>代价：空间分辨率不断降低，边缘、纹理等细节信息会丢失。</li>
+</ul>
+</li>
+<li>
+<p><strong>解码器（上采样路径）</strong>：用转置卷积（up-conv）不断<strong>放大特征图尺寸</strong>，同时通过<strong>跳跃连接</strong>，融合编码器对应层的特征，<strong>恢复空间细节</strong>。</p>
+<ul>
+<li>作用：把压缩后的特征图放大，恢复到原图尺寸；</li>
+<li>同时，跳跃连接会把编码器保留的细节信息传递过来，让放大后的特征图既有语义，又有细节。</li>
+</ul>
+</li>
+<li>
+<p><strong>密集的跳跃连接</strong>：将编码器每层的特征图直接与解码器对应层按通道拼接。精确定位并保留边缘/纹理信息。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620124838731.png" alt="image-20260620124838731" style="zoom:80%;" /></p>
+<ul>
+<li>做法：<strong>把编码器每一层的特征图，直接和解码器对应层的特征图按通道拼接；</strong></li>
+<li>作用：<ul>
+<li><strong>保留空间细节</strong>：编码器浅层的特征包含边缘、纹理等细节，直接传给解码器，避免上采样时丢失；</li>
+<li><strong>精确定位</strong>：解码器放大时，能直接拿到编码器对应位置的特征，分割边缘更清晰；</li>
+<li><strong>多尺度融合</strong>：深层语义+浅层细节，让网络自己学习如何组合。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h4 id="deeplab">DeepLab 系列</h4>
+<p>DeepLab是语义分割领域的 经典系列工作，通过空洞卷积扩大感受野、ASPP模块建模多尺度上下文等设计，系统性解决了"<strong>多尺度目标</strong>"和"<strong>边界模糊</strong>"两大核心挑战。</p>
+<p><strong>==DeepLab v1/v2==</strong>：</p>
+<ul>
+<li>
+<p>针对语义分割出现的两个挑战：</p>
+</li>
+<li>
+<p>多尺度目标：同一类别物体大小差异大</p>
+</li>
+<li>
+<p>边界模糊：深层特征及上采样带来的边界处挑战</p>
+</li>
+<li>
+<p>DeepLab v1/v2 引入<strong>==空洞卷积==</strong>，扩大感受野，捕获更多上下文。</p>
+</li>
+</ul>
+<blockquote>
+<p>是在<strong>卷积核</strong>里面插 0，前面反池化方法的那个0填充是在<strong>特征图</strong>里插0</p>
+</blockquote>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620131010647.png" alt="image-20260620131010647" style="zoom:80%;" /></p>
+<p><strong>==DeepLab v3==</strong></p>
+<p>然而，单一眼洞率无法适应所有尺度目标</p>
+<ul>
+<li>
+<p>v1/v2 用单一空洞率的卷积，只能适配固定大小的目标，没法处理多尺度的物体。</p>
+</li>
+<li>
+<p>因此，DeepLab v3 提出 <strong>==ASPP（Atrous Spatial Pyramid Pooling）==</strong>，并行多个不同空洞率的卷积 + 全局池化</p>
+</li>
+</ul>
+<blockquote>
+<p><img alt="image-20260620131152358" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620131152358.png" /></p>
+</blockquote>
+<ul>
+<li>并行使用<strong>多个不同空洞率的卷积</strong>（rate=6、12、18、24 等），再加上全局池化分支；</li>
+<li>每个分支的感受野不同：rate 小的分支捕捉局部细节，rate 大的分支捕捉全局上下文；</li>
+<li>
+<p>最后把所有分支的特征融合起来，模型就能同时适配不同大小的目标，鲁棒性大幅提升。</p>
+</li>
+<li>
+<p>从而同时捕获<strong>局部细节</strong>与<strong>全局上下文</strong>，<strong>适应不同大小目标</strong>，提升鲁棒性。</p>
+</li>
+</ul>
+<blockquote>
+<p>简单说，ASPP 就是给模型装上了 “不同焦距的镜头”，既能看清近处的小物体，也能看清远处的大物体。</p>
+</blockquote>
+<p><strong>==DeepLab v3+==</strong>：最终形态。</p>
+<ul>
+<li>改进ASPP，加入 <strong>Batch Normalization</strong> 层</li>
+<li>
+<p>实现Feature Map的跨Block融合</p>
+</li>
+<li>
+<p><strong>编码器部分</strong>：</p>
+</li>
+<li>
+<p>用带空洞卷积的 ResNet 作为主干，提取高维特征；</p>
+</li>
+<li>
+<p>搭配改进后的 ASPP 模块，加入 Batch Normalization，提升训练稳定性。</p>
+</li>
+<li>
+<p><strong>解码器部分</strong>：</p>
+</li>
+<li>
+<p>把编码器的低分辨率特征上采样，再和主干网络的浅层特征融合；</p>
+</li>
+<li>
+<p>浅层特征包含丰富的边缘细节，能有效恢复分割边界的精度，解决模糊问题。</p>
+</li>
+</ul>
+<p>这种结构让 v3 + 同时兼顾了<strong>全局语义理解</strong>和<strong>局部细节恢复</strong>，成为当时精度最高的语义分割模型之一。</p>
+<hr />
+<h4 id="segformer">SegFormer</h4>
+<blockquote>
+<p>纯 Transformer 架构的语义分割模型</p>
+</blockquote>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620133216728.png" alt="image-20260620133216728" style="zoom:80%;" /></p>
+<ol>
+<li><strong>层次化 Transformer Encoder（MiT Backbone）</strong></li>
+</ol>
+<p>这是 SegFormer 最核心的创新，它不是用传统的 Transformer（比如 ViT），而是设计了专门的 MiT（Mix Transformer）骨干，有几个关键改进：</p>
+<p><img alt="image-20260620134906718" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620134906718.png" /></p>
+<blockquote>
+<p><strong>（1）层次化特征提取</strong></p>
+<p>和 CNN 的 ResNet 一样，MiT 把图片分成 4 个 Stage，每个 Stage 的特征图尺寸不断缩小：</p>
+<p>Stage1: H/4 × W/4</p>
+<p>Stage2: H/8 × W/8</p>
+<p>Stage3: H/16 × W/16</p>
+<p>Stage4: H/32 × W/32</p>
+<p>这样就得到了<strong>多尺度的特征</strong>，浅层特征细节丰富，深层特征语义信息强，为后续分割打下基础。</p>
+<p>（2）<strong>重叠</strong> <strong>Patch</strong> <strong>Embedding</strong></p>
+<p>传统 ViT 的 Patch Embedding 是不重叠的，会丢失边缘信息；SegFormer 用<strong>重叠的卷积来做 Patch Embedding</strong>，这样能保留更多的空间细节，让分割边缘更清晰。</p>
+<p>（3）高效自注意力 + <strong>混合前馈网络 Mix-FFN</strong></p>
+<ul>
+<li>自注意力：SegFormer 用的是<strong>高效自注意力</strong>，计算量比全局注意力低很多，同时能捕捉局部和全局上下文；</li>
+<li>Mix-FFN：把传统 Transformer 的 FFN 改成了混合前馈网络，用 3×3 卷积代替部分全连接，能更好地捕捉空间信息，同时提升效率。</li>
+</ul>
+<p>（4）<strong>更大的感受野</strong></p>
+<p>从对比图里能看出来，SegFormer 的感受野比 DeepLabv3 + 大很多，尤其是深层 Stage，它的注意力能覆盖更大的区域，理解全局上下文的能力更强，这也是它分割效果好的关键原因之一。</p>
+</blockquote>
+<ol>
+<li><strong>轻量级</strong> <strong>MLP</strong> <strong>Decoder</strong>：由于编码器极其强大，解码器只需几个简单的 MLP 层对齐通道并上采样即可恢复分割图。</li>
+</ol>
+<hr />
+<h4 id="maskformer">MaskFormer</h4>
+<p><strong>掩码分类新范式</strong>：不再逐像素分类。通过 Transformer 处理 Query，直接预测一组“{掩码，类别}对”。每个掩码对应一个物体，推理时聚合同类掩码。同时适配语义、实例和全景分割。</p>
+<p><img alt="image-20260620135213992" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620135213992.png" /></p>
+<blockquote>
+<p><strong>传统 PerPixel Baseline</strong>：主干 + 像素解码器，直接输出<code>K×H×W</code>的特征图，每个像素在 K 个类别上做 softmax，用像素级交叉熵损失训练。缺点：需要处理像素间的复杂关系，边界模糊，也没法直接处理实例级信息。</p>
+<p><strong>MaskFormer 的范式</strong>：主干 + 像素解码器生成像素级嵌入，再通过 Transformer 解码器处理 N 个 Query，生成 N 个对象级嵌入；然后计算 Query 嵌入和像素嵌入的相似度，生成 N 个候选掩码，再给每个掩码预测类别。这样一来，模型就从 “像素级分类” 变成了 “对象级掩码 + 类别预测”。</p>
+</blockquote>
+<p>传统语义分割是<strong>逐像素分类</strong>：每个像素直接预测类别，最后拼成一张图。而 MaskFormer 提出了<strong>掩码分类（Mask Classification）新范式</strong>：</p>
+<ul>
+<li>不直接给每个像素打标签，而是预测一组<code>{掩码, 类别}</code>对；</li>
+<li>每个掩码对应一个物体 / 区域，再给它分配类别；</li>
+<li>推理时把同类掩码合并，就能得到最终的分割图。</li>
+</ul>
+<p>这种范式让它能同时适配语义分割、实例分割和全景分割，是分割领域的里程碑。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620135722919.png" alt="image-20260620135722919" style="zoom:80%;" /></p>
+<h4 id="sam">大模型时代：SAM</h4>
+<ul>
+<li>
+<p>SAM (Segment Anything Model) 是 Meta 发布的分割基础模型，<strong>通过提示式交互</strong>（点/框/文本）实现 <strong>zero-shot 通用分割</strong>，开创了"一个模型分割万物"的新范式。</p>
+</li>
+<li>
+<p>支持<strong>可提示交互</strong> (Promptable)：点、框、文本 prompt。</p>
+</li>
+<li>
+<p>海量数据：SA-1B 数据集（11亿掩码，1100万图片）。</p>
+</li>
+<li>
+<p>突破了闭集和单一任务限制，实现 zero-shot 通用分割。</p>
+</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620140334049.png" alt="image-20260620140334049" style="zoom:80%;" /></p>
+<hr />
+<h2 id="03">03 实例分割</h2>
+<p>为图像中的每一个物体实例生成一个二值掩码（Binary Mask），精确到像素级别。需要同时解决<strong>检测（定位和分类）</strong>和<strong>分割（像素级描绘）</strong>两个子任务，对空间对齐精度要求极高。 </p>
+<h3 id="mask-r-cnn">Mask R-CNN</h3>
+<p>两阶段实例分割的典范。</p>
+<p>核心思想：在 Faster R-CNN 的基础上，增加一个预测掩码的分支。</p>
+<p>架构详解：</p>
+<ul>
+<li>
+<p>共享主干和 RPN：与 Faster R-CNN 相同。</p>
+</li>
+<li>
+<p>三个并行输出头：分类头、边界框回归头、<strong>==掩码头==</strong>。</p>
+</li>
+<li>
+<p><strong>==RoI Align==</strong>：替换 RoI Pooling，以保证掩码预测的像素级对齐精度。</p>
+</li>
+</ul>
+<blockquote>
+<p>问题：RoI Pooling 在映射和池化过程中存在<strong>两次量化（取整）</strong>操作，导致特征与原始 RoI 位置不对齐，对像素级任务（如实例分割）影响显著。 </p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620141509469.png" alt="image-20260620141509469" style="zoom:80%;" /></p>
+<p><strong>解决方案 (RoI Align)</strong>：移除量化操作，使用<strong>==双线性插值==</strong>来精确地从特征图上采样 RoI 所需的值。</p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620141542059.png" alt="image-20260620141542059" style="zoom:80%;" /></p>
+</blockquote>
+<p><strong>掩码预测策略</strong></p>
+<ul>
+<li>逐类掩码：掩码头为每个类别都输出一个二值掩码。 </li>
+<li>掩码选择：根据分类头的预测结果，只选择对应类别的掩码通道作为最终输出。</li>
+</ul>
+<p><strong>训练目标</strong></p>
+<p><img alt="image-20260620141640073" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620141640073.png" /></p>
+<p><strong>多功能性</strong></p>
+<ul>
+<li>除了实例分割，Mask R-CNN 稍作修改即可用于<strong>人体姿态估计</strong>（Human Pose Estimation）</li>
+<li>将关键点（如关节）视为一种特殊的“实例”，用类似掩码的方式预测。</li>
+</ul>
+<p><strong>Note</strong></p>
+<ul>
+<li>Mask R-CNN 是两阶段实例分割的典范，精度高。 </li>
+<li>也存在单阶段的实例分割方法（如 YOLACT, SOLO），追求速度。 </li>
+</ul>
+<h2 id="04">04 视频理解</h2>
+<p>视频本质是一连串按时间顺序排列的图像帧（视频 = 2D + 时间）。</p>
+<p>数据表示为 4D 张量（通常为 $T \times 3 \times H \times W$，T 为帧数）。</p>
+<ul>
+<li>
+<p><strong>核心挑战</strong>：数据量巨大，如何有效建模和利用时间维度信息。</p>
+</li>
+<li>
+<p><strong>解决方案</strong>：==<strong>基于短片段训练</strong>==</p>
+</li>
+<li>
+<p>实践策略：不在完整长视频上训练，而是采样短片段（clips）。 </p>
+</li>
+<li>
+<p>训练阶段： 模型学习对这些短片段进行分类。 </p>
+</li>
+<li>
+<p>测试阶段： 对多个片段进行推理，取平均预测结果作为最终视频级预测。 </p>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620142619288.png" alt="image-20260620142619288" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h3 id="1_1">1. 时空融合策略</h3>
+<ul>
+<li><strong>单帧 CNN</strong> (基线方法)：将视频简化为<strong>每帧独立的 2D CNN 分类</strong>，最后时间维度取平均。</li>
+</ul>
+<p><img src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620143257458.png" alt="image-20260620143257458" style="zoom:80%;" /></p>
+<ul>
+<li><strong>早期融合</strong></li>
+</ul>
+<blockquote>
+<p>在<strong>输入层</strong>融合时间信息</p>
+</blockquote>
+<ul>
+<li>
+<p>在模型的第一层就将时间信息融合进来。</p>
+</li>
+<li>
+<p>将 T 帧的 RGB 通道堆叠，形成一个 $(3T) \times H \times W$ 的“超图像”，然后送入标准的 2D CNN。  </p>
+<p><img alt="image-20260620143908520" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620143908520.png" /></p>
+</li>
+<li>
+<p>局限性</p>
+<ul>
+<li>关键问题：第一个2D卷积层会<strong>将所有时间信息压缩掉</strong>（输出为 D x H x W），后续网络无法再访问原始的时间结构。</li>
+<li>后果：仅有一层进行时间处理，对于复杂的、长时序的动作可能不足以捕获足够的动态信息。</li>
+</ul>
+</li>
+<li>
+<p><strong>晚期融合</strong>：</p>
+</li>
+</ul>
+<blockquote>
+<p>在<strong>高层特征</strong>融合时间信息</p>
+</blockquote>
+<ul>
+<li>
+<p>先独立提取每帧的高层特征，再在特征层面进行时间融合。</p>
+</li>
+<li>
+<p>实现方式 A（<strong>MLP</strong>）：对每帧用 2D CNN 提取特征，将所有帧的特征向量拼接成一个长向量，送入全连接层（MLP）进行分类。</p>
+<p><img alt="image-20260620143924496" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620143924496.png" /></p>
+</li>
+<li>
+<p>实现方式B（<strong>Pooling</strong>）：对每帧用 2D CNN 提取特征后，在时间和空间维度上进行全局平均池化，得到一个紧凑的视频级特征向量，再送入线性分类器。</p>
+</li>
+<li>
+<p>局限性</p>
+<ul>
+<li>关键问题：由于每帧是独立处理的，模型难以直接比较帧与帧之间的<strong>底层运动信息</strong>（如像素位移）。</li>
+<li>后果：虽然能捕捉到每帧的变化，但对精细、局部的运动模式建模能力弱。</li>
+</ul>
+</li>
+<li>
+<p>**3D CNN **</p>
+</li>
+<li>
+<p><strong>时空慢速融合</strong></p>
+</li>
+<li>核心思想：使用 3D 卷积核 $(K_t \times K_h \times K_w)$ 在整个网络中逐步、同步地融合空间和时间信息。</li>
+<li>实现方式：将 2D CNN 中的卷积和池化操作全部替换为 3D 版本。</li>
+<li>直觉：每一层的特征图都是一个 4D 张量，保留了完整的时空结构。 </li>
+</ul>
+<p><img alt="image-20260620144345274" src="C:\Users\wufeng\AppData\Roaming\Typora\typora-user-images\image-20260620144345274.png" /></p>
+<h3 id="2_2">2. 运动识别</h3>
+<p>从运动识别人类行为</p>
+<ul>
+<li>运动信息是视频理解中至关重要的线索，有时甚至比外观信息更重要。</li>
+</ul>
+<p><strong>度量运动：光流</strong></p>
+<ul>
+<li>光流是一个二维向量场，描述从帧 It 到帧 It+1 每个像素点的位移(dx,dy)。</li>
+<li>水平分量(dx)和垂直分量(dy)可以用灰度图表示，共同构成运动模式。</li>
+</ul>
+<p><strong>双流融合</strong>：显式建模运动信息，一条流走空间（RGB），一条流走时间（光流），最后取平均或 SVM 融合，性能大幅超越单流。</p>
+<h3 id="3_1">3. 长期时序建模</h3>
+<p>局限性：前述方法（3D CNN, 双流网络）主要处理短片段（~2-5秒），只能捕获局部的时序动态。</p>
+<p>现实需求：许多复杂活动（如“做早餐”、“打篮球比赛”）包含跨越数十秒甚至数分钟的长期依赖和事件顺序。</p>
+<p>问题：如何建模这种长距离的时序结构？</p>
+<p>处理复杂活动（长视频）时的长距离依赖：</p>
+<ul>
+<li><strong>RNN/LSTM -&gt; 序列建模的经典工具</strong>：使用循环神经网络处理 CNN 提取的逐帧序列，理论上可捕获任意长度依赖。</li>
+<li>核心思想：使用循环神经网络来处理由 CNN 提取的逐帧特征序列。</li>
+<li>流程：(1) 使用 CNN 从视频中提取局部特征向量；(2) 将这些特征向量按时间顺序送入 RNN；(3) RNN 的最终状态或所有状态用于最终预测。</li>
+<li>
+<p>优势：理论上可以捕获任意长度的时序依赖。</p>
+</li>
+<li>
+<p><strong>循环卷积网络</strong>：将 RNN 的递归与 CNN 权重共享结合。</p>
+</li>
+<li>
+<p>架构特点：网络由多层组成，每一层在时间步 t 的输出，不仅取决于当前时间步上一层的输出，还取决于同一层在上一时间步 t-1 的输出。</p>
+</li>
+<li>
+<p><strong>I3D</strong>：直接将成功的 2D CNN 卷积核和池化核“膨胀” (Inflate) 为 3D，复用 2D 架构优势。</p>
+</li>
+<li>
+<p><strong>时空自注意力</strong>：将自注意力机制应用到 3D 特征图上并行捕获长距离依赖。</p>
+</li>
+</ul>
+<h3 id="4_1">4. 视频任务前沿与大模型</h3>
+<ul>
+<li>
+<p><strong>超越分类（动作定位）</strong>：</p>
+</li>
+<li>
+<p><strong>时序动作定位</strong>：给定一个未修剪的长视频，不仅要识别出其中发生的动作类别，还要精确定位每个动作发生的起止时间（帧）。</p>
+</li>
+<li>
+<p><strong>时空动作检测</strong>：</p>
+<ul>
+<li>在未修剪的长视频中，同时在空间（定位人物边界框）和时间（定位动作起止）上检测并识别人物执行的原子动作。</li>
+<li>挑战：需要同时处理复杂的外观、姿态、运动以及精确的时空定位。</li>
+</ul>
+</li>
+<li>
+<p><strong>前沿方向</strong>：视频大语言模型</p>
+</li>
+<li>
+<p>趋势：将强大的视频编码器（如ViViT, VideoMAE）与大语言模型（LLM）相结合。</p>
+</li>
+<li>
+<p>能力：实现开放词汇的视频问答、视频描述生成、基于指令的视频内容理解等。</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1698 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://seamlessss.github.io/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/10/">
+      
+      
+        <link rel="prev" href="../1/">
+      
+      
+        <link rel="next" href="../2/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>L11：大语言模型架构与训练 - seamlessss's Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#l11" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-header__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            seamlessss's Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              L11：大语言模型架构与训练
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="seamlessss&#39;s Notes" class="md-nav__button md-logo" aria-label="seamlessss's Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    seamlessss's Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seamlessss's Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    人工智能芯片与系统
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    人工智能芯片与系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%8A%AF%E7%89%87%E4%B8%8E%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    摄影
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    摄影
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%91%84%E5%BD%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    深度学习导论
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    深度学习导论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L11：大语言模型架构与训练
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L11：大语言模型架构与训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#00-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        00 Transformer 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="00 Transformer 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 为什么现代大模型往往“拆开用”？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 注意力机制的四大变体
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 大语言模型的三种架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 大语言模型的三种架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-encoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Encoder-only 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Encoder-only 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BERT 模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roberta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RoBERTa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#albert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ALBERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-encoder-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Encoder-Decoder 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Encoder-Decoder 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BART 模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t5-text-to-text-tranfer-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T5 模型 (Text-to-Text Tranfer Transformer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-decoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Decoder-only 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Decoder-only 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPT 系列演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LLaMA 系列 (开源之光)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-scaling-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 扩展法则 (Scaling Laws)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 大语言模型的后训练与对齐
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 大语言模型的后训练与对齐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-rlhf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 人类反馈强化学习 (RLHF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 思维提升
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-peft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 参数高效微调 (PEFT)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 参数高效微调 (PEFT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-addition-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 参数附加方法 (Addition-based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-selection-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 参数选择方法 (Selection-based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-low-rank-adaptation-lora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 低秩适配方法 (Low-Rank Adaptation, LoRA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L3：机器学习基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L4：神经网络基础（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L5：神经网络基础（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L6：深度视觉模型（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L7：深度视觉模型（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L8：表征学习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L9：生成模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    L10：语言模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#00-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        00 Transformer 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="00 Transformer 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 为什么现代大模型往往“拆开用”？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 注意力机制的四大变体
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 大语言模型的三种架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="01 大语言模型的三种架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-encoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Encoder-only 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Encoder-only 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BERT 模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roberta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RoBERTa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#albert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ALBERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-encoder-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Encoder-Decoder 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Encoder-Decoder 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BART 模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t5-text-to-text-tranfer-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        T5 模型 (Text-to-Text Tranfer Transformer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-decoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Decoder-only 架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Decoder-only 架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPT 系列演进
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LLaMA 系列 (开源之光)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-scaling-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 扩展法则 (Scaling Laws)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 大语言模型的后训练与对齐
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="02 大语言模型的后训练与对齐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-rlhf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 人类反馈强化学习 (RLHF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 思维提升
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-peft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 参数高效微调 (PEFT)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="03 参数高效微调 (PEFT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-addition-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 参数附加方法 (Addition-based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-selection-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 参数选择方法 (Selection-based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-low-rank-adaptation-lora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 低秩适配方法 (Low-Rank Adaptation, LoRA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="l11">L11：大语言模型架构与训练</h1>
+<h2 id="00-transformer">00 Transformer 架构</h2>
+<p>原版完整的 Transformer 由两大核心部分组成：左侧的 Encoder（编码器）和右侧的 Decoder（解码器）。</p>
+<h3 id="1">1. 为什么现代大模型往往“拆开用”？</h3>
+<p>完整版 Transformer 存在结构太重、参数翻倍、训练和推理慢、极其消耗显存等缺点 。并且很多任务根本不需要两套结构，任务单一且通用性较差 。因此衍生出了三大拆分用法：</p>
+<ul>
+<li>
+<p><strong>只用 Encoder (仅编码器)</strong>：任务只需要读懂句子而不需要生成句子时使用（如分类、情感分析、语义匹配），省钱省力效果好。</p>
+</li>
+<li>
+<p><strong>只用 Decoder (仅解码器)</strong>：任务只需要往下续写、生成文字时使用（如聊天、问答、写代码），最适合当前的大语言模型。</p>
+</li>
+<li>
+<p><strong>全都保留 (完整版)</strong>：仅在翻译、摘要等“序列转序列”的刚需转译场景使用。</p>
+</li>
+</ul>
+<h3 id="2">2. 注意力机制的四大变体</h3>
+<ul>
+<li>
+<p><strong>自注意力 (Self-Attention)</strong>：让句子里每个字自动看向其他所有字，寻找语义关联（如判断指代关系“它=小猫”）。</p>
+</li>
+<li>
+<p><strong>双向自注意力 (Encoder 专属)</strong>：前面的字能看后面，后面的字也能看前面，整句话全部互通 。能利用全文上下文，理解力最强，但无法用于造句。</p>
+</li>
+<li>
+<p><strong>单向掩码自注意力 (Decoder 专属)</strong>：加了遮挡掩码 Mask，一个字只能看它前面已经出现的字，绝对看不到未来的字 。专门用于文本生成和续写。</p>
+</li>
+<li>
+<p><strong>交叉注意力 (Cross-Attention)</strong>：完整版 Transformer 专属。让解码器去读取编码器的信息 。纯 Encoder 或纯 Decoder 中完全用不到。</p>
+</li>
+<li>
+<p><strong>多头注意力 (Multi-Head Attention)</strong>：把 1 个注意力拆成好几个小注意力分头干活（如分别关注语法、近义词、情感等），合并后特征更全面精准，但更吃显存。</p>
+</li>
+</ul>
+<hr />
+<h2 id="01">01 大语言模型的三种架构</h2>
+<h3 id="1-encoder-only">1. Encoder-only 架构</h3>
+<p>只选用 Transformer 中的 Encoder 部分，通过双向完全注意力充分捕捉上下文的语义依赖关系 。适合理解类任务，但无法直接做文本生成。</p>
+<h4 id="bert">BERT 模型</h4>
+<ul>
+<li>
+<p><strong>结构</strong>：Base 版本为 12 层编码器，768 维隐藏层，1.1 亿参数。</p>
+</li>
+<li>
+<p><strong>预训练任务 1：掩码语言建模 (MLM)</strong>：随机把句子里 15% 的词替换成 <code>[MASK]</code>，让模型根据前后文预测该词（完形填空）。</p>
+</li>
+<li>
+<p><strong>预训练任务 2：下一句预测 (NSP)</strong>：给两句话，判断第二句是不是第一句的真实下文，学习句子间的逻辑关系。</p>
+</li>
+</ul>
+<h4 id="roberta">RoBERTa</h4>
+<ul>
+<li>
+<p><strong>核心改进</strong>：使用更大语料（160GB）、更长训练时间。</p>
+</li>
+<li>
+<p><strong>任务调整</strong>：移除了容易让模型走捷径的 NSP 任务。</p>
+</li>
+<li>
+<p><strong>动态掩码</strong>：将 BERT 的静态 Mask（预处理时固定）改为了数据输入模型时才进行的随机动态 Mask，极大提升了训练数据的多样性和模型的鲁棒性。</p>
+</li>
+</ul>
+<h4 id="albert">ALBERT</h4>
+<p>通过两大机制显著降低参数量，提升训练和推理效率 ：</p>
+<ul>
+<li>
+<p><strong>参数因子分解</strong>：将庞大的词嵌入矩阵 $V \times H$ 拆分为两个小矩阵的乘积：先映射到低维 $V \times E$，再映射回隐藏层 $E \times H$ 。以 Base 版为例，参数量直接减少了近 90%。</p>
+</li>
+<li>
+<p><strong>跨层参数共享</strong>：让所有 Encoder 层共享同一套注意力与前馈网络参数。不仅大幅减小参数量，还强制模型学习更通用稳定的特征。</p>
+</li>
+<li>
+<p><strong>任务调整</strong>：将 NSP 替换为更难的<strong>句序预测 (SOP)</strong>（判断两句话是正序还是倒序），强制模型学习真实的句子逻辑顺序。</p>
+</li>
+</ul>
+<hr />
+<h3 id="2-encoder-decoder">2. Encoder-Decoder 架构</h3>
+<p>同时选用 Encoder 和 Decoder，包含双向注意力、掩码注意力与交叉注意力，是“理解+生成”双能力的架构。</p>
+<h4 id="bart">BART 模型</h4>
+<ul>
+<li>
+<p><strong>核心任务（文本重建）</strong>：故意破坏输入文本，让模型重建回原始文本。</p>
+</li>
+<li>
+<p><strong>破坏方式</strong>：包括 Token 遮挡、Token 删除、连续文本填空、句子打乱、文档旋转等 。能让模型学到更全面的文档级语义理解能力。</p>
+</li>
+</ul>
+<h4 id="t5-text-to-text-tranfer-transformer">T5 模型 (Text-to-Text Tranfer Transformer)</h4>
+<ul>
+<li>
+<p><strong>核心思想</strong>：把所有 NLP 任务都统一成“文本输入 $\rightarrow$ 文本输出”的形式，通过添加自然语言“前缀指令”来区分任务（如“翻译成英文: ...”、“情感识别: ...”）。</p>
+</li>
+<li>
+<p><strong>预训练任务 (Span Corruption)</strong>：不同于 BERT 的单词掩码，T5 随机盖住<strong>连续的几个词</strong>（一个完整语义片段），迫使模型理解句子整体结构和上下文依赖。</p>
+</li>
+</ul>
+<hr />
+<h3 id="3-decoder-only">3. Decoder-only 架构</h3>
+<p>只保留解码器，去掉交叉注意力，仅使用<strong>掩码单向自注意力</strong> 。因去除了冗余的编码器，具有极强的可扩展性，通过堆叠参数量即可暴力提升生成质量，成为当前大语言模型的绝对主流。</p>
+<h4 id="gpt">GPT 系列演进</h4>
+<ul>
+<li>
+<p><strong>GPT-1</strong>：单向自注意力，下一词预测任务，泛化能力有限。</p>
+</li>
+<li>
+<p><strong>GPT-2</strong>：提升语料质量（WebText 40GB），展现出 Zero-shot 能力。</p>
+</li>
+<li>
+<p><strong>GPT-3</strong>：参数飙升至 1750 亿，涌现出强大的<strong>上下文学习 (In-Context Learning, ICL)</strong> 能力。</p>
+</li>
+<li>
+<p><strong>InstructGPT / ChatGPT</strong>：引入<strong>人类反馈强化学习 (RLHF)</strong>，解决模型答非所问或产生有害内容的问题。</p>
+</li>
+</ul>
+<h4 id="llama">LLaMA 系列 (开源之光)</h4>
+<ul>
+<li>
+<p><strong>核心理念</strong>：不盲目追求参数规模，而是专注于提升预训练数据的规模与质量。</p>
+</li>
+<li>
+<p><strong>架构三大优化 (对比 GPT)</strong>：</p>
+</li>
+<li>
+<p><strong>词嵌入</strong>：采用<strong>旋转位置编码 (RoPE)</strong> 替代绝对位置编码，提升了对长序列顺序的理解和泛化能力。</p>
+</li>
+<li>
+<p><strong>归一化</strong>：采用 <strong>Pre-Norm</strong> 结合 <strong>RMSNorm</strong>，替代了 Post-Norm 的 LayerNorm，使深层梯度更稳定，计算速度更快。</p>
+</li>
+<li>
+<p><strong>激活函数</strong>：将 ReLU 替换为 <strong>SwiGLU</strong>（包含门控机制），非线性表达能力更强。</p>
+</li>
+<li>
+<p><strong>后续演进</strong>：LLaMA2 引入 RLHF 和分组查询注意力 (GQA)；LLaMA3.1 扩展至惊人的 405B 规模。</p>
+</li>
+</ul>
+<hr />
+<h3 id="4-scaling-laws">4. 扩展法则 (Scaling Laws)</h3>
+<ul>
+<li>
+<p><strong>Kaplan 法则 (OpenAI, 2020)</strong>：模型规模比数据规模更重要。在同等算力下，优先扩大模型参数更能降低损失（GPT-3 时代的指导思想）。</p>
+</li>
+<li>
+<p><strong>Chinchilla 法则 (DeepMind, 2022)</strong>：修正了上述结论。发现参数和数据同等重要，之前的模型都处于“欠拟合”状态。<strong>最优策略是参数与数据按比例同步增长</strong>。</p>
+</li>
+</ul>
+<hr />
+<h2 id="02">02 大语言模型的后训练与对齐</h2>
+<p>预训练只让模型学会了“语言规律”（复读机），通过后训练才能让它符合人类意图（价值对齐）并提升逻辑推理能力。</p>
+<h3 id="1-rlhf">1. 人类反馈强化学习 (RLHF)</h3>
+<ul>
+<li>
+<p><strong>Step 1: 有监督微调 (SFT)</strong>：利用人工标注的高质量“指令-回答”数据集微调模型，让模型学会“怎么正确回答问题”（模仿人类格式）。</p>
+</li>
+<li>
+<p><strong>Step 2: 训练奖励模型 (Reward Model, RM)</strong>：让 SFT 模型对同一指令生成多个回答，人工对其排序。利用这些数据训练一个“打分判官”，让其学会“什么是符合人类偏好的好回答”。</p>
+</li>
+<li>
+<p><strong>Step 3: 强化学习微调 (RL)</strong>：利用 PPO（近端策略优化）算法，在奖励模型打分的指导下，让大模型主动朝着“高分回答”的方向不断优化参数更新生成策略。</p>
+</li>
+</ul>
+<h3 id="2_1">2. 思维提升</h3>
+<ul>
+<li><strong>System-1</strong>：“会说话”，凭借直觉快速输出。</li>
+<li><strong>System-2</strong>：涉及缜密逻辑的推理。通过诱导大模型输出“思维链”(Chain of Thought)，展示中间推理步骤（如“请一步步思考”），并利用强化学习将其刻入模型，可大幅提升推理能力。</li>
+</ul>
+<hr />
+<h2 id="03-peft">03 参数高效微调 (PEFT)</h2>
+<p>全量微调（Full Fine-Tuning）极其消耗 GPU 显存和算力 。<strong>PEFT (Parameter-Efficient Fine-Tuning)</strong> 通过冻结绝大部分参数，只更新极少部分参数，实现低成本的高效微调。</p>
+<h3 id="1-addition-based">1. 参数附加方法 (Addition-based)</h3>
+<p>增加并训练新的小模块。</p>
+<ul>
+<li>
+<p><strong>加在输入 (Prompt-tuning)</strong>：在真实文本输入向量前，插入一组可训练的“软提示 (Soft Prompt)”连续向量 。模型越大效果越好，支持多任务共用一个冻结的主模型。</p>
+</li>
+<li>
+<p><strong>加在模型 (Adapter-tuning / Prefix-tuning)</strong>：在 Transformer 的隐藏层中间插入适配器模块（通常是“降维-激活-升维”的瓶颈结构）。用极少的参数量就能达到极高的性能。</p>
+</li>
+<li>
+<p><strong>加在输出 (Proxy-tuning)</strong>：解码时的轻量级算法。</p>
+</li>
+<li>
+<p><strong>数学机制</strong>：无需访问黑盒大模型的权重，只需拿到其输出的预测分布 logits ($s_M$)。</p>
+</li>
+<li>
+<p><strong>修正公式</strong>：$\tilde{s} = s_M + (s_{M+} - s_{M-})$。即将“微调后的小专家模型”与“未微调的小反专家模型”的 logits 差值，作为特定任务的“知识增量”注入到大模型的输出中。</p>
+</li>
+</ul>
+<h3 id="2-selection-based">2. 参数选择方法 (Selection-based)</h3>
+<p>只从模型原有参数中挑选一小部分更新。</p>
+<ul>
+<li>
+<p><strong>基于规则 (BitFit)</strong>：只微调模型中占比不到 0.1% 的<strong>偏置项 (Biases)</strong> 和特定的分类头。</p>
+</li>
+<li>
+<p><strong>基于学习 (Child-tuning)</strong>：引入一个 $0-1$ <strong>梯度掩码矩阵 $M_t$</strong>。在反向传播时，$W_{t+1} = W_t - \eta (M_t \odot \nabla L)$，仅使掩码为 1 的子网络参数接收梯度更新，屏蔽其余梯度。</p>
+</li>
+</ul>
+<h3 id="3-low-rank-adaptation-lora">3. 低秩适配方法 (Low-Rank Adaptation, LoRA)</h3>
+<p>工业界目前最主流、最强大的 PEFT 方法 。</p>
+<ul>
+<li>
+<p><strong>底层理论：本征维度假设 (Intrinsic Dimension)</strong>：大模型在微调时，实际上只需要在一个极低维的子空间中进行参数更新，就能达到与全量更新几乎一样的性能。</p>
+</li>
+<li>
+<p><strong>数学机制</strong>：将庞大的参数更新矩阵 $\Delta W_{d \times k}$ 分解为两个低秩小矩阵的乘积：</p>
+</li>
+</ul>
+<p>$$\Delta W = B_{d \times r} A_{r \times k}$$</p>
+<p>其中秩 $r \ll \min(d, k)$。前向传播时，输出变为 $h = W_0 x + BAx$。</p>
+<ul>
+<li>
+<p><strong>初始化技巧（极其关键）</strong>：</p>
+</li>
+<li>
+<p><strong>矩阵 $A$</strong>：用高斯分布初始化，保证初始值小且均匀。</p>
+</li>
+<li>
+<p><strong>矩阵 $B$</strong>：必须用 <strong>全零初始化</strong>。这样在训练伊始 $\Delta W = 0$，模型的输出与预训练模型完全一致，防止破坏原有的预训练知识。</p>
+</li>
+<li>
+<p><strong>优势</strong>：推理时可将 $BA$ 直接合并回原始权重 $W_0$，<strong>零额外推理延迟</strong>；需要保存的优化器状态和梯度显存断崖式下。</p>
+</li>
+</ul>
+<p><strong>LoRA 核心变体扩展</strong>：</p>
+<ul>
+<li>
+<p><strong>AdaLoRA</strong>：通过奇异值分解 (SVD) 动态裁剪，为不同重要性的模块分配不同的秩。</p>
+</li>
+<li>
+<p><strong>QLoRA</strong>：将原始大模型权重极度压缩量化至 4-bit 存储，仅让 LoRA 参数保持 16-bit 浮点进行微调，可节省约 60% 显存。</p>
+</li>
+<li>
+<p><strong>S-LoRA</strong>：优化推理。将 LLM 输入与 LoRA 参数计算分离，支持将多个不同 LoRA 插件的请求合并到同一个 Batch 中并行计算，大幅提升 GPU 吞吐量。</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
